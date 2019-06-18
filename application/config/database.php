@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'CI',
+	'hostname' => '13.232.90.200',
+	'username' => 'in3dev',
+	'password' => 'Hysl2fer@8482',
+	'database' => 'fintech',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
