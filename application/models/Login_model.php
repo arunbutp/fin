@@ -4,7 +4,7 @@
 			
 			$postData = $this->input->post();
 			
-			$SQL = "SELECT * FROM users where userName = '".$postData['userName']."' AND passWord = '".MD5($postData['passWord'])."' ";
+			$SQL = "SELECT * FROM users as u where u.userName = '".$postData['userName']."' AND u.passWord = '".MD5($postData['passWord'])."' ";
 			
 			$query = $this->db->query($SQL);
 
