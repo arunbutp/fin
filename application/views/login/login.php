@@ -38,7 +38,7 @@
 
     <form id="form1" action="" method="post">
       <div class="form-group has-feedback">
-        <input type="text" id="userName" name="userName" value="admin" class="form-control" placeholder="Username">
+        <input type="text" id="userName" name="userName" value="appsadmin" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -140,7 +140,7 @@
 	  
       <div class="row">
         <div class="col-xs-8">
-          <div id="loader"></div><div id="registererror" style="color:red;"></div>
+          <div id="loader2"></div><div id="registererror" style="color:red;"></div>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
@@ -210,7 +210,7 @@
 						console.log(result.msg);
                        if(result.msg == 'success'){
 						$("#loader").html('Redirecting...');   
-					   location.href= '<?=base_url();?>'+result.redirect_menu;
+					   location.href= '<?php echo base_url().'home'; ?>';
 					}else{
 						$("#loader").html('');
 						$("#error").html("Please Use Correct Username Password");
@@ -224,7 +224,7 @@
             event.preventDefault();
 			$("#loader").html('');
 			$("#error").html('');
-			$("#loader").html('<img src="<?=base_url();?>assets/dist/img/ajax-loader.gif"/> Processing...');
+			$("#loader2").html('<img src="<?=base_url();?>assets/dist/img/ajax-loader.gif"/> Processing...');
 //alert();
             $.ajax({
                     url:'<?=base_url();?>login/registration',
@@ -234,12 +234,14 @@
                     success:function(result){
 						console.log(result.msg);
                        if(result.msg == 'success'){
-						$("#loader").html(result.status_msg);   
-						$("#login_show").slideUp();   
+						alert("Registraion completed");   
+						$("#register_show").hide();
+						$("#login_show").show();   
+						("#loader2").html('');
 					  // location.href= '<?=base_url();?>'+result.redirect_menu;
 					}else{
-						$("#loader").html(result.status_msg);
-						$("#error").html("Please Use Correct Username Password");
+						$("#loader2").html(result.status_msg);
+						$("#registererror").html("Please Use Correct Username Password");
 					}
                     }
 

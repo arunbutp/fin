@@ -11,7 +11,7 @@ $session = $this->session->userdata('MY_SESS');
           <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo $session['data'][0]['name']; ?></p>
+          <p><?php echo $session['data'][0]['firstname']; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -29,18 +29,16 @@ $session = $this->session->userdata('MY_SESS');
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <!--<li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+      <li>
+          <a href="../mailbox/mailbox.html">
+            <i class="fa fa-envelope"></i> <span>Mailbox</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <small class="label pull-right bg-yellow">12</small>
+              <small class="label pull-right bg-green">16</small>
+              <small class="label pull-right bg-red">5</small>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-          </ul>
-        </li>-->
+        </li>
         <!--<li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
@@ -56,80 +54,7 @@ $session = $this->session->userdata('MY_SESS');
             <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
           </ul>
         </li>-->
-		<?php
-		$session = $this->session->userdata('MY_SESS');
 		
-		if (in_array(1, $session['menus']))
- 
-		{
-			
-		?>
-		
-        <li class='<?php echo ($this->router->fetch_method()=='index' ? 'active' : ''); ?>'>
-          <a href="<?=base_url();?>home/index">
-            <i class="fa fa-bar-chart "></i> <span>Category MIS</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-		<?php
-		}
-		
-		?>
-		
-		<?php
-		
-		
-		if (in_array(2, $session['menus']))
- 
-		{
-		?>
-		 <li class='<?php echo ($this->router->fetch_method()=='sales' ? 'active' : ''); ?>'>
-          <a href="<?=base_url();?>home/sales">
-            <i class="fa fa-bar-chart "></i> <span>Sales Target</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-		
-		<?php
-		}
-		?>
-		<?php
-		
-		
-		if (in_array(3, $session['menus']))
- 
-		{
-		?>
-		 <li class='<?php echo ($this->router->fetch_method()=='catalog' ? 'active' : ''); ?>'>
-          <a href="<?=base_url();?>home/catalog">
-            <i class="fa fa-bar-chart "></i> <span>Catalog</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-		<?php
-		}
-		
-		if ($session['l_method']=='admin')
- 
-		{
-		?>
-		<li class='<?php echo ($this->router->fetch_method()=='alc' ? 'active' : ''); ?>'>
-          <a href="<?=base_url();?>home/alc">
-            <i class="fa fa-bar-chart "></i> <span>Access Control</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-		<?php
-		}
-		?>
         <!--<li class="treeview active">
           <a href="#">
             <i class="fa fa-pie-chart"></i>

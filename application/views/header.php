@@ -33,7 +33,7 @@
 <body class="hold-transition skin-purple-light sidebar-mini">
 <div class="wrapper">
 <?php
-$session = $this->session->userdata('MY_SESS');
+$session = $this->session->userdata('MY_SESS2');
 
 //echo "<pre>";
 //print_r($session);
@@ -43,9 +43,9 @@ $session = $this->session->userdata('MY_SESS');
     <!-- Logo -->
     <a href="../../index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>In</b>A</span>
+      <span class="logo-mini"><b>F</b>T</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Inthree</b> access</span>
+      <span class="logo-lg"><b>Fin</b> tech</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -146,7 +146,7 @@ $session = $this->session->userdata('MY_SESS');
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $session['data'][0]['name']; ?></span>
+              <span class="hidden-xs"><?php echo $session['data'][0]['firstname']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -154,7 +154,7 @@ $session = $this->session->userdata('MY_SESS');
                 <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $session['data'][0]['name']; ?>
+                  <?php echo $session['data'][0]['firstname']; ?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>

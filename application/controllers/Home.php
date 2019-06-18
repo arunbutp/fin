@@ -7,9 +7,9 @@ class Home extends CI_Controller {
 
 		parent::__construct();
 		//$this->load->model('admin/report_model', 'report_model');
-		$session = $this->session->userdata('MY_SESS');
+		$session = $this->session->userdata('MY_SESS2');
 		
-		if($session['id']!= '3456'){
+		if($session['id']!= '34567'){
 		redirect('/login/index', 'refresh');
 		}
 	}
