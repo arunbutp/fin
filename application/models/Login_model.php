@@ -96,10 +96,38 @@
 								'dob' => $postData['dob'],
 								'email' => $postData['email'],
 								'mobile' => $postData['mobile'],
+								'bc_id' => $postData['role'],
+								'branch_id' => $postData['finance_bc'],
 								'gender'=> $postData['gender']);
 			
 		return	$this->db->insert('users',$insertData);
 			
 		//	echo $str = $this->db->last_query();
+		}
+		public function role_master(){
+			
+			$postData = $this->input->post();
+			
+			$SQL = "SELECT * FROM role_master where status = '1'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+			
+		}
+		public function finance_bc(){
+			
+			$postData = $this->input->post();
+			
+			$SQL = "SELECT * FROM finance_bc_master";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+			
 		}
 	}

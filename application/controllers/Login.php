@@ -58,4 +58,38 @@ class Login extends CI_Controller {
 
 		
 	}
+	public function role_master(){
+		
+		$this->load->model('login_model');
+		$role_master = $this->login_model->role_master();
+	//	echo "<pre>";
+	//	print_r($role_master);
+		
+		$str = "<option value=''>--select---</option>";
+		for($i=0;$i<count($role_master);$i++){
+			
+			$str .= "<option value='".$role_master[$i]['role_id']."'>".$role_master[$i]['role_name']."</option>";
+		}
+		
+		echo $str;
+	}
+	public function finance_bc(){
+		
+		$this->load->model('login_model');
+		$finance_bc = $this->login_model->finance_bc();
+	//	echo "<pre>";
+	//	print_r($role_master);
+		
+		$str = " <div class='form-group'>
+	 <label for='firstname'>Finance BC:</label><select class='form-control selcls' name='finance_bc' id='finance_bc' required>
+<option value=''>--select---</option>";
+		for($i=0;$i<count($finance_bc);$i++){
+			
+			$str .= "<option value='".$finance_bc[$i]['id']."'>".$finance_bc[$i]['name']."</option>";
+		}
+		
+		$str .="</select></div>";
+		
+		echo $str;
+	}
 }

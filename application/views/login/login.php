@@ -138,6 +138,19 @@
       </div>
 	  
 	  
+	   <div class="form-group">
+	 <label for="firstname">Role:</label>
+		<select class="form-control selcls" name="role" id="role" required>
+			
+		 
+		</select>
+	 </div>
+	 
+	 <div id="finance_bc">
+	 
+	 
+	 </div>
+	  
       <div class="row">
         <div class="col-xs-8">
           <div id="loader2"></div><div id="registererror" style="color:red;"></div>
@@ -190,6 +203,42 @@
 				$("#register_show").slideUp();
 						
 	});
+	
+	
+		
+		 $.ajax({
+                    url:'<?=base_url();?>login/role_master',
+                    type:'POST',
+					dataType:'html',
+
+                    success:function(result){
+						$("#role").html(result);
+                    }
+
+            });	
+			
+			
+			$("#role").change(function(){
+				
+				if($("#role").val()=='3'){
+				
+				 $.ajax({
+                    url:'<?=base_url();?>login/finance_bc',
+                    type:'POST',
+					data: {"id": $("#role").val()},
+					dataType:'html',
+
+                    success:function(result){
+						$("#finance_bc").append(result);
+                    }
+
+				});
+				}else{
+					$("#finance_bc").html('');
+					
+				}				
+				
+			})
 	
 	
 	
