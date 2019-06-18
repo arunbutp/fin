@@ -86,4 +86,22 @@ class Login extends CI_Controller {
 
 		
 	}
+	public function registration(){
+		
+		$this->load->model('login_model');
+		$register_check = $this->login_model->register_check();
+		
+		if($register_check){
+			
+			echo json_encode(array("msg"=> "error","status_msg"=> 'User Name Already Exists'));
+		}else{
+			
+			$insert_register = $this->login_model->insert_register();
+			
+			echo json_encode(array("msg"=> "success","status_msg"=> 'Registration completed'));
+			
+		}
+
+		
+	}
 }

@@ -71,4 +71,35 @@
 			$result = curl_exec($ch);
 			return $result_array=json_decode($result, true);	
 		}
+		
+		public function register_check(){
+			
+			$postData = $this->input->post();
+			
+			$SQL = "SELECT * FROM users where userName = '".$postData['userName']."'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+			
+		}
+		public function insert_register(){
+			
+			$postData = $this->input->post();
+			
+			$insertData = array('userName' => $postData['userName'],
+								'passWord' => MD5($postData['passWord']),
+								'firstname'=> $postData['firstname'],
+								'lastname' => $postData['lastname'],
+								'dob' => $postData['dob'],
+								'email' => $postData['email'],
+								'mobile' => $postData['mobile'],
+								'gender'=> $postData['gender']);
+			
+		return	$this->db->insert('users',$insertData);
+			
+		//	echo $str = $this->db->last_query();
+		}
 	}

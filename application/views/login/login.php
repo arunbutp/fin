@@ -33,7 +33,7 @@
     <a href="#"><b>Fin</b>tech</a>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div id="login_show" class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
     <form id="form1" action="" method="post">
@@ -59,10 +59,107 @@
 
    
     <!-- /.social-auth-links -->
-
+ <a href="#" id="registerclick" class="text-center">Register a new membership</a>
    
   </div>
   <!-- /.login-box-body -->
+  
+  
+  
+  
+  <!-- Register Form -->
+  
+  <div style="display:none;" id="register_show" class="register-box-body">
+    <p class="login-box-msg">Register a new membership</p>
+
+    <form id="form2" action= "" method="post">
+      <div class="form-group has-feedback">
+	  <label for="firstname">First Name:</label>
+        <input type="text" class="form-control" name="firstname" placeholder="John" required>
+        <span class=""></span>
+      </div>
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Last Name:</label>
+        <input type="text" class="form-control" name="lastname" placeholder="Smith" required>
+        <span class=""></span>
+      </div>
+	  
+	  
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Date of Birth:</label>
+        <input type="date" class="form-control" name="dob" placeholder="Date of Birth" required>
+        <span class=""></span>
+      </div>
+	  
+	 
+	 
+	 
+	 <div class="form-group">
+	 <label for="firstname">gender:</label>
+		<select class="form-control selcls" name="gender" id="gender" required>
+ 
+		<option value="" selected disabled >--select--</option>
+		
+		<option value="male">Male</option>
+		 
+		<option value="female">Female</option>
+		 
+		</select>
+	 </div>
+
+	 
+
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Mobile:</label>
+        <input type="text" class="form-control" name="mobile" placeholder="99999 99999" required>
+        <span class=""></span>
+      </div>
+	  
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Email:</label>
+        <input type="text" class="form-control" name="email" placeholder="abc@mail.com" required>
+        <span class=""></span>
+      </div>
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Username:</label>
+        <input type="text" class="form-control" name="userName" placeholder="Username" required>
+        <span class=""></span>
+      </div>
+	  
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Password:</label>
+        <input type="password" class="form-control" name="passWord" placeholder="Password" required>
+        <span class=""></span>
+      </div>
+	  
+	  
+      <div class="row">
+        <div class="col-xs-8">
+          <div id="loader"></div><div id="registererror" style="color:red;"></div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+    
+
+    <a href="#" id="loginclick" class="text-center">I already have a membership</a>
+  </div>
+  
+  
+  
+  
+  
+  
 </div>
 <!-- /.login-box -->
 
@@ -79,6 +176,24 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' /* optional */
     });
+	
+	$("#registerclick").click(function(){
+				
+				$("#login_show").slideUp();
+				$("#register_show").slideDown();
+						
+	});
+	
+	$("#loginclick").click(function(){
+				
+				$("#login_show").slideDown();
+				$("#register_show").slideUp();
+						
+	});
+	
+	
+	
+	
   });
      $("#form1").submit(function(event){
             event.preventDefault();
@@ -102,13 +217,39 @@
 					}
                     }
 
-            });
+            });	
+        });
+		
+		$("#form2").submit(function(event){
+            event.preventDefault();
+			$("#loader").html('');
+			$("#error").html('');
+			$("#loader").html('<img src="<?=base_url();?>assets/dist/img/ajax-loader.gif"/> Processing...');
+//alert();
+            $.ajax({
+                    url:'<?=base_url();?>login/registration',
+                    type:'POST',
+					dataType:'json',
+                    data:$(this).serialize(),
+                    success:function(result){
+						console.log(result.msg);
+                       if(result.msg == 'success'){
+						$("#loader").html(result.status_msg);   
+						$("#login_show").slideUp();   
+					  // location.href= '<?=base_url();?>'+result.redirect_menu;
+					}else{
+						$("#loader").html(result.status_msg);
+						$("#error").html("Please Use Correct Username Password");
+					}
+                    }
+
+            });	
         });
 </script>
 <style>
 body{
-	margin: 0;
-	overflow: hidden;
+//	margin: 0;
+//	overflow: hidden;
 }
 </style>
 </body>
