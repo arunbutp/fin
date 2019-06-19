@@ -218,6 +218,7 @@ function bc_branch(){
     });
 	
 	$("#registerclick").click(function(){
+		$('#form2')[0].reset();
 				
 				$("#login_show").slideUp();
 				$("#register_show").slideDown();
@@ -364,7 +365,7 @@ function bc_branch(){
 						alert("Registraion completed");   
 						$("#register_show").hide();
 						$("#login_show").show();   
-						("#loader2").html('');
+						$("#loader2").html('');
 					  // location.href= '<?=base_url();?>'+result.redirect_menu;
 					}else{
 						$("#loader2").html(result.status_msg);

@@ -30,7 +30,7 @@ $session = $this->session->userdata('MY_SESS2');
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><!--MAIN Navigation--></li>
         <li>
-          <a href="../mailbox/mailbox.html">
+          <a href="<?=base_url();?>/home">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           
           </a>
