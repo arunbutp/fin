@@ -28,16 +28,27 @@ $session = $this->session->userdata('MY_SESS');
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-      <li>
+        <li class="header"><!--MAIN Navigation--></li>
+        <li>
           <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          
+          </a>
+        </li>
+<li class="treeview">
+          <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Config</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Finance Master</a></li>
+            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
+            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
+            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+          </ul>
         </li>
         <!--<li class="treeview">
           <a href="#">
