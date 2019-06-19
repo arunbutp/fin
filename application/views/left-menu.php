@@ -44,10 +44,10 @@ $session = $this->session->userdata('MY_SESS2');
             </span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Finance Master</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+            <li><a href="<?=base_url();?>/home/finance_master"><i class="fa fa-circle-o"></i> Finance Master</a></li>
+            <li><a href="<?=base_url();?>/home/finance_bc"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
+            <li><a href="<?=base_url();?>/home/flot"><i class="fa fa-circle-o"></i> Flot</a></li>
+            <li><a href="<?=base_url();?>/home/inline_charts"><i class="fa fa-circle-o"></i> Inline charts</a></li>
           </ul>
         </li>
         <!--<li class="treeview">

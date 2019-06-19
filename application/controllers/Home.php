@@ -15,7 +15,10 @@ class Home extends CI_Controller {
 	}
 	public function index()
 	{
-		$this->load->view('home/home');
+		
+		$this->load->model('home_model');
+		$data['dashboard'] = $this->home_model->dashboard();
+		$this->load->view('home/home',$data);
 	}
 	public function sales()
 	{
@@ -52,6 +55,11 @@ class Home extends CI_Controller {
 		
 		echo json_encode($chked);
 		
+	}
+	
+	public function finance_master(){
+		
+		$this->load->view('home/finance_master');
 	}
 	
 }
