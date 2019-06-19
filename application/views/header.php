@@ -146,7 +146,7 @@ $session = $this->session->userdata('MY_SESS2');
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo $session['data'][0]['firstname']; ?></span>
+              <span class="hidden-xs"><?php echo ucfirst($session['data'][0]['firstname']); ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -154,7 +154,7 @@ $session = $this->session->userdata('MY_SESS2');
                 <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $session['data'][0]['firstname']; ?>
+                  <?php echo ucfirst($session['data'][0]['firstname']); ?>
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>

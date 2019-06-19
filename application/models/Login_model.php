@@ -98,6 +98,9 @@
 								'mobile' => $postData['mobile'],
 								'bc_id' => $postData['role'],
 								'branch_id' => $postData['finance_bc'],
+								'rso_bc_ids' => $postData['rso_bc_ids'],
+								'bc_id' => $postData['finance_bc_b'],
+							
 								'gender'=> $postData['gender']);
 			
 		return	$this->db->insert('users',$insertData);
@@ -126,6 +129,20 @@
 			$query = $this->db->query($SQL);
 
 			return $query->result_array();
+			
+			
+			
+		}
+		public function bc_branch_master(){
+			
+			$postData = $this->input->post();
+			
+			$SQL = "SELECT * FROM finance_bc_branch_master where bc_id='".$postData['id']."'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
 			
 			
 			

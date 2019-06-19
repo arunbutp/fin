@@ -11,7 +11,7 @@ $session = $this->session->userdata('MY_SESS2');
           <img src="<?=base_url();?>assets/dist/img/blank-profile 160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo $session['data'][0]['firstname']; ?></p>
+          <p><?php echo ucfirst($session['data'][0]['firstname']); ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>

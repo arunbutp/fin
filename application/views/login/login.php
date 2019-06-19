@@ -150,6 +150,11 @@
 	 
 	 
 	 </div>
+	 
+	  <div id="finance_bc_branch">
+	 
+	 
+	 </div>
 	  
       <div class="row">
         <div class="col-xs-8">
@@ -183,7 +188,29 @@
 <!-- iCheck -->
 <script src="<?=base_url();?>assets/plugins/iCheck/icheck.min.js"></script>
 <script>
-  $(function () {
+function bc_branch(){
+	  
+	//alert($("#finance_bc_b").val())
+
+	if($("#role").val() == 4 || $("#role").val() == 5){
+	$.ajax({
+		url:'<?=base_url();?>login/bc_branch_master',
+		type:'POST',
+		data: {"id": $("#finance_bc_b").val()},
+		dataType:'html',
+
+		success:function(result){
+			$("#finance_bc_branch").empty().append(result);
+		}
+
+	});
+	}			
+				
+  }
+  $(document).ready(function(){
+	  
+	  
+	   
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
@@ -220,6 +247,8 @@
 			
 			$("#role").change(function(){
 				
+				$("#finance_bc_branch").empty();
+				
 				if($("#role").val()=='3'){
 				
 				 $.ajax({
@@ -229,21 +258,70 @@
 					dataType:'html',
 
                     success:function(result){
-						$("#finance_bc").append(result);
+						$("#finance_bc").empty().append(result);
                     }
 
 				});
-				}else{
-					$("#finance_bc").html('');
-					
-				}				
+				}
+				if($("#role").val()=='4'){
 				
+				 $.ajax({
+                    url:'<?=base_url();?>login/finance_bc',
+                    type:'POST',
+					data: {"id": $("#role").val()},
+					dataType:'html',
+
+                    success:function(result){
+						$("#finance_bc").empty().append(result);
+                    }
+
+				});
+				}
+				if($("#role").val()=='5'){
+				
+				 $.ajax({
+                    url:'<?=base_url();?>login/finance_bc',
+                    type:'POST',
+					data: {"id": $("#role").val()},
+					dataType:'html',
+
+                    success:function(result){
+						$("#finance_bc").empty().append(result);
+                    }
+
+				});
+				}
+				if($("#role").val()=='6'){
+					
+					$("#finance_bc_branch").empty();	
+				
+				 $.ajax({
+                    url:'<?=base_url();?>login/finance_bc_mul',
+                    type:'POST',
+					data: {"id": $("#role").val()},
+					dataType:'html',
+
+                    success:function(result){
+						$("#finance_bc").empty().append(result);
+                    }
+
+				});
+				}
+				else{
+					
+					$("#finance_bc").empty();	
+
+				}				
 			})
+			
+
 	
 	
 	
 	
   });
+  
+ 
      $("#form1").submit(function(event){
             event.preventDefault();
 			$("#loader").html('');

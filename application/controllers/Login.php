@@ -81,7 +81,7 @@ class Login extends CI_Controller {
 	//	print_r($role_master);
 		
 		$str = " <div class='form-group'>
-	 <label for='firstname'>Finance BC:</label><select class='form-control selcls' name='finance_bc' id='finance_bc' required>
+	 <label for='firstname'>Finance BC:</label><select onchange='bc_branch()' class='form-control selcls' name='finance_bc_b' id='finance_bc_b' required>
 <option value=''>--select---</option>";
 		for($i=0;$i<count($finance_bc);$i++){
 			
@@ -92,4 +92,43 @@ class Login extends CI_Controller {
 		
 		echo $str;
 	}
+	public function finance_bc_mul(){
+		
+		$this->load->model('login_model');
+		$finance_bc = $this->login_model->finance_bc();
+	//	echo "<pre>";
+	//	print_r($role_master);
+		
+		$str = " <div class='form-group'>
+	 <label for='firstname'>Finance BC:</label><select multiple  class='form-control selcls' name='rso_bc_ids' id='rso_bc_ids' required>
+<option value=''>--select---</option>";
+		for($i=0;$i<count($finance_bc);$i++){
+			
+			$str .= "<option value='".$finance_bc[$i]['id']."'>".$finance_bc[$i]['name']."</option>";
+		}
+		
+		$str .="</select></div>";
+		
+		echo $str;
+	}
+		public function bc_branch_master(){
+		
+		$this->load->model('login_model');
+		$bc_branch_master = $this->login_model->bc_branch_master();
+	//	echo "<pre>";
+	//	print_r($role_master);
+		
+		$str = " <div class='form-group'>
+	 <label for='firstname'>Finance BC Branch:</label><select  class='form-control selcls' name='finance_bc_branch' id='finance_bc_branch' required>
+<option value=''>--select---</option>";
+		for($i=0;$i<count($bc_branch_master);$i++){
+			
+			$str .= "<option value='".$bc_branch_master[$i]['branch_code']."'>".$bc_branch_master[$i]['branch_name']."</option>";
+		}
+		
+		$str .="</select></div>";
+		
+		echo $str;
+	}
+
 }
