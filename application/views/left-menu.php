@@ -1,5 +1,5 @@
 <?php
-$session = $this->session->userdata('MY_SESS');
+$session = $this->session->userdata('MY_SESS2');
 ?>  
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
@@ -38,7 +38,7 @@ $session = $this->session->userdata('MY_SESS');
 <li class="treeview">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
-            <span>Config</span>
+            <span>Config  <?php //print_r( $session['data'][0]['role']); echo "</pre>"; ?></span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
