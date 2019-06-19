@@ -100,7 +100,7 @@ class Login extends CI_Controller {
 	//	print_r($role_master);
 		
 		$str = " <div class='form-group'>
-	 <label for='firstname'>Finance BC:</label><select multiple  class='form-control selcls' name='rso_bc_ids' id='rso_bc_ids' required>
+	 <label for='firstname'>Finance BC:</label><select multiple  class='form-control selcls' name='rso_bc_ids[]' id='rso_bc_ids' required>
 <option value=''>--select---</option>";
 		for($i=0;$i<count($finance_bc);$i++){
 			

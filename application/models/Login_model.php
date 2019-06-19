@@ -89,6 +89,11 @@
 			
 			$postData = $this->input->post();
 			
+			
+			//echo "<pre>";
+			//echo 
+			//print_r($postData['rso_bc_ids']);
+			//echo "</pre>";
 			$insertData = array('userName' => $postData['userName'],
 								'passWord' => MD5($postData['passWord']),
 								'firstname'=> $postData['firstname'],
@@ -96,16 +101,17 @@
 								'dob' => $postData['dob'],
 								'email' => $postData['email'],
 								'mobile' => $postData['mobile'],
-								'bc_id' => $postData['role'],
-								'branch_id' => $postData['finance_bc'],
-								'rso_bc_ids' => $postData['rso_bc_ids'],
-								'bc_id' => $postData['finance_bc_b'],
+								'role' => (empty($postData['role']) ? '' : $postData['role']),
+								'branch_id' => (empty($postData['finance_bc_branch']) ? '' : $postData['finance_bc_branch']),
+								'rso_bc_ids' => (empty($postData['rso_bc_ids']) ? '' : implode(',',$postData['rso_bc_ids'])) ,
+								'bc_id' => (empty($postData['finance_bc_b']) ? '' : $postData['finance_bc_b']),
 							
 								'gender'=> $postData['gender']);
 			
-		return	$this->db->insert('users',$insertData);
+			return $this->db->insert('users',$insertData);
 			
 		//	echo $str = $this->db->last_query();
+			
 		}
 		public function role_master(){
 			

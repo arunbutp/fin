@@ -349,8 +349,8 @@ function bc_branch(){
 		
 		$("#form2").submit(function(event){
             event.preventDefault();
-			$("#loader").html('');
-			$("#error").html('');
+			$("#loader2").html('');
+			$("#registererror").html('');
 			$("#loader2").html('<img src="<?=base_url();?>assets/dist/img/ajax-loader.gif"/> Processing...');
 //alert();
             $.ajax({
@@ -368,7 +368,7 @@ function bc_branch(){
 					  // location.href= '<?=base_url();?>'+result.redirect_menu;
 					}else{
 						$("#loader2").html(result.status_msg);
-						$("#registererror").html("Please Use Correct Username Password");
+						$("#registererror").html("");
 					}
                     }
 
