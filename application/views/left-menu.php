@@ -29,14 +29,14 @@ $session = $this->session->userdata('MY_SESS2');
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"><!--MAIN Navigation--></li>
-        <li>
-          <a href="<?=base_url();?>/home">
+        <li class='<?php echo ($this->router->fetch_method()=='index' ? 'active' : ''); ?>'>
+          <a href="<?=base_url();?>home">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           
           </a>
         </li>
 		<?php if($session['data'][0]['role']==1 || $session['data'][0]['role']==2){ ?>
-        <li class="treeview">
+        <li class="treeview open">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Config  <?php //print_r( $session['data'][0]['role']); echo "</pre>"; ?></span>
@@ -45,16 +45,11 @@ $session = $this->session->userdata('MY_SESS2');
             </span>
           </a>
           <ul class="treeview-menu" style="display: none;">
-<<<<<<< HEAD
-            <li><a href="<?=base_url();?>/home/finance_master"><i class="fa fa-circle-o"></i> Finance Master</a></li>
-            <li><a href="<?=base_url();?>/home/finance_bc"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
-            <li><a href="<?=base_url();?>/home/flot"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="<?=base_url();?>/home/inline_charts"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-=======
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Finance Master</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Finance Bc Master</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Finance Bc Branch Master</a></li>
->>>>>>> a95ce47e1e80b9140a182c7cfcfb7841483d1948
+
+            <li class='<?php echo ($this->router->fetch_method()=='finance_master' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_master"><i class="fa fa-circle-o"></i> Finance Master</a></li>
+            <li class='<?php echo ($this->router->fetch_method()=='finance_bc' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_bc"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
+            <li class='<?php echo ($this->router->fetch_method()=='finance_bc_branch' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_bc_branch"><i class="fa fa-circle-o"></i> Finance BC Branch</a></li>
+
           </ul>
         </li>
 		<?php } ?>

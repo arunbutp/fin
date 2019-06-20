@@ -33,8 +33,9 @@ $this->load->view('left-menu');
         
                 <th></th>
                 <th>ID</th>
-                <th>Finance Name</th>
-                <th>Status</th>
+                <th>BC ID</th>
+                <th>Branch Code</th>
+                <th>Branch Name</th>
                 
             </tr>
         </thead>
@@ -84,7 +85,7 @@ $this->load->view('footer');
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/editor.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/resources/syntax/shCore.css">
-
+	
 	<style type="text/css" class="init">
 	
 	</style>
@@ -104,17 +105,22 @@ var editor; // use a global for the submit and return data rendering in the exam
 
 $(document).ready(function() {
 	editor = new $.fn.dataTable.Editor( {
-		ajax: "<?=base_url();?>home/finance_master_show",
+		ajax: "<?=base_url();?>home/finance_bc_branch_show",
 		table: "#example",
 		idSrc:  'id',
 		fields: [ 
 			{
-				label: "Finance Name:",
-				name: "finance_name"
+				label: "BC ID:",
+				name: "bc_id",
+				type: "select"
 			},
 			{
-				label: "Status:",
-				name: "status"
+				label: "Branch Code:",
+				name: "branch_code"
+			},
+			{
+				label: "Branch Name:",
+				name: "branch_name"
 			}
 		]
 	} );
@@ -128,7 +134,7 @@ $(document).ready(function() {
 
 	$('#example').DataTable( {
 		dom: "Bfrtip",
-		ajax: "<?=base_url();?>home/finance_master_show",
+		ajax: "<?=base_url();?>home/finance_bc_branch_show",
 		columns: [
 			{
 				data: null,
@@ -137,8 +143,10 @@ $(document).ready(function() {
 				orderable: false
 			},
 			{ data: "id" },
-			{ data: "finance_name" },
-			{ data: "status" }
+			{ data: "bc_id" , editField: "users.site"},
+			
+			{ data: "branch_code" },
+			{ data: "branch_name" }
 		],
 		order: [ 1, 'asc' ],
 		select: {
@@ -159,7 +167,6 @@ $(document).ready(function() {
 			
 			
 			var table = $('#example').DataTable();
-
 			table.clear().draw();
 			table.ajax.reload();
 		}

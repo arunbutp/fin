@@ -103,4 +103,193 @@
 			
 			
 		}
+		public function finance_master_show(){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			
+			$SQL = "SELECT * from finance_master";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+		}
+		public function finance_master_edit($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			$id = array_keys($data['data']);
+			
+			$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL = "UPDATE finance_master SET finance_name='".$data['data'][$pure_id]['finance_name']."' WHERE id='".$id[0]."'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function finance_master_create($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			// $id = array_keys($data['data']);
+			
+		//	$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL =  "INSERT INTO finance_master (finance_name, status) VALUES ('".$data['data'][0]['finance_name']."', '".$data['data'][0]['status']."')";
+		
+		
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function finance_bc_show(){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			
+			$SQL = "SELECT * from finance_bc_master";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+		}
+			public function finance_bc_edit($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			$id = array_keys($data['data']);
+			
+			$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL = "UPDATE finance_bc_master SET name='".$data['data'][$pure_id]['name']."' WHERE id='".$id[0]."'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function finance_bc_create($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			// $id = array_keys($data['data']);
+			
+		//	$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL =  "INSERT INTO finance_bc_master (name, description) VALUES ('".$data['data'][0]['name']."', '".$data['data'][0]['description']."')";
+		
+		
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function finance_bc_branch_show(){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			
+			$SQL = "SELECT * from finance_bc_branch_master";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+		}
+			public function finance_bc_branch_edit($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			$id = array_keys($data['data']);
+			
+			$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL = "UPDATE finance_bc_branch_master SET bc_id='".$data['data'][$pure_id]['bc_id']."',branch_code='".$data['data'][$pure_id]['branch_code']."',branch_name='".$data['data'][$pure_id]['branch_name']."',  WHERE id='".$id[0]."'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function finance_bc_branch_create($data){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			//echo "<pre>";
+			//print_r($data);
+			
+			// $id = array_keys($data['data']);
+			
+		//	$pure_id = $id[0];
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL =  "INSERT INTO finance_bc_branch_master (bc_id, branch_code, branch_name) VALUES ('".$data['data'][0]['bc_id']."', '".$data['data'][0]['branch_code']."', '".$data['data'][0]['branch_name']."')";
+		
+		
+			
+			$query = $this->db->query($SQL);
+
+			return $query;
+			
+			
+		}
+		public function under_process(){
+			
+			$session = $this->session->userdata('MY_SESS2');
+			
+			$start = $this->input->post('start');
+			$limit = $this->input->post('length');
+			
+			if($limit!='' && $start!=''){
+				//$this->db->limit($limit, $start);
+				
+				$limit_rows = "LIMIT $start,$limit";
+			}
+			
+			$SQL = "SELECT lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
+IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') AS cas_id,
+ IF(lp.case_id IS NULL,'','') AS cas_id_empty,IFNULL(lp.discrepancy_comment,'') AS discrepancy_comment,
+ IFNULL(lp.case_id,'') AS case_id,lp.id AS lead_id,fb.finance_name 
+ AS bc_name FROM orderlead_info AS lp  
+ LEFT JOIN finance_bc_branch_master AS jd ON jd.branch_code = lp.branch_code 
+ LEFT JOIN finance_master AS fb ON fb.id = jd.bc_id
+ WHERE (lp.lead_type = 1) AND (lp.username = 'bcarunbutp' OR lp.rso_username = 'bcarunbutp' OR 
+ lp.branch_code = '01001,01002') AND (lp.status = 'Under Process') ORDER BY id DESC $limit_rows";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+		}
 	}

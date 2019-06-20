@@ -43,7 +43,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="<?=base_url();?>/home/total_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/total_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -61,7 +61,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?=base_url();?>/home/other_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/other_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -91,7 +91,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?=base_url();?>/home/loan_eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/loan_eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -111,7 +111,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="<?=base_url();?>/home/discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -126,7 +126,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?=base_url();?>/home/sanctioned" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/sanctioned" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -141,7 +141,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="<?=base_url();?>/home/pending_order" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/pending_order" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -156,7 +156,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?=base_url();?>/home/disbursement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/disbursement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -176,7 +176,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?=base_url();?>/home/dispursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/dispursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -191,7 +191,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?=base_url();?>/home/rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 	  </div>

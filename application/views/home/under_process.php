@@ -8,12 +8,12 @@ $this->load->view('left-menu');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales Target
+        Under Process
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sales Target</li>
+        <li class="active">Under Process</li>
       </ol>
     </section>
 
@@ -33,8 +33,13 @@ $this->load->view('left-menu');
         
                 <th></th>
                 <th>ID</th>
-                <th>Finance Name</th>
-                <th>Status</th>
+                <th>Customer Name</th>
+                <th>Location Name</th>
+                <th>City</th>
+                <th>District</th>
+                <th>State</th>
+                <th>Item Code</th>
+                <th>Settings</th>
                 
             </tr>
         </thead>
@@ -104,17 +109,17 @@ var editor; // use a global for the submit and return data rendering in the exam
 
 $(document).ready(function() {
 	editor = new $.fn.dataTable.Editor( {
-		ajax: "<?=base_url();?>home/finance_master_show",
+		ajax: "<?=base_url();?>home/under_process_json",
 		table: "#example",
 		idSrc:  'id',
 		fields: [ 
 			{
-				label: "Finance Name:",
-				name: "finance_name"
+				label: "Location Name:",
+				name: "location_name"
 			},
 			{
-				label: "Status:",
-				name: "status"
+				label: "Lead ID:",
+				name: "lead_id"
 			}
 		]
 	} );
@@ -128,7 +133,14 @@ $(document).ready(function() {
 
 	$('#example').DataTable( {
 		dom: "Bfrtip",
-		ajax: "<?=base_url();?>home/finance_master_show",
+		
+		 "processing": true,
+        "serverSide": true,
+		"searching": false,
+        "ajax": {
+			'type': 'POST',
+			'url': "<?=base_url();?>home/under_process_json"
+				},
 		columns: [
 			{
 				data: null,
@@ -136,9 +148,14 @@ $(document).ready(function() {
 				className: 'select-checkbox',
 				orderable: false
 			},
-			{ data: "id" },
-			{ data: "finance_name" },
-			{ data: "status" }
+			{ data: "lead_id" },
+			{ data: "applicant_name" },
+			{ data: "location_name" },
+			{ data: "city" },
+			{ data: "district" },
+			{ data: "state" },
+			{ data: "item_code" },
+			{ data: "settings" }
 		],
 		order: [ 1, 'asc' ],
 		select: {
@@ -146,8 +163,8 @@ $(document).ready(function() {
 			selector: 'td:first-child'
 		},
 		buttons: [
-			{ extend: "create", editor: editor },
-			{ extend: "edit",   editor: editor }/* ,
+			/*{ extend: "create", editor: editor },
+			{ extend: "edit",   editor: editor } ,
 			{ extend: "remove", editor: editor } */
 		]
 	} );
@@ -167,7 +184,13 @@ $(document).ready(function() {
 
 } );
 
-
+function settings(){
+	
+	//alert()
+	window.location.href='<?=base_url();?>home/settings';
+	
+	
+}
 
 	</script>
 </body>
