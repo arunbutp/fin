@@ -2,7 +2,13 @@
 $this->load->view('header');
 $this->load->view('left-menu');
 ?>
-	
+<style>
+.custom {
+   // width: 78px !important;
+   margin:0px 5px;
+   width:23%;
+}
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -93,7 +99,7 @@ $this->load->view('left-menu');
 		  <div class="col-md-4">
               <div class="form-group">
 			  <label for="comment">Permanent Address:</label>
-			  <textarea class="form-control" rows="2" id="comment"></textarea>
+			  <textarea class="form-control" rows="1" id="comment"></textarea>
 			</div>
             </div>
 			
@@ -131,7 +137,7 @@ $this->load->view('left-menu');
 		  <div class="col-md-4">
               <div class="form-group">
 			  <label for="comment">Shipping Address:</label>
-			  <textarea class="form-control" rows="2" id="comment"></textarea>
+			  <textarea class="form-control" rows="1" id="comment"></textarea>
 			</div>
             </div>
 			
@@ -213,11 +219,11 @@ $this->load->view('left-menu');
 		  <div class="row">
 		  <div class="col-md-12">
 		  <div class="form-group">
-			<div class="btn-group btn-group-justified">
-			  <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span> Update</a>
-			  <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-transfer"></span> Discrepency</a>
-			  <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-share-alt"></span> Reject</a>
-			  <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Un Assign</a>
+			<div class=" ">
+			  <button type="button"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
+			  <button type="button" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
+			  <button type="button" class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
+			  <button type="button" class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
 			</div>		
 		  </div>
 		  </div>

@@ -8,12 +8,13 @@ $this->load->view('left-menu');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales Target
+        Finance Master
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sales Target</li>
+        <li class="">Config</li>
+        <li class="active">Finance Master</li>
       </ol>
     </section>
 

@@ -8,12 +8,13 @@ $this->load->view('left-menu');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales Target
+        Finance BC
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sales Target</li>
+        <li class="active">Config</li>
+        <li class="active">Finance BC</li>
       </ol>
     </section>
 
@@ -26,8 +27,9 @@ $this->load->view('left-menu');
 			 
 			 
 			 
-			 
+		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
+	
         <thead>
             <tr>
         
@@ -127,7 +129,7 @@ $(document).ready(function() {
 	} ); */
 
 	$('#example').DataTable( {
-		dom: "Bfrtip",
+		"dom": '<"toolbar">frtip',
 		ajax: "<?=base_url();?>home/finance_bc_show",
 		columns: [
 			{
@@ -149,9 +151,10 @@ $(document).ready(function() {
 			{ extend: "create", editor: editor },
 			{ extend: "edit",   editor: editor }/* ,
 			{ extend: "remove", editor: editor } */
-		]
+		],
+		"dom": '<"toolbar">frtip'
 	} );
-	
+	$("div.toolbar").html('<button type="button" id="any_button">Click Me!</button>');
 	
 	$(document).on("click","button",function() {
        

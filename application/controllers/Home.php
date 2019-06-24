@@ -176,7 +176,7 @@ class Home extends CI_Controller {
 			 $this->home_model->finance_bc_branch_edit($postData);
 			 $data = $this->home_model->finance_bc_branch_show();
 		for($i=0;$i<count($data);$i++){
-			$arr[] = array('id'=> $data[$i]['branch_auto_id'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
+			$arr[] = array('id'=> $data[$i]['branch_auto_id'] ,'bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
 			
 		}
 		
@@ -188,7 +188,7 @@ class Home extends CI_Controller {
 			 $this->home_model->finance_bc_branch_create($postData);
 			 $data = $this->home_model->finance_bc_branch_show();
 		for($i=0;$i<count($data);$i++){
-			$arr[] = array('id'=> $data[$i]['branch_auto_id'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
+			$arr[] = array('id'=> $data[$i]['branch_auto_id'] , 'bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
 			
 		}
 		
@@ -197,10 +197,15 @@ class Home extends CI_Controller {
 		}
 		if($postData['action'] == ''){
 		$data = $this->home_model->finance_bc_branch_show();
-		for($i=0;$i<count($data);$i++){
-			$arr[] = array('id'=> $data[$i]['branch_auto_id'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
+		 for($i=0;$i<count($data);$i++){
+			$arr[] = array('id'=> $data[$i]['branch_auto_id'] ,'bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
 			
-		}
+		} 
+		
+		/* for($i=0;$i<count($data);$i++){
+			$arr[] = array('DT_RowId'=> "row_".$data[$i]['branch_auto_id'] ,'id'=> $data[$i]['branch_auto_id'] ,'data'=> array('bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']),'opt'=> array('name'=> $data[$i]['bc_name']));
+			
+		} */
 		
 		echo '{"data":'.json_encode($arr).'}';
 		}
@@ -221,16 +226,22 @@ class Home extends CI_Controller {
 		$this->load->model('home_model');
 		$data = $this->home_model->under_process();
 		
-		for($i=0;$i<count($data);$i++){
-			$arr[] = array('lead_id'=> $data[$i]['id'] , 'location_name'=>  $data[$i]['location_name'], 'item_code'=>  $data[$i]['item_code'], 'price'=>  $data[$i]['price'], 'bc_name'=>  $data[$i]['bc_name'], 'city'=>  $data[$i]['city'], 'district'=>  $data[$i]['district'], 'state'=>  $data[$i]['cust_state'], 'applicant_name'=>  $data[$i]['applicant_name'], 'status'=>  $data[$i]['status'], 'mobile_number'=>  $data[$i]['mobile_number'], 'branch_code'=>  $data[$i]['branch_code'], 'created_at'=>  $data[$i]['created_at'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings()"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
+		for($i=0;$i<count($data['main']);$i++){
+			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings()"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
 			
 		}
 		
 				echo '{
 			    "draw": '.$_POST['draw'].',
-			    "recordsFiltered": "10",
-			    "recordsTotal": "10",
+			    "recordsFiltered": "'.$data['total'].'",
+			    "recordsTotal": "'.$data['total'].'",
 				"data":'.json_encode( $arr, JSON_NUMERIC_CHECK ).'}';
+		
+	}
+	public function register(){
+		
+	
+		$this->load->view('home/register');	
 		
 	}
 	

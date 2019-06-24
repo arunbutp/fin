@@ -101,13 +101,21 @@ $this->load->view('footer');
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/syntax/shCore.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/demo.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/editor-demo.js"></script>
+	
+
+
 <script type="text/javascript" language="javascript" class="init">
 	
 
 
 var editor; // use a global for the submit and return data rendering in the examples
 
+
 $(document).ready(function() {
+	
+	
+	
+	
 	editor = new $.fn.dataTable.Editor( {
 		ajax: "<?=base_url();?>home/under_process_json",
 		table: "#example",
@@ -182,6 +190,7 @@ $(document).ready(function() {
 		}
     });
 
+	
 } );
 
 function settings(){

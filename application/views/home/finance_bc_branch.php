@@ -8,12 +8,13 @@ $this->load->view('left-menu');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales Target
+        Finance BC Branch
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sales Target</li>
+        <li class="">Config</li>
+        <li class="active">Finance BC Branch</li>
       </ol>
     </section>
 
@@ -33,7 +34,7 @@ $this->load->view('left-menu');
         
                 <th></th>
                 <th>ID</th>
-                <th>BC ID</th>
+                <th>BC Name</th>
                 <th>Branch Code</th>
                 <th>Branch Name</th>
                 
@@ -111,7 +112,7 @@ $(document).ready(function() {
 		fields: [ 
 			{
 				label: "BC ID:",
-				name: "bc_id",
+				name: "bc_name",
 				type: "select"
 			},
 			{
@@ -143,7 +144,7 @@ $(document).ready(function() {
 				orderable: false
 			},
 			{ data: "id" },
-			{ data: "bc_id" , editField: "users.site"},
+			{ data: "bc_name" , editField: "bc_name"},
 			
 			{ data: "branch_code" },
 			{ data: "branch_name" }

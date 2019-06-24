@@ -215,7 +215,7 @@
 			
 			$session = $this->session->userdata('MY_SESS2');
 			
-			$SQL = "SELECT * from finance_bc_branch_master";
+			$SQL = " SELECT t2.name as bc_name,t1.* FROM finance_bc_branch_master AS t1 LEFT JOIN finance_bc_master AS t2 ON t1.bc_id = t2.id";
 			
 			$query = $this->db->query($SQL);
 
@@ -278,7 +278,7 @@
 				$limit_rows = "LIMIT $start,$limit";
 			}
 			
-			$SQL = "SELECT lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
+			$SQL = "SELECT SQL_CALC_FOUND_ROWS lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
 IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') AS cas_id,
  IF(lp.case_id IS NULL,'','') AS cas_id_empty,IFNULL(lp.discrepancy_comment,'') AS discrepancy_comment,
  IFNULL(lp.case_id,'') AS case_id,lp.id AS lead_id,fb.finance_name 
@@ -289,7 +289,17 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
  lp.branch_code = '01001,01002') AND (lp.status = 'Under Process') ORDER BY id DESC $limit_rows";
 			
 			$query = $this->db->query($SQL);
+			
+			$data['main'] = $query->result_array();
+			
+				$total = 0;
+				if(!empty($data['main'])) { 
+				$sql2 = "SELECT FOUND_ROWS() as total"; 
+				$query1 = $this->db->query($sql2); 
+				$row = $query1->row(); 
+				$data['total'] = $row->total; // suppose you get total as 150 
+				}
 
-			return $query->result_array();
+			return $data;
 		}
 	}

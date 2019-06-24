@@ -35,8 +35,19 @@ $session = $this->session->userdata('MY_SESS2');
           
           </a>
         </li>
-		<?php if($session['data'][0]['role']==1 || $session['data'][0]['role']==2){ ?>
-        <li class="treeview open">
+		<?php if($session['data'][0]['role']==1 || $session['data'][0]['role']==2){ 
+		
+		$config_menus = array("finance_master", "finance_bc", "finance_bc_branch", "register");
+		if (in_array($this->router->fetch_method(), $config_menus)){
+			
+			$active = "active menu-open";
+		}
+		
+		?>
+		
+		
+		
+        <li class="treeview <?=$active?>">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Config  <?php //print_r( $session['data'][0]['role']); echo "</pre>"; ?></span>
@@ -44,11 +55,13 @@ $session = $this->session->userdata('MY_SESS2');
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu" style="display: none;">
+          <ul class="treeview-menu" >
 
-            <li class='<?php echo ($this->router->fetch_method()=='finance_master' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_master"><i class="fa fa-circle-o"></i> Finance Master</a></li>
-            <li class='<?php echo ($this->router->fetch_method()=='finance_bc' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_bc"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
-            <li class='<?php echo ($this->router->fetch_method()=='finance_bc_branch' ? 'active' : ''); ?>'><a href="<?=base_url();?>/home/finance_bc_branch"><i class="fa fa-circle-o"></i> Finance BC Branch</a></li>
+            <li class='<?php echo ($this->router->fetch_method()=='finance_master' ? 'active' : ''); ?>'><a href="<?=base_url();?>home/finance_master"><i class="fa fa-circle-o"></i> Finance Master</a></li>
+            <li class='<?php echo ($this->router->fetch_method()=='finance_bc' ? 'active' : ''); ?>'><a href="<?=base_url();?>home/finance_bc"><i class="fa fa-circle-o"></i> Finance Bc</a></li>
+            <li class='<?php echo ($this->router->fetch_method()=='finance_bc_branch' ? 'active' : ''); ?>'><a href="<?=base_url();?>home/finance_bc_branch"><i class="fa fa-circle-o"></i> Finance BC Branch</a></li>
+			
+			<li class='<?php echo ($this->router->fetch_method()=='register' ? 'active' : ''); ?>'><a href="<?=base_url();?>home/register"><i class="fa fa-circle-o"></i> User Management</a></li>
 
           </ul>
         </li>

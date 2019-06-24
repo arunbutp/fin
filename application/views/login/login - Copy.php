@@ -59,7 +59,7 @@
 
    
     <!-- /.social-auth-links -->
- <!--<a href="#" id="registerclick" class="text-center">Register a new membership</a>-->
+ <a href="#" id="registerclick" class="text-center">Register a new membership</a>
    
   </div>
   <!-- /.login-box-body -->
