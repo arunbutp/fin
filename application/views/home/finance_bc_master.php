@@ -206,7 +206,7 @@ $(document).ready(function() {
 		],
 		"dom": '<"toolbar">frtip'
 	} );
-	$("div.toolbar").html('<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Import Template </button><button style="margin-left:10px;" id="export_csv" onclick="exportCSV();" type="button" class="btn btn-primary" > Export Template </button>');
+	$("div.toolbar").html('<button  type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal"> Import Template </button><button  style="margin:0px 10px;" id="export_csv" onclick="exportCSV();" type="button" class="btn btn-success pull-right" > Export Template </button>');
 	
 	$(document).on("click","button",function() {
        

@@ -45,4 +45,16 @@
 
 			return $query->result_array();
 		}
+		public function get_field_officers($branch_ids){
+			
+			$branch_id = implode(',',$branch_ids);
+			
+		
+
+			$SQL = "SELECT DISTINCT email,mobile,userName,firstname,lastname,branch_id FROM users WHERE branch_id IN ($branch_id)";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+		}
 	}

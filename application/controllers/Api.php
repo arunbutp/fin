@@ -28,6 +28,7 @@ class Api extends CI_Controller {
 			
 			$rso_names = array();
 			$branch = array();
+			$branch_ids=array();
 			
 			if($data[0]['role']== 6){
 				
@@ -63,8 +64,21 @@ class Api extends CI_Controller {
 										"branch_name"	=> $finance_bc_branch[$p]['branch_name']
 					);
 					
+					$branch_ids[] = $finance_bc_branch[$p]['branch_code'];
 					
-				} 
+					
+				}
+				$get_field_officers = $this->api_model->get_field_officers($branch_ids);
+
+				for($q=0;$q<count($get_field_officers);$q++){	
+				
+						$fieldofficers[]= array("branch"=> $get_field_officers[$q]['branch_id'],
+											"store_id"=> 27,
+											"username"=> $get_field_officers[$q]['userName'],
+											"customer_name"=> $get_field_officers[$q]['firstname']
+											);
+
+				}				
 				
 				
 				
@@ -92,6 +106,7 @@ class Api extends CI_Controller {
 						"mobile"		=> null,
 						"finance_branches"=> $rso_names,
 						"branches"		=> $branch,
+						"fieldofficers"	=> $fieldofficers,
 						"boonboxlite"	=>"No",
 						"scheme"		=>"No",
 						"location"		=>"No",

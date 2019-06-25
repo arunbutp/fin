@@ -29,7 +29,7 @@ $(function () {
      * @type Array
      */
     var mySkins = [
-        'skin-blue'/*,
+        /*'skin-blue',
         'skin-black',
         'skin-red',
         'skin-yellow',
@@ -39,8 +39,8 @@ $(function () {
         'skin-black-light',
         'skin-red-light',
         'skin-yellow-light',
-        'skin-purple-light',
-        'skin-green-light'*/
+        'skin-purple-light','*/
+        'skin-green-light'
     ]
 
     /**
