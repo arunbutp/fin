@@ -20,6 +20,8 @@ class Api extends CI_Controller {
 		
 		$this->load->model('api_model');
 		$data = $this->api_model->chk_login();
+		$uname = $this->input->get_post('uname');
+		$pwd = $this->input->get_post('pwd');
 		//$this->load->view('home/home',$data);
 		
 		//for($i=0;$i<count($data);$i++){
@@ -37,10 +39,10 @@ class Api extends CI_Controller {
 				for($m=0;$m<count($rso_ids);$m++){
 					
 					
-					$rso_names[] = array("id"  			=> $rso_ids[$m]['id'],
+					$rso_names[] = array(/* "id"  			=> $rso_ids[$m]['id'], */
 										
-										$m +1			=> $rso_ids[$m]['name'],
-										"description"	=> $rso_ids[$m]['description']
+										$m +1			=> $rso_ids[$m]['name']/* ,
+										"description"	=> $rso_ids[$m]['description'] */
 					);
 					
 					$rso_individual_id[] =  $rso_ids[$m]['id']; 
@@ -75,6 +77,8 @@ class Api extends CI_Controller {
 						"lastname"		=>$data[0]['firstname'],
 						"email"			=>$data[0]['email'],
 						"birthdate" 	=> '',
+						"username" 	=> $uname,
+						"password" 	=> $pwd,
 						"store_id" 		=> 60,
 						"group_id"		=> 0,
 						"couponcode"	=> '',

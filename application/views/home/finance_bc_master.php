@@ -26,7 +26,7 @@ $this->load->view('left-menu');
 			 style=" position:relative; display:block; width: 100%">
 			 
 			 
-			 
+	 
 		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
 	
@@ -80,6 +80,28 @@ $this->load->view('footer');
 <!-- page script -->
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <form id="uploadform" method="post" enctype="multipart/form-data">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">File Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="file" id="file" accept=".csv"  name="myFile">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="upload" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+	</form>
+  </div>
+</div>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
@@ -103,8 +125,38 @@ $this->load->view('footer');
 
 
 var editor; // use a global for the submit and return data rendering in the examples
-
+function exportCSV(){
+		
+		//alert()
+		
+		window.location.href = "<?=base_url();?>assets/finance_bc.csv"
+		
+		
+}
 $(document).ready(function() {
+ //form Submit
+   $("#uploadform").submit(function(evt){	 
+      evt.preventDefault();
+      var formData = new FormData($(this)[0]);
+   $.ajax({
+       url: "<?=base_url();?>home/finance_bc_upload",
+       type: 'POST',
+       data: formData,
+       async: false,
+       cache: false,
+       contentType: false,
+       enctype: 'multipart/form-data',
+       processData: false,
+       success: function (response) {
+         alert(response);
+       }
+   });
+   return false;
+ });
+
+	
+	
+	
 	editor = new $.fn.dataTable.Editor( {
 		ajax: "<?=base_url();?>home/finance_bc_show",
 		table: "#example",
@@ -154,7 +206,7 @@ $(document).ready(function() {
 		],
 		"dom": '<"toolbar">frtip'
 	} );
-	$("div.toolbar").html('<button type="button" id="any_button">Click Me!</button>');
+	$("div.toolbar").html('<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Import Template </button><button style="margin-left:10px;" id="export_csv" onclick="exportCSV();" type="button" class="btn btn-primary" > Export Template </button>');
 	
 	$(document).on("click","button",function() {
        

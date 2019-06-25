@@ -302,4 +302,24 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 
 			return $data;
 		}
+		public function chk_bc_branch($arr){
+			
+			
+			$SQL = "SELECT * FROM `finance_bc_master` where name='".$arr[0]."'";
+		   
+		   
+		   $query = $this->db->query($SQL);
+		   
+		   $result = $query->result_array();
+		   
+		   
+		   if(!$result){
+
+		   
+			$SQL = "INSERT INTO finance_bc_master (name,description) VALUES ('".$arr[0]."','".$arr[1]."')";
+
+			$query = $this->db->query($SQL);
+			
+		   }
+		}
 	}

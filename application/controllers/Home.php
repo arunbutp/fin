@@ -5,6 +5,7 @@ class Home extends CI_Controller {
 
 	public function __construct(){
 		error_reporting(0);
+		//$this->load->helper(array('form', 'url'));
 		parent::__construct();
 		//$this->load->model('admin/report_model', 'report_model');
 		$session = $this->session->userdata('MY_SESS2');
@@ -243,6 +244,49 @@ class Home extends CI_Controller {
 	
 		$this->load->view('home/register');	
 		
+	}
+	public function finance_bc_upload(){
+		
+		$csv = $_FILES['myFile']['name'];
+	//	echo $csv;
+		
+		$file = $_FILES['myFile']['tmp_name'];
+		$handle = fopen($file, "r");
+			
+			
+		//echo "<pre>";
+		//print_r($_FILES);
+		
+		$this->load->model('home_model');
+
+			$i=0;
+			while (($row = fgetcsv($handle, 10000, ",")) != FALSE) 
+			{
+				if($i == 0){
+					
+					
+					//echo "<pre>";
+					//print_r($row);
+					
+					if($row[0] != 'name' || $row[1] != 'description'){
+						
+						//echo 'dss';
+						
+						echo "Template Error";
+						exit;
+					}
+				}
+				else{
+				
+				 $this->home_model->chk_bc_branch($row);
+				}
+				
+
+			  $i++;
+
+
+			}
+			echo "File Uploaded";
 	}
 	
 }
