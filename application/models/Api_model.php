@@ -51,7 +51,7 @@
 			
 		
 
-			$SQL = "SELECT DISTINCT email,mobile,userName,firstname,lastname,branch_id FROM users WHERE branch_id IN ($branch_id)";
+			$SQL = "SELECT DISTINCT dob,email,mobile,userName,firstname,lastname,branch_id FROM users WHERE branch_id IN ($branch_id)";
 			
 			$query = $this->db->query($SQL);
 

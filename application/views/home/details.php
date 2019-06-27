@@ -18,44 +18,82 @@ $this->load->view('left-menu');
     </section>
 
     <!-- Main content -->
+     <!-- Main content -->
     <section class="content">
-		<div class="row">
-		<div class="box box-danger" style="padding:10px 5px; height:100%;">
-			<div class="box-header with-border" id="Container"
-			 style=" position:relative; display:block; width: 100%">
-			 
-			 
-			 
-			 
-	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
-        <thead>
-            <tr>
-        
-                <th></th>
-                <th>ID</th>
-                <th>Customer Name</th>
-                <th>Location Name</th>
-                <th>City</th>
-                <th>District</th>
-                <th>State</th>
-                <th>Item Code</th>
-                <th>Settings</th>
-                
-            </tr>
-        </thead>
-    </table>
-			  
-			  
-			  
-			  
-			</div>
-			</div>
-		</div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-success">
+            <div class="box-header">
+            <!--  <h3 class="box-title">Hover Data Table</h3>-->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body"><!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-success pull-right" style="margin:0px 0px 5px 0px" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>
+              <table id="example" class="table table-bordered table-hover">
+
+				<thead>
+					<tr>
+				
+						<!--<th></th>-->
+						<th>ID</th>
+						<th>Customer Name</th>
+						<th>Location Name</th>
+						<th>City</th>
+						<th>District</th>
+						<th>State</th>
+						<th>Item Code</th>
+						<th>Status</th>
+						<th>Settings</th>
+						
+					</tr>
+				</thead>
+				</table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CSV Upload</h4>
+      </div>
+      <div class="modal-body">
+				<form id="csvupload" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+				  <label for="email">File:</label>
+				   <input type="file" id="file" accept=".csv"  name="myFile">
+				</div>
+				
+				
+				<button type="submit" class="btn btn-success">Submit</button>
+			  </form>
+			  
+			  
+			  <div id="csv_status">
+			  
+			  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <?php 
 $this->load->view('footer');
 
@@ -113,11 +151,29 @@ var editor; // use a global for the submit and return data rendering in the exam
 
 $(document).ready(function() {
 	
-	
+	$("#csvupload").submit(function(evt){	 
+      evt.preventDefault();
+      var formData = new FormData($(this)[0]);
+	  $("#csv_status").html('');
+   $.ajax({
+       url: "<?=base_url();?>home/lead_csv_upload",
+       type: 'POST',
+       data: formData,
+       async: false,
+       cache: false,
+       contentType: false,
+       enctype: 'multipart/form-data',
+       processData: false,
+       success: function (response) {
+         $("#csv_status").html(response);
+       }
+   });
+   return false;
+ });
 	
 	
 	editor = new $.fn.dataTable.Editor( {
-		ajax: "<?=base_url();?>home/under_process_json",
+		ajax: "<?=base_url();?>home/under_process_json/?task=<?php echo $_GET['task']?>",
 		table: "#example",
 		idSrc:  'id',
 		fields: [ 
@@ -147,15 +203,15 @@ $(document).ready(function() {
 		"searching": false,
         "ajax": {
 			'type': 'POST',
-			'url': "<?=base_url();?>home/under_process_json"
+			'url': "<?=base_url();?>home/under_process_json?task=<?php echo $_GET['task']?>"
 				},
 		columns: [
-			{
+			/* {
 				data: null,
 				defaultContent: '',
 				className: 'select-checkbox',
 				orderable: false
-			},
+			}, */
 			{ data: "lead_id" },
 			{ data: "applicant_name" },
 			{ data: "location_name" },
@@ -163,6 +219,7 @@ $(document).ready(function() {
 			{ data: "district" },
 			{ data: "state" },
 			{ data: "item_code" },
+			{ data: "status" },
 			{ data: "settings" }
 		],
 		order: [ 1, 'asc' ],
@@ -193,10 +250,10 @@ $(document).ready(function() {
 	
 } );
 
-function settings(){
+function settings(id){
 	
 	//alert()
-	window.location.href='<?=base_url();?>home/settings';
+	window.location.href='<?=base_url();?>home/settings?id='+id;
 	
 	
 }

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller {
 
 	public function __construct(){
-		error_reporting(0);
+		//error_reporting(0);
 		//$this->load->helper(array('form', 'url'));
 		parent::__construct();
 		//$this->load->model('admin/report_model', 'report_model');
@@ -213,13 +213,17 @@ class Home extends CI_Controller {
 		
 		
 	}
-	public function under_process()
+	public function details()
 	{
-		$this->load->view('home/under_process');
+		$this->load->view('home/details');
 	}
 	public function settings()
 	{
-		$this->load->view('home/settings');
+		$this->load->model('home_model');
+		$data['data'] = $this->home_model->orderLeadByID();		
+		
+		
+		$this->load->view('home/settings',$data);
 	}
 	public function under_process_json(){
 		
@@ -228,7 +232,7 @@ class Home extends CI_Controller {
 		$data = $this->home_model->under_process();
 		
 		for($i=0;$i<count($data['main']);$i++){
-			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings()"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
+			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
 			
 		}
 		
@@ -287,6 +291,162 @@ class Home extends CI_Controller {
 
 			}
 			echo "File Uploaded";
+	}
+	public function case_id(){
+		
+		$this->load->model('home_model');
+		
+		$this->home_model->case_id();
+		
+		echo "Case ID Updated";
+		
+	}
+	public function submit_discrepancy(){
+		
+		$this->load->model('home_model');
+		
+		$this->home_model->submit_discrepancy();
+		
+		echo "Case ID Updated";
+		
+	}
+	public function lead_csv_upload(){
+		
+		$csv = $_FILES['myFile']['name'];
+	
+		$file = $_FILES['myFile']['tmp_name'];
+		$handle = fopen($file, "r");
+	
+		$this->load->model('home_model');
+
+			
+			while (($row = fgetcsv($handle, 10000, ",")) != FALSE) 
+			{
+				
+			$arr[]   = $row;
+
+			}
+			
+			for($i=0;$i<count($arr);$i++){
+				
+			$case_id 			=	array_search('Sr#',$arr[0]);
+			$process 			=	array_search('Process',$arr[0]);
+			$action 			=	array_search('Action',$arr[0]);
+			$status 			=	array_search('Status',$arr[0]);
+			$remarks 			=	array_search('Remarks',$arr[0]);
+			$lead_status 		=	array_search('Boonbox Lead Status',$arr[0]);
+			$order_status	 	=	array_search('Boonbox Order Status',$arr[0]);
+			
+				
+			$original_array[] = array(    'case_id'		=> $arr[$i][$case_id],
+										'process'		=> $arr[$i][$process],
+										'action'		=> $arr[$i][$action],
+										'status'		=> $arr[$i][$status],
+										'remarks'		=> $arr[$i][$remarks],
+										'lead_status'	=> $arr[$i][$lead_status],
+										'order_status'	=> $arr[$i][$order_status]
+			
+			);	
+			}
+			//echo "<pre>";
+			//print_r($original_array);
+			$str = "<table class='table table-bordered'><tr><td>ROW</td><td>Status</td></tr>";
+			for($m=0;$m<count($original_array);$m++){
+				
+				if($m != 0){
+				
+				if($original_array[$m]['case_id'] == ''){
+					
+					//echo $m . '<br/>';
+				$str .= "<tr><td>".$m."</td><td>Case ID Not Available</td></tr>";	
+					
+				}else{
+					
+				if(strlen($original_array[$m]['process']) == 0 ){
+					$cell_err[] = 'Process NA';
+					
+				} 
+				else if(strlen($original_array[$m]['action']) == 0){
+					$cell_err[] = 'Action NA';
+				
+				} 
+				else{
+					
+					//$cell_err[] = 'go';
+					
+					if(str_replace('"', '', $original_array[$m]['remarks']) == 'Cibil ok to Process'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->loan_eligible($original_array[$m]);
+						
+						
+					}
+					
+					if($original_array[$m]['process'] == 'Post Approval' && $original_array[$m]['action'] == 'Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->discrepancy_changes($original_array[$m]);
+					}
+					
+					if($original_array[$m]['process'] == 'Post Approval' && $original_array[$m]['action'] == 'SS Completed'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->sanctioned_changes($original_array[$m]);
+					}
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->pending_changes($original_array[$m]);
+					}
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disbursement_changes($original_array[$m]);
+					}
+					if($original_array[$m]['process'] == '' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['status'] == 'BB Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disbursement2_changes($original_array[$m]);
+					}
+					if($original_array[$m]['process'] == '' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['status'] == 'BC Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->discrepancy2_changes($original_array[$m]);
+					}
+					if($original_array[$m]['process'] == 'Hero-Ops' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['status'] == 'BC Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disbursement3_changes($original_array[$m]);
+					}
+					
+					if($original_array[$m]['process'] == 'BB Delivery Confirmation' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['status'] == ''){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disbursed_changes($original_array[$m]);
+					}
+					
+					echo 'd';
+					
+					
+					
+					
+				}
+					
+					
+					
+				
+					
+				
+				$str .= "<tr><td>".$m."</td><td>".implode(" ",$cell_err)."</td></tr>";	
+					
+				}
+				}
+				
+				unset($cell_err);
+				
+			}
+			$str .= "</table>";
+			echo $str;
 	}
 	
 }

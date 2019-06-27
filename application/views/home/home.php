@@ -43,7 +43,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-medkit"></i>
             </div>
-            <a href="<?=base_url();?>home/total_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=total_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -61,7 +61,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-male"></i>
             </div>
-            <a href="<?=base_url();?>home/other_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=other_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -76,7 +76,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-eye-disabled"></i>
             </div>
-            <a href="<?=base_url();?>/home/under_process" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Under Process" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -91,7 +91,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-briefcase"></i>
             </div>
-            <a href="<?=base_url();?>home/loan_eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=loan_eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -111,7 +111,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-shuffle"></i>
             </div>
-            <a href="<?=base_url();?>home/discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -126,7 +126,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-paper-airplane"></i>
             </div>
-            <a href="<?=base_url();?>home/sanctioned" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Sanctioned" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -141,7 +141,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-ios-checkmark-outline"></i>
             </div>
-            <a href="<?=base_url();?>home/pending_order" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=pending_order" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -156,7 +156,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-loop"></i>
             </div>
-            <a href="<?=base_url();?>home/disbursement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=disbursement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -176,7 +176,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?=base_url();?>home/dispursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Disbursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -191,7 +191,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-android-cancel"></i>
             </div>
-            <a href="<?=base_url();?>home/rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 	  </div>

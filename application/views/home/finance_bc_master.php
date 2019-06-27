@@ -181,7 +181,7 @@ $(document).ready(function() {
 	} ); */
 
 	$('#example').DataTable( {
-		"dom": '<"toolbar">frtip',
+		
 		ajax: "<?=base_url();?>home/finance_bc_show",
 		columns: [
 			{
@@ -204,7 +204,7 @@ $(document).ready(function() {
 			{ extend: "edit",   editor: editor }/* ,
 			{ extend: "remove", editor: editor } */
 		],
-		"dom": '<"toolbar">frtip'
+		"dom": '<"toolbar">Bfrtip'
 	} );
 	$("div.toolbar").html('<button  type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal"> Import Template </button><button  style="margin:0px 10px;" id="export_csv" onclick="exportCSV();" type="button" class="btn btn-success pull-right" > Export Template </button>');
 	

@@ -1,6 +1,10 @@
 <?php 
 $this->load->view('header');
 $this->load->view('left-menu');
+
+/* echo "<pre>";
+print_r($data);
+echo "</pre>"; */
 ?>
 <style>
 .custom {
@@ -32,8 +36,8 @@ $this->load->view('left-menu');
           <h3 class="box-title">Personal Details</h3>
 
           <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          <!--  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
           </div>
         </div>
         <!-- /.box-header -->
@@ -42,12 +46,12 @@ $this->load->view('left-menu');
             <div class="col-md-3">
               <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="<?php echo $data[0]['first_name'];?>" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="<?php echo $data[0]['last_name'];?>" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -55,12 +59,12 @@ $this->load->view('left-menu');
             <div class="col-md-3">
               <div class="form-group">
                 <label>Number of Dependants</label>
-               <input type="text" class="form-control">
+               <input type="text"  class="form-control" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Father's/ Husband's Name</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="<?php echo $data[0]['father_name'];?>" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -68,12 +72,12 @@ $this->load->view('left-menu');
 			<div class="col-md-3">
               <div class="form-group">
                 <label>Date of Birth</label>
-               <input type="text" class="form-control">
+               <input type="text" class="form-control" value="<?php echo $data[0]['date_of_birth'];?>" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Gender</label>
-               <input type="text" class="form-control">
+               <input type="text" class="form-control" value="<?php echo $data[0]['gender'];?>" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -81,12 +85,12 @@ $this->load->view('left-menu');
 			<div class="col-md-3">
               <div class="form-group">
                 <label>Mobile</label>
-               <input type="text" class="form-control">
+               <input type="text" class="form-control" value="<?php echo $data[0]['mobile_number'];?>" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Email</label>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" value="<?php echo $data[0]['email_id'];?>" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -99,41 +103,41 @@ $this->load->view('left-menu');
 		  <div class="col-md-4">
               <div class="form-group">
 			  <label for="comment">Permanent Address:</label>
-			  <textarea class="form-control" rows="1" id="comment"></textarea>
+			  <textarea class="form-control" readonly rows="1" id="comment"><?php echo $data[0]['perm_addressline1'];?></textarea>
 			</div>
             </div>
 			
 			<div class="col-md-2">
               <div class="form-group">
 			  <label for="comment"> Permanent City:</label>
-			  <input type="text" class="form-control">
+			  <input type="text" class="form-control" value="<?php echo $data[0]['perm_city'];?>" readonly>
 			</div>
             </div>
 			
 			<div class="col-md-2">
               <div class="form-group">
 			  <label for="comment">Permanent District:</label>
-			  <input type="text" class="form-control">
+			  <input type="text" class="form-control" value="<?php echo $data[0]['perm_district'];?>" readonly>
 			</div>
             </div>
 			
 			<div class="col-md-2">
               <div class="form-group">
 			  <label for="comment">Permanent State:</label>
-			  <input type="text" class="form-control">
+			  <input type="text" class="form-control" value="<?php echo $data[0]['perm_state'];?>" readonly>
 			</div>
             </div>
 			
 			<div class="col-md-2">
               <div class="form-group">
 			  <label for="comment">Permanent Pincode:</label>
-			  <input type="text" class="form-control">
+			  <input type="text" class="form-control" value="<?php echo $data[0]['perm_pincode'];?>" readonly>
 			</div>
             </div>
 			
 		  </div>
 		  
-		   <div class="row">
+		 <!--  <div class="row">
 		  <div class="col-md-4">
               <div class="form-group">
 			  <label for="comment">Shipping Address:</label>
@@ -169,7 +173,7 @@ $this->load->view('left-menu');
 			</div>
             </div>
 			
-		  </div>
+		  </div>-->
 		  
 		  <div class="row">
 		  <div class="col-md-6">
@@ -197,20 +201,20 @@ $this->load->view('left-menu');
 		<hr style="border-top: 1px dotted red;">
 
 		<div class="box-header with-border">
-          <h3 class="box-title">Documents</h3>
+          <h3 class="box-title">Case Details</h3>
         </div>
 
 		<div class="row">
 		  <div class="col-md-4">
 		  <div class="form-group">
-			  <label for="comment">Browse:</label>
-			  <input type="file" class="form-control">
+			  <label for="comment">Case ID:</label>
+			  <input type="text" value="<?php echo $data[0]['case_id'];?>" name="case_id" id="case_id" class="form-control">
 			</div>
 		  </div>
 		  <div class="col-md-8">
 		  <div class="form-group">
-			  <label for="comment">Remarks:</label>
-			   <input type="text" class="form-control">
+			  <label for="comment">Discrepancy Comment:</label>
+			   <input type="text" value="<?php echo $data[0]['discrepancy_comment'];?>" name="discrepancy_comment" id="discrepancy_comment" class="form-control">
 			</div>
 		  </div>
 		  </div>
@@ -220,10 +224,10 @@ $this->load->view('left-menu');
 		  <div class="col-md-12">
 		  <div class="form-group">
 			<div class=" ">
-			  <button type="button"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
-			  <button type="button" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
-			  <button type="button" class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
-			  <button type="button" class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
+			  <button type="button" id="update"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
+			  <button type="button" id="discrepency" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
+			  <button type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
+			  <button type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
 			</div>		
 		  </div>
 		  </div>
@@ -295,6 +299,53 @@ $this->load->view('footer');
 var editor; // use a global for the submit and return data rendering in the examples
 
 $(document).ready(function() {
+	
+	$("#update").on("click",function(){
+	//alert()	
+		
+		
+		if($("#case_id").val() == ''){
+			
+			alert("Please Enter Case ID");
+			return false;
+		}else{
+	
+		$.ajax({
+		  url: "<?=base_url();?>home/case_id",
+		  dataType:'POST',
+		  data:{id:<?php echo $_GET['id']; ?>, case_id: $("#case_id").val()},
+		  success: function(html){
+			  alert(html);
+			//$("#results").append(html);
+		  }
+		});
+		}
+		
+	});
+	
+	$("#discrepency").on("click",function(){
+	//alert()	
+		
+		
+		if($("#discrepancy_comment").val() == ''){
+			
+			alert("Please Enter Discrepancy");
+			return false;
+		}else{
+	
+		$.ajax({
+		  url: "<?=base_url();?>home/submit_discrepancy",
+		  dataType:'POST',
+		  data:{id:<?php echo $_GET['id']; ?>, discrepency: $("#discrepancy_comment").val()},
+		  success: function(html){
+			  alert(html);
+			//$("#results").append(html);
+		  }
+		});
+		}
+		
+	});
+	
 	editor = new $.fn.dataTable.Editor( {
 		ajax: "<?=base_url();?>home/under_process_json",
 		table: "#example",
