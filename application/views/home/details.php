@@ -83,7 +83,7 @@ $this->load->view('left-menu');
 			  </form>
 			  
 			  
-			  <div id="csv_status">
+			  <div id="csv_status" >
 			  
 			  </div>
       </div>
@@ -151,10 +151,12 @@ var editor; // use a global for the submit and return data rendering in the exam
 
 $(document).ready(function() {
 	
-	$("#csvupload").submit(function(evt){	 
+	$("#csvupload").submit(function(evt){
+$("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
+//alert();
       evt.preventDefault();
       var formData = new FormData($(this)[0]);
-	  $("#csv_status").html('');
+	  
    $.ajax({
        url: "<?=base_url();?>home/lead_csv_upload",
        type: 'POST',
@@ -166,6 +168,8 @@ $(document).ready(function() {
        processData: false,
        success: function (response) {
          $("#csv_status").html(response);
+		// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
+
        }
    });
    return false;

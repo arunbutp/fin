@@ -350,7 +350,7 @@ class Home extends CI_Controller {
 			}
 			//echo "<pre>";
 			//print_r($original_array);
-			$str = "<table class='table table-bordered'><tr><td>ROW</td><td>Status</td></tr>";
+			$str = "<div style='overflow-x:auto; height:300px;'><table  class='table table-bordered'><tr><td>ROW</td><td>Status</td></tr>";
 			for($m=0;$m<count($original_array);$m++){
 				
 				if($m != 0){
@@ -425,7 +425,7 @@ class Home extends CI_Controller {
 						$cell_err[] = $this->home_model->disbursed_changes($original_array[$m]);
 					}
 					
-					echo 'd';
+					//echo 'd';
 					
 					
 					
@@ -445,7 +445,7 @@ class Home extends CI_Controller {
 				unset($cell_err);
 				
 			}
-			$str .= "</table>";
+			$str .= "</div></table>";
 			echo $str;
 	}
 	

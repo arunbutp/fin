@@ -151,6 +151,17 @@ class Api extends CI_Controller {
 		
 		echo json_encode($arr);
 	}
-	
+	public function get_json(){
+		
+		$this->load->model('api_model');
+		$data = $this->api_model->get_json();
+		
+		//print_r($data[0]);
+		
+		echo json_encode($data[0]);
+		
+		
+		
+	}
 	
 }

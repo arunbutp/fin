@@ -57,4 +57,14 @@
 
 			return $query->result_array();
 		}
+		public function get_json(){
+			
+			$id = $this->input->get_post('id');
+
+			$SQL = "SELECT * FROM orderlead_info WHERE id = '$id'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+		}
 	}
