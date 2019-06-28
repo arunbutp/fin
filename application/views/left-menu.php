@@ -36,7 +36,7 @@ $session = $this->session->userdata('MY_SESS2');
           </a>
         </li>
 		<?php if($session['data'][0]['role']==1 || $session['data'][0]['role']==2){ 
-		
+		$active='';
 		$config_menus = array("finance_master", "finance_bc", "finance_bc_branch", "register");
 		if (in_array($this->router->fetch_method(), $config_menus)){
 			

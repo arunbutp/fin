@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller {
 
 	public function __construct(){
-		//error_reporting(0);
+		error_reporting(0);
 		//$this->load->helper(array('form', 'url'));
 		parent::__construct();
 		//$this->load->model('admin/report_model', 'report_model');
