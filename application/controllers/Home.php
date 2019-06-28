@@ -362,7 +362,7 @@ class Home extends CI_Controller {
 					
 				}else{
 					
-				if(strlen($original_array[$m]['process']) == 0 ){
+				/*  if(strlen($original_array[$m]['process']) == 0 ){
 					$cell_err[] = 'Process NA';
 					
 				} 
@@ -370,10 +370,28 @@ class Home extends CI_Controller {
 					$cell_err[] = 'Action NA';
 				
 				} 
-				else{
+				else{  */
 					
 					//$cell_err[] = 'go';
 					
+					
+					if($original_array[$m]['process'] == 'RCF Document Check' && $original_array[$m]['action'] == 'Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->discrepancy_first_changes($original_array[$m]);
+					}
+					
+					if($original_array[$m]['process'] == 'RCF QDE' && $original_array[$m]['action'] == '-'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->under_process_first_changes($original_array[$m]);
+					}
+					
+					if($original_array[$m]['process'] == 'RCF QDE' && $original_array[$m]['action'] == 'Discrepancy'){
+						
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->discrepancy_second_changes($original_array[$m]);
+					}
 					if(str_replace('"', '', $original_array[$m]['remarks']) == 'Cibil ok to Process'){
 						
 						$this->load->model('home_model');
@@ -393,12 +411,12 @@ class Home extends CI_Controller {
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->sanctioned_changes($original_array[$m]);
 					}
-					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed'){
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['lead_status'] == 'Pending Order Confirmation'){
 						
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->pending_changes($original_array[$m]);
 					}
-					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed'){
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['lead_status'] == 'Disbursement In Progress'){
 						
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursement_changes($original_array[$m]);
@@ -413,13 +431,13 @@ class Home extends CI_Controller {
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->discrepancy2_changes($original_array[$m]);
 					}
-					if($original_array[$m]['process'] == 'Hero-Ops' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['status'] == 'BC Discrepancy'){
+					if($original_array[$m]['process'] == 'Hero-Ops' && $original_array[$m]['action'] == 'Processed'){
 						
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursement3_changes($original_array[$m]);
 					}
 					
-					if($original_array[$m]['process'] == 'BB Delivery Confirmation' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['status'] == ''){
+					if($original_array[$m]['process'] == 'BB Delivery Confirmation' && $original_array[$m]['action'] == 'Processed'){
 						
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursed_changes($original_array[$m]);
@@ -430,7 +448,7 @@ class Home extends CI_Controller {
 					
 					
 					
-				}
+				/* } */
 					
 					
 					

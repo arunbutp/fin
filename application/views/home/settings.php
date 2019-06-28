@@ -226,8 +226,8 @@ echo "</pre>"; */
 			<div class=" ">
 			  <button type="button" id="update"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
 			  <button type="button" id="discrepency" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
-			  <button type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
-			  <button type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
+			  <button disabled type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
+			  <button disabled type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
 			</div>		
 		  </div>
 		  </div>

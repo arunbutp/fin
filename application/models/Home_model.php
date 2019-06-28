@@ -360,7 +360,7 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 			$query = $this->db->query($SQL);
 			
 			$SQL = "INSERT INTO orderlead_upload_history (parent_id, action, reason,process,status)
-VALUES ('$id', 'EDIT', 'Case ID Updated','Update','Update');";
+VALUES ('$id', '-', 'Case ID Updated','RCF Document Check','');";
 
 			$query = $this->db->query($SQL);
 			
@@ -377,7 +377,7 @@ VALUES ('$id', 'EDIT', 'Case ID Updated','Update','Update');";
 			$query = $this->db->query($SQL);
 			
 			$SQL = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
-VALUES ('$id', 'Discrepancy', '$discrepency','$discrepency','RCF Document Check','Discrepancy');";
+VALUES ('$id', 'Discrepancy', '','','RCF Document Check','');";
 
 			$query = $this->db->query($SQL);
 			
@@ -415,7 +415,9 @@ VALUES ('$id', 'Discrepancy', '$discrepency','$discrepency','RCF Document Check'
 			if($history_arr[0]['action'] == '-' && ($history_arr[0]['process']== 'RCF QDE' || $history_arr[0]['process']== '' )){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Loan Eligible',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Loan Eligible' WHERE case_id = '".$vars['case_id']."'";
+			
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', 'Cibil ok to Process','Cibil ok to Process','-','');";
@@ -437,6 +439,89 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', 'Cibil ok to Process','Cibil ok 
 			
 			
 		}
+		public function discrepancy_first_changes($vars){
+			
+			$SQL = "SELECT * FROM orderlead_info where case_id = '".$vars['case_id']."'";
+			
+			$query = $this->db->query($SQL);
+		   
+		   $chk_arr =  $query->result_array();
+		   
+		   if(!$chk_arr){
+			   return "Case ID Not Matching. Please enter correctly";
+		   }
+		   else{
+			
+			$SQL = "UPDATE orderlead_info SET status='Discrepancy' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
+			
+			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
+VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','RCF Document Check','');";
+
+			$query = $this->db->query($SQL2);
+			return "Status Changed Discrepancy";
+		   }
+		}
+		public function under_process_first_changes($vars){
+			
+			$SQL = "SELECT * FROM orderlead_info where case_id = '".$vars['case_id']."'";
+			
+			$query = $this->db->query($SQL);
+		   
+		   $chk_arr =  $query->result_array();
+		   
+		   if(!$chk_arr){
+			   return "Case ID Not Matching. Please enter correctly";
+		   }
+		   else{
+			
+			$SQL2 = "SELECT * FROM orderlead_upload_history where parent_id = '".$chk_arr[0]['id']."' order by id desc limit 1";
+			
+			$query2 = $this->db->query($SQL2);
+		   
+			$history_arr =  $query2->result_array();
+			
+			
+			if($history_arr[0]['action'] == 'Discrepancy' && ($history_arr[0]['process']== 'RCF Document Check' || $history_arr[0]['process']== 'RCF QDE')){
+			
+			
+			$SQL = "UPDATE orderlead_info SET status='Under Process' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
+			
+			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
+VALUES ('".$chk_arr[0]['id']."', '-', '','','RCF QDE','');";
+
+			$query = $this->db->query($SQL2);
+			return "Status Changed Under Process";
+			}else{
+				
+			return "Please do Previous step";	
+			}
+		   }
+		}
+		public function discrepancy_second_changes($vars){
+			
+			$SQL = "SELECT * FROM orderlead_info where case_id = '".$vars['case_id']."'";
+			
+			$query = $this->db->query($SQL);
+		   
+		   $chk_arr =  $query->result_array();
+		   
+		   if(!$chk_arr){
+			   return "Case ID Not Matching. Please enter correctly";
+		   }
+		   else{
+			
+			$SQL = "UPDATE orderlead_info SET status='Discrepancy' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
+			
+			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
+VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','RCF QDE','');";
+
+			$query = $this->db->query($SQL2);
+			return "Status Changed Discrepancy";
+		   }
+		}
 		public function discrepancy_changes($vars){
 			
 			$SQL = "SELECT * FROM orderlead_info where case_id = '".$vars['case_id']."'";
@@ -450,7 +535,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', 'Cibil ok to Process','Cibil ok 
 		   }
 		   else{
 			
-			$SQL = "UPDATE orderlead_info SET status='Discrepancy',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Discrepancy' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','Post Approval','');";
@@ -491,7 +577,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','Post Approval','');";
 			if($history_arr[0]['action'] == 'Discrepancy' && ($history_arr[0]['process']== 'Post Approval' || $history_arr[0]['process']== '-' )){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Sanctioned',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Sanctioned' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'SS Completed', '','','Post Approval','');";
@@ -538,7 +625,8 @@ VALUES ('".$chk_arr[0]['id']."', 'SS Completed', '','','Post Approval','');";
 			if($history_arr[0]['action'] == 'SS Completed' && $history_arr[0]['process']== 'Post Approval' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Pending Order Confirmation',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Pending Order Confirmation' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
@@ -585,7 +673,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
 			if($history_arr[0]['action'] == 'Processed' && $history_arr[0]['process']== 'Boonbox Upload' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
@@ -632,7 +721,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
 			if($history_arr[0]['action'] == 'Processed' && $history_arr[0]['process']== 'Boonbox Upload' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','','BB Discrepancy');";
@@ -679,7 +769,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','','BB Discrepancy');";
 			if($history_arr[0]['status'] == 'BB Discrepancy' && $history_arr[0]['action']== 'Discrepancy' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Discrepancy',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Discrepancy' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','','BC Discrepancy');";
@@ -726,7 +817,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','','BC Discrepancy');";
 			if($history_arr[0]['status'] == 'BC Discrepancy' && $history_arr[0]['action']== 'Discrepancy' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Hero-Ops','');";
@@ -773,7 +865,8 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Hero-Ops','');";
 			if($history_arr[0]['status'] == '' && $history_arr[0]['action']== 'Processed' && $history_arr[0]['process']== 'Hero-Ops' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursed',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursed' WHERE case_id = '".$vars['case_id']."'";
+			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
 VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','');";
