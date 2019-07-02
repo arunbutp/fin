@@ -420,7 +420,7 @@ VALUES ('$id', 'Discrepancy', '','','RCF Document Check','');";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
-VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', 'Cibil ok to Process','Cibil ok to Process','-','');";
+VALUES ('".$chk_arr[0]['id']."', '', 'Cibil ok to Process','Cibil ok to Process','-','');";
 
 			$query = $this->db->query($SQL2);
 			return "Status Changed Loan Eligible";
@@ -574,7 +574,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','Post Approval','');";
 			$history_arr =  $query2->result_array();
 			
 			
-			if($history_arr[0]['action'] == 'Discrepancy' && ($history_arr[0]['process']== 'Post Approval' || $history_arr[0]['process']== '-' )){
+			if(($history_arr[0]['action'] == 'Discrepancy' || $history_arr[0]['action'] == '') && ($history_arr[0]['process']== 'Post Approval' || $history_arr[0]['process']== '-' )){
 				
 	
 			$SQL = "UPDATE orderlead_info SET status='Sanctioned' WHERE case_id = '".$vars['case_id']."'";
@@ -880,5 +880,19 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			}
 			
 		   }
+		}
+		public function disbursed_chk($row){
+			
+			
+			$SQL = "SELECT * FROM orderlead_info where case_id = '".$row['case_id']."' and status= 'Disbursed'";
+			
+			$query = $this->db->query($SQL);
+		   
+		   $chk_arr =  $query->result_array();
+			
+			
+			
+			
+			return $chk_arr;
 		}
 	}

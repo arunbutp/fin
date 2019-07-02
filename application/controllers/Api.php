@@ -164,4 +164,336 @@ class Api extends CI_Controller {
 		
 	}
 	
+	public function new_lead(){
+		
+		$json = json_decode(file_get_contents('php://input'), true);
+
+		$output  = array();
+		$i=0;
+		$json1 = $json['fintech'];
+		
+		echo "<pre>";
+		print_r($json1);
+		
+		
+		
+		
+foreach($json1 as $item){
+	$user_id = $item['user_id'];
+	$storeid = $item['store_id'];
+	//Mage::app()->setCurrentStore($storeid);
+	//$connectionRead = Mage::getSingleton('core/resource')->getConnection('core_read');
+    $id = $item['server_id'];
+	$location_name = $item['location_name'];
+	$disburse_to = "Boonbox";
+	$disburse_code = "Boon";
+	$bc_name = $item['bc_name'];
+	$bc_code = $item['bc_code'];
+	$tm_name = $item['tm_name'];
+	$tm_code = $item['tm_code'];
+	$couponcode = $item['coupen_code'];
+	$rule_id = $item['rule_id'];
+	$discount_amount = $item['discount_amount'];
+	$program_name = "RCF";
+    $scheme_name = "Vanilla";
+	$item_code = $item['item_code'];
+	$price = $item['price'];
+	$qty = $item['qty'];
+    $applicant_name = $item['applicant_name'];
+	$applicant_fname = $item['applicant_name'];
+	$applicant_lname = $item['applicant_Lname'];
+	$applicant_middlename = $item['applicant_mname'];
+	$mother_name = $item['mother_name'];
+    $father_name = $item['father_name'];
+	$id_proof = "Aadhar";
+	$aadhaar_id = $item['aadhaar_id'];
+	$proof_number = $item['proof_number'];
+	$date_of_birth = date("Y-m-d",strtotime($item['date_of_birth']));
+	$gender = $item['gender'];
+	$marital_status = $item['marital_status'];
+	$education = $item['education'];
+	$residence = $item['residence'];
+    $address_line1 = $item['address_line1'];
+	$address_line2 = $item['address_line2'];
+	$landmark = $item['landmark'];
+	$pincode = $item['pincode'];
+    $city = $item['city'];
+    $district = $item['district'];
+    $cust_state = $item['cust_state'];
+	$mobile_number = $item['mobile_number'];
+	$occupation = $item['occupation'];
+	$monthly_income = $item['monthly_income'];
+	$family_income = $item['income_exp'];
+	$foodly_income = $item['food_exp'];
+	$username = $item['username'];
+	
+
+    //$branch_code = $customers['branchcode'];
+	
+    $email_id = $item['email_id'];
+    $no_of_dependants = $item['no_of_dependants'];
+    $year_at_currentaddress = $item['year_at_currentaddress'];
+    $year_in_currentcity = $item['year_in_currentcity'];
+    $perm_addressline1 = $item['perm_addressline1'];
+    $perm_addressline2 = $item['perm_addressline2'];
+    $perm_landmark = $item['perm_landmark'];
+    $perm_district = $item['perm_district'];
+    $perm_pincode = $item['perm_pincode'];
+    $perm_city = $item['perm_city'];
+    $perm_state = $item['perm_state'];
+    $aadhar_front = $item['aadhar_front'];
+    $aadhar_back = $item['aadhar_back'];
+    $alernate_id = $item['alernate_id'];
+	$alernate_id_type = $item['alternative_type'];
+    $ownhouse_proof = $item['ownhouse_proof'];
+	$Profile_img = $item['Profile_img'];
+    $signature_img = $item['signature_img'];
+	
+	$monthly_expenditure = $item['monthly_expenditure'];
+	$repaying_capacity = $item['repaying_capacity'];
+	$emi_eligibility = $item['emi_eligibility'];
+    $first_due_date = $item['first_due_date'];
+	$last_due_date = $item['last_due_date'];
+	$manufacturer_name = $item['manufacturer_name'];
+	$asset_make = $item['asset_make'];
+    $asset_model = $item['asset_model'];
+	$rso_username = $item['rso_username'];
+
+	$pd_assess = $item['pd_assess'];
+    $pd_repaying =  $item['pd_repaying'];
+    $pd_month_emi =  $item['pd_month_emi'];
+    $pd_monthemi_eligibility =  $item['pd_monthemi_eligibility'];
+    $pd_loan_amount =  $item['pd_loan_amount'];
+    // $processing_fee = $item['processing_fee'];
+	$ngo_officername = $item['ngo_officername'];
+    $field_officername = $item['field_officername'];
+    $branch_officername = $item['branch_officername'];
+    $lead_type = $item['lead_type'];
+
+ $month_income=json_decode($family_income,true);
+ $food_income=json_decode($foodly_income,true);
+
+$income_data = serialize($month_income);
+$arr = unserialize($income_data);   
+
+$incomes =array();
+foreach($arr as $key=>$value)
+{
+
+	 $incomes[] =array("familyMem"=>$value['familyMem'],"amount"=>$value['amount'],"relationName"=>$value['relationName']);
+}
+
+
+$monthly_income_ser =serialize($incomes);
+    
+$exp_data = serialize($food_income);
+$arr = unserialize($exp_data);    
+$expendituress =array();
+foreach($arr as $key=>$value)
+{
+     $expendituress[$value['foodExpedi']] =$value['amount'];
+
+}
+$monthly_exp_ser =serialize($expendituress);
+  
+	
+	if($lead_type == '1'){
+  //  Mage::app()->setCurrentStore($storeid);
+   // $connectionRead = Mage::getSingleton('core/resource')->getConnection('core_read');
+    $processing_fee = '';
+    $taxes = '';
+    $interestrate = '';
+	$insurance_rate = '';
+    $gross_tenure = '';
+    $roi = '';
+    $emi_amount = $item['emi_amount'];
+	$advance_emi_amount = $item['advance_emi_amount'];
+	$net_tenure = 12;
+	$item_number = $item['item_number'];
+
+    $order_id = $item['order_id'];
+
+    $product_id = '';
+    $_product = '';
+    $finalprice = '';
+	$insurance_amount = '';
+	// $loan_amount = $item['loan_amount'];
+	$loan_amount = '';
+    $cal_process_fee = '';
+    $total_process = '';	
+	$total_process_amount = $cal_process_fee + $total_process;
+    // $emi_amount =  loancalculateAction($finalprice);
+	$emi_amount = '';
+    $advance_emi = 0;
+   
+    
+    $location = '';
+    $tm_code = '';
+    $tm_name = '';
+    $bc_code = '';
+    $bc_name = '';
+    $se_code = '';
+    $se_name = '';
+}else{
+	
+$location = "";
+$tm_code = "";
+$tm_name = "";
+$bc_code = "";
+$bc_name = "";
+$se_code = "";
+$se_name = "";
+
+$manufacturer = "";
+$make = "";
+$model = "";
+$emi_eligibility = "";
+$cal_process_fee = 0.0;
+$emi_amount = 0.0;
+$advance_emi = 0.0;
+$grosstenure = 0.0;
+$net_tenure = 0.0;
+$item_code = "";
+$finalprice = 0.0;
+$roi = "";
+$qty = 0;
+$order_id = 0;
+$no_of_dependants = 0;
+$repaying_capacity = 0.0;
+$rule_id = 0;
+$discount_amount = 0;
+$storeid = 0;
+}
+	
+	
+	if($user_id != null){
+    if($id == '0'){
+ 
+	echo $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
+advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
+perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type) VALUES 
+('".$location."', '".$disburse_to."', '".$disburse_code."','".$bc_name."', '".$bc_code."', '".$tm_name."', 
+'".$tm_code."','".$se_name."','".$se_code."','".$program_name."','".$scheme_name."','".$item_code."', '".$finalprice."', ".$qty.", '".$applicant_name."',  
+'".$applicant_fname."','".$applicant_lname."','".$applicant_middlename."','".$mother_name."','".$father_name."','".$id_proof."', '".$aadhaar_id ."', '".$date_of_birth."','".$gender."', 
+'".$marital_status."', '".$education."', '".$residence."', '".$address_line1."','".$address_line2."','".$landmark."', '".$pincode."', 
+'".$city."', '".$district."', '".$cust_state."','".$mobile_number."','".$occupation."', '".$monthly_income_ser."','".$monthly_exp_ser."',
+'".$repaying_capacity."', '".$emi_eligibility."',
+'".$manufacturer."','".$make."','".$model."','".$cal_process_fee."','".$emi_amount."', '".$advance_emi."',
+'".$grosstenure."', '".$net_tenure."', '".$item_code."','".$finalprice."','".$roi."','".$email_id."', ".$no_of_dependants.",'".$year_at_currentaddress."', '".$year_in_currentcity."','".$perm_addressline1."',
+'".$perm_addressline2."','".$perm_landmark."','".$perm_district."', '".$perm_pincode."','".$perm_city."','".$perm_state."',
+'".$aadhar_front."','".$aadhar_back."','".$alernate_id."','".$alernate_id_type."','".$ownhouse_proof."','".$Profile_img."','".$signature_img."', ".$order_id.",".$storeid.",'".$branch_code."','".$username."','0','0','','".date("Y-m-d H:i:s")."', '".$couponcode."', '".$rule_id."', '".$discount_amount."', '".$rso_username."','".$pd_assess."','".$pd_repaying."','".$pd_month_emi."','".$pd_monthemi_eligibility."','".$pd_loan_amount."','".$ngo_officername."','".$field_officername."','".$branch_officername."',".$lead_type.")";
+
+  	 $query = $this->db->query($sql); 
+
+	 $this->db->query("INSERT INTO lead_api_log(request_json) values ('".$json."')"); 
+	
+
+  
+    if($query){
+    $output['res_msg']="order lead success";
+	$output['res_code']=1;	
+    }else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=0;
+    }
+}
+else if($id != '0'){
+echo $updatesql = "UPDATE orderlead_info set 
+location_name = '".$location."',
+bc_name = '".$bc_name."',
+bc_code = '".$bc_code."',
+tm_name = '".$tm_name."',
+tm_code = '".$tm_code."',
+qty = ".$qty.",
+applicant_name = '".$applicant_name."',
+applicant_firstname = '".$applicant_fname."',
+applicant_lastname ='".$applicant_lname."',
+applicant_middlename ='".$applicant_middlename."',
+mother_name ='".$mother_name."',
+father_name = '".$father_name."',
+id_proof = '".$id_proof."',
+proof_number = '".$aadhaar_id."',
+date_of_birth = '".$date_of_birth."',     
+gender = '".$gender."',         
+marital_status = '".$marital_status."',
+education =  '".$education."',
+residence = '".$residence."',
+address_line1 ='".$address_line1."',
+address_line2 ='".$address_line2."',
+landmark ='".$landmark."',
+pincode = '".$pincode."',
+city ='".$city."',
+district ='".$district."',
+cust_state ='".$cust_state."',
+mobile_number ='".$mobile_number."',
+occupation ='".$occupation."',
+monthly_income ='".$monthly_income_ser."',
+monthly_expenditure ='".$monthly_exp_ser."',
+repaying_capacity ='".$repaying_capacity."',
+emi_eligibility ='".$emi_eligibility."',
+
+asset_make ='".$make."',
+asset_model ='".$model."',
+
+net_tenure ='".$net_tenure."',
+item_number ='".$item_code."',
+email_id ='".$email_id."',
+no_of_dependants =".$no_of_dependants.",
+year_at_currentaddress ='".$year_at_currentaddress."',
+year_in_currentcity ='".$year_in_currentcity."',
+perm_addressline1 ='".$perm_addressline1."',
+perm_addressline2 ='".$perm_addressline2."',
+perm_landmark = '".$perm_landmark."',
+perm_district ='".$perm_district."',
+perm_pincode ='".$perm_pincode."',
+perm_city ='".$perm_city."',
+perm_state ='".$perm_state."',
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_back = IF('".$aadhar_back."' = '' ,aadhar_back,'".$aadhar_back."'), 
+alernate_id = IF('".$alernate_id."' = '' ,alernate_id,'".$alernate_id."'),
+alternateid_type ='".$alernate_id_type."',
+ownhouse_proof = IF('".$ownhouse_proof."' = '' ,ownhouse_proof,'".$ownhouse_proof."'),
+signature_img = IF('".$signature_img."' = '' ,signature_img,'".$signature_img."'), 
+Profile_img = IF('".$Profile_img."' = '' ,Profile_img,'".$Profile_img."'),
+order_id = ".$order_id.",
+store_id = ".$storeid.",
+branch_code = '".$branch_code."',
+discrepancy = '2',
+pd_assessment = '".$pd_assess."',
+pd_repaying = '".$pd_repaying."',
+pd_month_emi = '".$pd_month_emi."',
+pd_monthemi_eligibility = '".$pd_monthemi_eligibility."',
+pd_loan_amount = '".$pd_loan_amount."',
+ngo_officername = '".$ngo_officername."',
+field_officername = '".$field_officername."',
+branch_officername = '".$branch_officername."',
+lead_type = '".$lead_type."',
+status = 'Under Process',
+
+updated_at = NOW() where username = '".$item["username"]."' AND id = '".$item["server_id"]."' ";
+
+    $update_execute = $this->db->query($updatesql);
+	if($update_execute){
+	
+	$output['res_msg']="order lead success";
+	$output['res_code']=3;
+    }else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=4;
+    } 
+}
+	$i++;
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=2;	
+	}
+
+} 
+// echo json_encode($output);
+		
+		
+		
+		
+	}
+	
 }

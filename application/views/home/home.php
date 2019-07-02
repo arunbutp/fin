@@ -21,7 +21,51 @@ $this->load->view('left-menu');
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-	 
+	 <div class="box box-success">
+         <!--   <div class="box-header with-border">
+              <h3 class="box-title">Modal Examples</h3>
+            </div>-->
+            <div class="box-body">
+             
+              <button  onclick="location.href = '<?=base_url();?>home/new_lead';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
+                New Lead
+              </button>
+              <button type="button" class="btn btn-success " style="margin:0px 5px;" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>
+			  <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CSV Upload</h4>
+      </div>
+      <div class="modal-body">
+				<form id="csvupload" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+				  <label for="email">File:</label>
+				   <input type="file" id="file" accept=".csv"  name="myFile">
+				</div>
+				
+				
+				<button type="submit" class="btn btn-success">Submit</button>
+			  </form>
+			  
+			  
+			  <div id="csv_status" >
+			  
+			  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+            </div>
+          </div>
       <div class="row">
 	   <?php
 	 // echo "<pre>";
@@ -226,6 +270,33 @@ $this->load->view('footer');
 <!-- AdminLTE for demo purposes -->
 <script src="<?=base_url();?>assets/dist/js/demo.js"></script>
 <!-- page script -->
+<script>
+$(document).ready(function() {
+	$("#csvupload").submit(function(evt){
+$("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
+//alert();
+      evt.preventDefault();
+      var formData = new FormData($(this)[0]);
+	  
+   $.ajax({
+       url: "<?=base_url();?>home/lead_csv_upload",
+       type: 'POST',
+       data: formData,
+       async: false,
+       cache: false,
+       contentType: false,
+       enctype: 'multipart/form-data',
+       processData: false,
+       success: function (response) {
+         $("#csv_status").html(response);
+		// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
 
+       }
+   });
+   return false;
+ });
+ });
+ 
+</script>
 </body>
 </html>

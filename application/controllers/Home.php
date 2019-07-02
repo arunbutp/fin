@@ -376,71 +376,121 @@ class Home extends CI_Controller {
 					
 					
 					if($original_array[$m]['process'] == 'RCF Document Check' && $original_array[$m]['action'] == 'Discrepancy'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->discrepancy_first_changes($original_array[$m]);
+						}
 					}
 					
 					if($original_array[$m]['process'] == 'RCF QDE' && $original_array[$m]['action'] == '-'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->under_process_first_changes($original_array[$m]);
+						}
 					}
 					
 					if($original_array[$m]['process'] == 'RCF QDE' && $original_array[$m]['action'] == 'Discrepancy'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->discrepancy_second_changes($original_array[$m]);
+						}
 					}
 					if(str_replace('"', '', $original_array[$m]['remarks']) == 'Cibil ok to Process'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->loan_eligible($original_array[$m]);
+						}
 						
 						
 					}
 					
 					if($original_array[$m]['process'] == 'Post Approval' && $original_array[$m]['action'] == 'Discrepancy'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->discrepancy_changes($original_array[$m]);
+						}
 					}
 					
 					if($original_array[$m]['process'] == 'Post Approval' && $original_array[$m]['action'] == 'SS Completed'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->sanctioned_changes($original_array[$m]);
+						}
 					}
 					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['lead_status'] == 'Pending Order Confirmation'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->pending_changes($original_array[$m]);
+						}
 					}
 					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['lead_status'] == 'Disbursement In Progress'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursement_changes($original_array[$m]);
+						}
 					}
 					if($original_array[$m]['process'] == '' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['status'] == 'BB Discrepancy'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursement2_changes($original_array[$m]);
+						}
 					}
 					if($original_array[$m]['process'] == '' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['status'] == 'BC Discrepancy'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->discrepancy2_changes($original_array[$m]);
+						}
 					}
 					if($original_array[$m]['process'] == 'Hero-Ops' && $original_array[$m]['action'] == 'Processed'){
-						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursement3_changes($original_array[$m]);
+						}
 					}
 					
 					if($original_array[$m]['process'] == 'BB Delivery Confirmation' && $original_array[$m]['action'] == 'Processed'){
 						
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						
 						$this->load->model('home_model');
 						$cell_err[] = $this->home_model->disbursed_changes($original_array[$m]);
+						}
 					}
 					
 					//echo 'd';
@@ -465,6 +515,21 @@ class Home extends CI_Controller {
 			}
 			$str .= "</div></table>";
 			echo $str;
+	}
+	public function disbursed_chk($row){
+		
+		$this->load->model('home_model');
+		$chk = $this->home_model->disbursed_chk($row);
+		
+		return $chk;
+						
+						
+	}
+	public function new_lead(){
+		
+		$this->load->view('home/new_lead_html');	
+		
+		
 	}
 	
 }

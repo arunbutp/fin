@@ -28,7 +28,7 @@ $this->load->view('left-menu');
             </div>
             <!-- /.box-header -->
             <div class="box-body"><!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-success pull-right" style="margin:0px 0px 5px 0px" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>
+<!--<button type="button" class="btn btn-success pull-right" style="margin:0px 0px 5px 0px" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>-->
               <table id="example" class="table table-bordered table-hover">
 
 				<thead>
