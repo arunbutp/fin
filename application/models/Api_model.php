@@ -67,4 +67,27 @@
 
 			return $query->result_array();
 		}
+		public function get_users($username){
+			
+			
+
+			$SQL = "SELECT u.*,t2.branch_name,t2.bc_id,t3.name AS bc_name,t2.tm_code,t2.tm_name,t2.se_name,t2.se_code FROM users AS u
+LEFT JOIN finance_bc_branch_master AS t2 ON u.branch_id=t2.branch_code 
+LEFT JOIN finance_bc_master AS t3 ON t3.id=t2.bc_id
+WHERE u.username= '$username'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->row();
+			
+		}
+		public function get_config($store_id){
+			
+			$SQL = "SELECT * from config_data where store_id= '$store_id' ";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->row();
+			
+		}
 	}

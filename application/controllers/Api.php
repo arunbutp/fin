@@ -302,12 +302,15 @@ $monthly_exp_ser =serialize($expendituress);
 	if($lead_type == '1'){
   //  Mage::app()->setCurrentStore($storeid);
    // $connectionRead = Mage::getSingleton('core/resource')->getConnection('core_read');
-    $processing_fee = '';
-    $taxes = '';
-    $interestrate = '';
-	$insurance_rate = '';
-    $gross_tenure = '';
-    $roi = '';
+   
+   $this->load->model('api_model');
+	$config = $this->api_model->get_config($storeid);
+    $processing_fee = $config->processingfee;
+    $taxes = $config->taxes;
+    $interestrate = $config->interestrate;
+	$insurance_rate = $config->insurance;
+    $gross_tenure = $config->grosstenure;
+    $roi = $config->roi;
     $emi_amount = $item['emi_amount'];
 	$advance_emi_amount = $item['advance_emi_amount'];
 	$net_tenure = 12;
@@ -317,15 +320,15 @@ $monthly_exp_ser =serialize($expendituress);
 
     $product_id = '';
     $_product = '';
-    $finalprice = '';
-	$insurance_amount = '';
+    $finalprice = $item['price'];
+	$insurance_amount = round($finalprice * $insurance_rate/1000);
 	// $loan_amount = $item['loan_amount'];
-	$loan_amount = '';
-    $cal_process_fee = '';
-    $total_process = '';	
+	$loan_amount = round($insurance_amount + $finalprice);
+    $cal_process_fee = ($processing_fee / 100) * $loan_amount;
+    $total_process = round($taxes/100 *($cal_process_fee),0);	
 	$total_process_amount = $cal_process_fee + $total_process;
     // $emi_amount =  loancalculateAction($finalprice);
-	$emi_amount = '';
+	$emi_amount = ceil(($loan_amount+$loan_amount*12/100)/12);
     $advance_emi = 0;
    
     
@@ -370,6 +373,22 @@ $storeid = 0;
 	
 	if($user_id != null){
     if($id == '0'){
+		
+		$this->load->model('api_model');
+		$users = $this->api_model->get_users($username);
+		//echo "<pre>";
+		//print_r($users->userName);
+		//exit;
+		
+		$location = $users->branch_name;
+		$bc_name = $users->bc_name;
+		$branch_code = $users->branch_id;
+		$bc_code = $users->bc_id;
+		$tm_name = $users->tm_name;
+		$se_name = $users->se_name;
+		$tm_code = $users->tm_code;
+		$se_code = $users->se_code;
+		
  
 	echo $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
 advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
