@@ -166,7 +166,9 @@ class Api extends CI_Controller {
 	
 	public function new_lead(){
 		
-		$json = json_decode(file_get_contents('php://input'), true);
+		$data=file_get_contents('php://input');
+		
+		$json = json_decode($data, true);
 
 		$output  = array();
 		$i=0;
@@ -385,7 +387,7 @@ perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernat
 
   	 $query = $this->db->query($sql); 
 
-	 $this->db->query("INSERT INTO lead_api_log(request_json,result) values ('".$json."','insert')"); 
+	 $this->db->query("INSERT INTO lead_api_log(request_json,result,username) values ('".$data."','insert','$username')"); 
 	
 
   
@@ -474,8 +476,7 @@ updated_at = NOW() where username = '".$item["username"]."' AND id = '".$item["s
 
     $update_execute = $this->db->query($updatesql);
 	
-	$this->db->query("INSERT INTO lead_api_log(request_json,result) values ('".$json."','update')"); 
-	
+ $this->db->query("INSERT INTO lead_api_log(request_json,result,username) values ('".$data."','update','$username')"); 
 	if($update_execute){
 	
 	$output['res_msg']="order lead success";
