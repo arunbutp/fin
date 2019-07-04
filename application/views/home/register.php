@@ -20,8 +20,8 @@ $this->load->view('left-menu');
 
     <!-- Main content -->
     <section class="content">
-		<div class="row">
-		<div class="box box-danger" style="padding:10px 5px; height:100%;">
+		
+		<div class="box box-success" style="padding:10px 5px; height:100%;">
 			<div class="box-header with-border" id="Container"
 			 style=" position:relative; display:block; width: 100%">
 			 
@@ -135,7 +135,7 @@ $this->load->view('left-menu');
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-success btn-block btn-flat">Register</button>
+          <button type="submit" class="btn btn-success btn-block btn-flat">    Register</button>
         </div>
         <!-- /.col -->
       </div>
@@ -151,7 +151,7 @@ $this->load->view('left-menu');
 			  
 			</div>
 			</div>
-		</div>
+		
     </section>
     <!-- /.content -->
   </div>

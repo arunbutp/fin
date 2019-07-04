@@ -9,11 +9,11 @@ $this->load->view('left-menu');
     <section class="content-header">
       <h1>
         Under Process
-        <small>Preview sample</small>
+        <small><!--Preview sample---></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Under Process</li>
+        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><?php echo $_GET['task']; ?></li>
       </ol>
     </section>
 
@@ -43,8 +43,13 @@ $this->load->view('left-menu');
 						<th>State</th>
 						<th>Item Code</th>
 						<th>Status</th>
+						<?php
+						if($_GET['task']=='Under Process'){
+						?>
 						<th>Settings</th>
-						
+						<?php
+						}
+						?>
 					</tr>
 				</thead>
 				</table>
@@ -122,9 +127,9 @@ $this->load->view('footer');
 
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/dataTables/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/dataTables/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/dataTables/css/select.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/editor.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/resources/syntax/shCore.css">
 
@@ -132,9 +137,9 @@ $this->load->view('footer');
 	
 	</style>
 
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/js/dataTables.editor.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/syntax/shCore.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/demo.js"></script>
@@ -223,8 +228,14 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 			{ data: "district" },
 			{ data: "state" },
 			{ data: "item_code" },
-			{ data: "status" },
+			{ data: "status" }
+			<?php
+			if($_GET['task']=='Under Process'){
+			?>,
 			{ data: "settings" }
+			<?php
+			}
+			?>
 		],
 		order: [ 1, 'asc' ],
 		select: {

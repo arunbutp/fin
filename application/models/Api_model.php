@@ -90,4 +90,43 @@ WHERE u.username= '$username'";
 			return $query->row();
 			
 		}
+		public function fintech_count($username){
+			
+			$SQL = "SELECT COUNT(*) AS total_lead,IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,IFNULL(SUM(IF(oi.status='Under Process' AND lead_type = 1,1,0)),0) AS under_process, IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, IFNULL(SUM(IF(oi.status='Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi WHERE oi.username = '".$username."' OR oi.rso_username = '".$username."' OR oi.branch_code = '01001,01002'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->row();
+			
+		}
+		public function download_fintech($user_type,$username){
+			
+		if($user_type == '1'){
+			
+			$sql = "SELECT * from orderlead_info WHERE rso_username = '".$username."' AND status = 'Discrepancy' "; 
+		}else{
+			 
+			$sql = "SELECT * from orderlead_info WHERE username = '".$username."' AND status = 'Discrepancy' "; 
+		}
+		 
+		$query = $this->db->query($sql);
+
+		return $query->result_array();
+			
+		}
+		public function chk_pending($user_type,$username){
+			
+		if($user_type == '1'){
+			
+			$sql = "SELECT * from orderlead_info WHERE rso_username = '".$username."'  AND (status = 'Pending Order Confirmation' )  "; 
+		}else{
+			 
+			$sql = "SELECT * from orderlead_info WHERE username = '".$username."'  AND (status = 'Pending Order Confirmation' ) "; 
+		}
+		 
+		$query = $this->db->query($sql);
+
+		return $query->result_array();
+			
+		}
 	}

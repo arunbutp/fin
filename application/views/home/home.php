@@ -13,8 +13,8 @@ $this->load->view('left-menu');
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
+        
       </ol>
     </section>
 
@@ -87,7 +87,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-medkit"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=total_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Total Lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -105,7 +105,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-male"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=other_lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Other Leads" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -185,7 +185,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-ios-checkmark-outline"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=pending_order" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Pending Order Confirmation" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -200,7 +200,7 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-loop"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=disbursement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Disbursement In Progress" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

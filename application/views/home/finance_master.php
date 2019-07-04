@@ -2,6 +2,26 @@
 $this->load->view('header');
 $this->load->view('left-menu');
 ?>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?=base_url();?>assets/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+
+		$(".fancybox").fancybox({'width':400,
+                         'height':250,
+                         'autoSize' : false,
+						  afterClose  : function() {
+							location.href = "";
+						 },
+						    'openEffect': 'elastic',
+							'closeEffect': 'elastic'
+						 });
+
+		});
+	</script>
 	
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -20,14 +40,14 @@ $this->load->view('left-menu');
 
     <!-- Main content -->
     <section class="content">
-		<div class="row">
-		<div class="box box-danger" style="padding:10px 5px; height:100%;">
+	
+		<div class="box box-success" style="padding:10px 5px; height:100%;">
 			<div class="box-header with-border" id="Container"
 			 style=" position:relative; display:block; width: 100%">
 			 
 			 
-			 
-			 
+	<a style="margin:5px;" class="btn btn-success fancybox fancybox.iframe" href="<?=base_url();?>home/create_finance_master">ADD</a>
+	<button style="margin:5px;" type="button" id="edit" class="btn btn-success">Edit</button>		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
         <thead>
             <tr>
@@ -36,6 +56,7 @@ $this->load->view('left-menu');
                 <th>ID</th>
                 <th>Finance Name</th>
                 <th>Status</th>
+              
                 
             </tr>
         </thead>
@@ -46,7 +67,7 @@ $this->load->view('left-menu');
 			  
 			</div>
 			</div>
-		</div>
+	
     </section>
     <!-- /.content -->
   </div>
@@ -66,7 +87,7 @@ $this->load->view('footer');
 </div>
 <!-- ./wrapper -->
 
-	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url();?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -104,7 +125,38 @@ $this->load->view('footer');
 var editor; // use a global for the submit and return data rendering in the examples
 
 $(document).ready(function() {
-	editor = new $.fn.dataTable.Editor( {
+	
+
+$('#edit').on('click', function(){
+	
+	var Table = $('#example').DataTable();
+ var oData = Table.rows('.selected').data();
+
+  // console.log( oData[0]['id'] );
+  
+  if(oData[0] == undefined){
+	  
+	  alert("Please select row");
+	  return false;
+  }else{
+	
+    $.fancybox({
+        width: 400,
+        height: 250,
+        autoSize: false,
+        href: "<?=base_url();?>home/finance_master_editpop?id="+oData[0]['id'],
+        type: 'iframe',
+		'openEffect': 'elastic',
+		'closeEffect': 'elastic',
+		afterClose  : function() {
+        location.href = "";
+		}
+    });
+  }
+});
+	
+	
+	/* editor = new $.fn.dataTable.Editor( {
 		ajax: "<?=base_url();?>home/finance_master_show",
 		table: "#example",
 		idSrc:  'id',
@@ -118,7 +170,7 @@ $(document).ready(function() {
 				name: "status"
 			}
 		]
-	} );
+	} ); */
 
 	// Activate an inline edit on click of a table cell
 	/* $('#example').on( 'click', 'tbody td:not(:first-child)', function (e) {
@@ -128,7 +180,7 @@ $(document).ready(function() {
 	} ); */
 
 	$('#example').DataTable( {
-		dom: "Bfrtip",
+	
 		ajax: "<?=base_url();?>home/finance_master_show",
 		columns: [
 			{
@@ -142,15 +194,16 @@ $(document).ready(function() {
 			{ data: "status" }
 		],
 		order: [ 1, 'asc' ],
+		
 		select: {
 			style:    'os',
 			selector: 'td:first-child'
-		},
+		}/* ,
 		buttons: [
 			{ extend: "create", editor: editor },
-			{ extend: "edit",   editor: editor }/* ,
-			{ extend: "remove", editor: editor } */
-		]
+			{ extend: "edit",   editor: editor } ,
+			{ extend: "remove", editor: editor } 
+		] */
 	} );
 	
 	

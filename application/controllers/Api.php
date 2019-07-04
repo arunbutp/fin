@@ -59,9 +59,11 @@ class Api extends CI_Controller {
 				
 			 	for($p=0;$p<count($finance_bc_branch);$p++){
 					
-					$branch[] = array("id"  			=> $finance_bc_branch[$p]['bc_id'],
+					$branch[] = array(/* "id"  			=> $finance_bc_branch[$p]['bc_id'],
 										"branch_code"	=> $finance_bc_branch[$p]['branch_code'],
-										"branch_name"	=> $finance_bc_branch[$p]['branch_name']
+										"branch_name"	=> $finance_bc_branch[$p]['branch_name'], */
+										$finance_bc_branch[$p]['branch_code'] => $finance_bc_branch[$p]['branch_name'] ,
+										"finance_branch" => $finance_bc_branch[$p]['bc_id']
 					);
 					
 					$branch_ids[] = $finance_bc_branch[$p]['branch_code'];
@@ -174,8 +176,8 @@ class Api extends CI_Controller {
 		$i=0;
 		$json1 = $json['fintech'];
 		
-		echo "<pre>";
-		print_r($json1);
+		//echo "<pre>";
+		//print_r($json1);
 		
 		
 		
@@ -370,11 +372,7 @@ $discount_amount = 0;
 $storeid = 0;
 }
 	
-	
-	if($user_id != null){
-    if($id == '0'){
-		
-		$this->load->model('api_model');
+	$this->load->model('api_model');
 		$users = $this->api_model->get_users($username);
 		//echo "<pre>";
 		//print_r($users->userName);
@@ -389,8 +387,13 @@ $storeid = 0;
 		$tm_code = $users->tm_code;
 		$se_code = $users->se_code;
 		
+	if($user_id != null){
+    if($id == '0'){
+		
+		
+		
  
-	echo $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
+	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
 advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
 perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type) VALUES 
 ('".$location."', '".$disburse_to."', '".$disburse_code."','".$bc_name."', '".$bc_code."', '".$tm_name."', 
@@ -419,7 +422,7 @@ perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernat
     }
 }
 else if($id != '0'){
-echo $updatesql = "UPDATE orderlead_info set 
+ $updatesql = "UPDATE orderlead_info set 
 location_name = '".$location."',
 bc_name = '".$bc_name."',
 bc_code = '".$bc_code."',
@@ -495,7 +498,10 @@ updated_at = NOW() where username = '".$item["username"]."' AND id = '".$item["s
 
     $update_execute = $this->db->query($updatesql);
 	
- $this->db->query("INSERT INTO lead_api_log(request_json,result,username) values ('".$data."','update','$username')"); 
+ $this->db->query("INSERT INTO lead_api_log(request_json,result,username) values ('".$data."','update','$username')");
+ $this->db->query("INSERT INTO orderlead_upload_history(parent_id,action,process,reason) values ('".$item["server_id"]."','-','RCF QDE','under process changed through mobile')");
+
+ 
 	if($update_execute){
 	
 	$output['res_msg']="order lead success";
@@ -512,11 +518,170 @@ updated_at = NOW() where username = '".$item["username"]."' AND id = '".$item["s
 	}
 
 } 
-// echo json_encode($output);
+ echo json_encode($output);
 		
 		
 		
 		
+	}
+	public function fintech_count(){
+		
+		$data=file_get_contents('php://input');
+$id="test";
+$json = json_decode($data,true);
+
+// file_put_contents($file, $current); 
+
+$output  = array();
+$i=0;
+
+$user_id = $json["user_id"];
+$username = $json["username"];
+$user_type = $json["user_type"];
+$store_id = $json["store_id"];
+// $store_id = 54;
+ if($user_id != null){
+		$this->load->model('api_model');
+		$data = $this->api_model->fintech_count($username);
+    if($data)
+	{
+		$output['orderlead'][$i]['countDiscrepancy'] = $data->discrepancy;
+		$output['orderlead'][$i]['total_lead'] = $data->total_lead;
+		$output['orderlead'][$i]['countInprogress'] = $data->under_process;
+		$output['orderlead'][$i]['countPendingOrder'] = $data->order_confim;
+		$output['orderlead'][$i]['countApproved'] = $data->sanctioned;
+		$output['orderlead'][$i]['countDisbursed'] = $data->disbursed;
+		$output['orderlead'][$i]['countRejected'] = $data->canceled;
+		$output['orderlead'][$i]['countDisburseProgress'] = $data->disbursement;
+		$output['orderlead'][$i]['countLoanEligible'] = $data->loan_eligible;
+		// $output['orderlead'] = $result;
+		$output['res_msg']="order lead success";
+		$output['res_code']=1;
+	}
+	else {
+	$output['res_msg']="order lead failed";
+	$output['res_code']=0;
+    }
+
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=2;	
+	}
+ echo json_encode($output);
+		
+	}
+	public function download_fintech(){
+		
+		$data=file_get_contents('php://input');
+
+  $id="test";
+
+    $json = json_decode($data,true);
+   // $file = 'orderxmls/logis_'.$id."_". (strtotime(date("Y/m/d h:i:sa"))*1000);
+
+  //  $current = file_get_contents($file);
+   // $current = $data;
+    // file_put_contents($file, $current); 
+	//echo 'd';
+    $output  = array();
+    $i=0;
+// $json1 = $json['gramalaya'];
+	$user_id = $json["user_id"];
+    $username = $json["username"];
+    $user_type = $json["user_type"];
+	
+	//echo "<pre>";
+	//print_r($json);
+
+//echo $user_type.'ss';
+	 if($user_id != null){
+		 
+	//	 echo 'dd';
+		 
+		$this->load->model('api_model');
+		$details = $this->api_model->download_fintech($user_type,$username);
+		
+	
+
+    if($details){
+    foreach($details as $key =>$value)
+    {
+        $monthly_inc = $value['monthly_income'];
+        $monthly_exp = $value['monthly_expenditure'];
+        if($monthly_inc != "")
+        {
+            $inc_arr = unserialize($monthly_inc);
+            foreach($inc_arr as $inc_element)
+			{
+					$income_arr[] = $inc_element;
+			}
+			
+            $details[$key]['monthly_income']= json_encode($income_arr);
+        }
+        if($monthly_exp != "")
+        {
+            $exp_arr = unserialize($monthly_exp);
+            foreach($exp_arr as $ekeys=>$eval)
+                $expenditure_arr[] = array('amount'=>$eval,'foodExpedi'=>$ekeys);
+            $details[$key]['monthly_expenditure']= json_encode($expenditure_arr);
+        }
+        unset($income_arr);
+        unset($expenditure_arr);
+    }
+	$output['orderlead'] = $details;
+    $output['res_msg']="order lead success";
+	$output['res_code']=1;	
+	
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=0;
+    }
+
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=2;	
+	} 
+
+ echo json_encode($output);
+	}
+	public function pending_confirmation(){
+		
+	$data=file_get_contents('php://input');
+
+
+
+    $json = json_decode($data,true);
+	
+    $output  = array();
+    $i=0;
+
+	$user_id = $json["user_id"];
+    $username = $json["username"];
+	$user_type = $json["user_type"];
+
+ 
+	 if($user_id != null){
+	 
+
+	$this->load->model('api_model');
+	$details = $this->api_model->chk_pending($user_type,$username);
+	
+
+ 
+    if($details){
+		$output['orderlead_pending'][$i] = $details[0];		
+		$output['res_msg']="order lead success";
+	    $output['res_code']=1;
+		}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=0;
+    }
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=2;	
+	} 
+
+ echo json_encode($output);
 	}
 	
 }

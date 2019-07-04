@@ -21,9 +21,9 @@ echo "</pre>"; */
         <small>Preview</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">Advanced Elements</li>
+        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?=base_url();?>home/details/?task=Under Process">Under Process</a></li>
+        <li class="active">Settings</li>
       </ol>
     </section>
 
@@ -31,7 +31,7 @@ echo "</pre>"; */
     <section class="content">
 
       <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default">
+      <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Personal Details</h3>
 
@@ -208,7 +208,7 @@ echo "</pre>"; */
 		  <div class="col-md-4">
 		  <div class="form-group">
 			  <label for="comment">Case ID:</label>
-			  <input type="text" value="<?php echo $data[0]['case_id'];?>" name="case_id" id="case_id" class="form-control">
+			  <input type="text" <?php echo ($data[0]['case_id'] == '' ? '' : 'readonly'); ?> value="<?php echo $data[0]['case_id'];?>" name="case_id" id="case_id" class="form-control">
 			</div>
 		  </div>
 		  <div class="col-md-8">
@@ -224,7 +224,7 @@ echo "</pre>"; */
 		  <div class="col-md-12">
 		  <div class="form-group">
 			<div class=" ">
-			  <button type="button" id="update"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
+			  <button <?php echo ($data[0]['case_id'] == '' ? '' : 'disabled'); ?> type="button" id="update"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
 			  <button type="button" id="discrepency" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
 			  <button disabled type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
 			  <button disabled type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
@@ -232,6 +232,13 @@ echo "</pre>"; */
 		  </div>
 		  </div>
 		  </div>
+		  <div class="row">
+		  <div class="col-md-12">
+		  <div id="status">
+		  </div>
+		  </div>
+		  </div>
+		  
 		  
           <!-- /.row -->
         </div>
@@ -312,11 +319,12 @@ $(document).ready(function() {
 	
 		$.ajax({
 		  url: "<?=base_url();?>home/case_id",
-		  dataType:'POST',
+		  dataType:'html',
+		  type:'GET',
 		  data:{id:<?php echo $_GET['id']; ?>, case_id: $("#case_id").val()},
-		  success: function(html){
-			  alert(html);
-			//$("#results").append(html);
+		  success: function(result){
+			//  alert(result);
+			$("#status").html(result);
 		  }
 		});
 		}
@@ -335,11 +343,12 @@ $(document).ready(function() {
 	
 		$.ajax({
 		  url: "<?=base_url();?>home/submit_discrepancy",
-		  dataType:'POST',
+		  dataType:'html',
+		  type:'GET',
 		  data:{id:<?php echo $_GET['id']; ?>, discrepency: $("#discrepancy_comment").val()},
-		  success: function(html){
-			  alert(html);
-			//$("#results").append(html);
+		  success: function(result){
+
+			$("#status").html(result);
 		  }
 		});
 		}

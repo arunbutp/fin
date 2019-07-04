@@ -62,6 +62,147 @@ class Home extends CI_Controller {
 		
 		$this->load->view('home/finance_master');
 	}
+	public function create_finance_master(){
+		
+		
+		echo '  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><div class="container"><form method="POST" action="">
+  <div class="form-group">
+    <label for="email">Finance Name::</label>
+    <input type="text" class="form-control" value="'.$_POST['finance_name'].'" name="finance_name" id="finance_name" required>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Status:</label>
+    <input type="text" class="form-control" value="'.$_POST['status'].'" name="status" id="status" required>
+  </div>
+   <input type="hidden" class="form-control" name="action" id="action">
+  <button type="submit" name="submit" class="btn btn-default">Create</button>
+</form></div>';
+
+
+if(isset($_POST['submit'])){
+	
+		$this->load->model('home_model');
+		$data = $this->home_model->finance_master_create($_POST);
+		echo $data;
+	
+}
+	
+		
+	}
+	
+	public function finance_master_editpop(){
+		
+		
+		$this->load->model('home_model');
+		$details = $this->home_model->finance_master_editpop($_GET['id']);
+		//echo $details[0]['finance_name'];
+		
+		echo '  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><div class="container" style="width:350px"><form method="POST" action="">
+  <div class="form-group row">
+  <div class="">
+    <label for="email">Finance Name::</label>
+    <input type="text" class="form-control" value="'.($_POST['finance_name'] == '' ? $details[0]['finance_name'] : $_POST['finance_name']).'" name="finance_name" id="finance_name" required>
+  </div>
+  </div>
+  <div class="form-group row">
+  <div class="">
+    <label for="pwd">Status:</label>
+    <input type="text" class="form-control" value="'.($_POST['status'] == '' ? $details[0]['status'] : $_POST['status']).'" name="status" id="status" required>
+	<input type="hidden" class="form-control" value="'.$_GET['id'].'" name="id" id="id" >
+  </div>
+  </div>
+   <input type="hidden" class="form-control" name="action" id="action">
+  <button type="submit" name="submit" class="btn btn-default">Update</button>
+</form></div>';
+
+
+
+		if(isset($_POST['submit'])){
+			
+				$this->load->model('home_model');
+				$data = $this->home_model->finance_master_sub_edit_popup($_POST);
+				echo $data;
+			
+		}
+
+
+		
+		
+		
+	}
+	public function create_finance_bc_master(){
+		
+		    
+			if(isset($_POST['submit'])){
+				
+				
+				$this->load->model('home_model');
+				$data['status'] = $this->home_model->finance_bc_create($_POST);
+				$this->load->view('create_finance_bc_master',$data);
+				
+			}else{
+				$this->load->view('create_finance_bc_master');
+			}
+			
+	}
+	public function create_finance_bc_branch(){
+		
+		    
+			if(isset($_POST['submit'])){
+				
+				
+				$this->load->model('home_model');
+				$data['status'] = $this->home_model->finance_bc_branch_create_popup($_POST);
+				$data['bc_details'] = $this->home_model->get_finance_bc();
+				$this->load->view('home/create_finance_bc_branch',$data);
+				
+			}else{
+				$this->load->model('home_model');
+				$data['bc_details'] = $this->home_model->get_finance_bc();
+				$this->load->view('home/create_finance_bc_branch',$data);
+			}
+			
+	}
+	public function finance_bc_editpop(){
+		
+		
+		
+		if(isset($_POST['submit'])){
+		$this->load->model('home_model');
+		$data['status'] = $this->home_model->finance_bc_edit_row($_POST);	
+		$data['rows'] = $this->home_model->finance_bc_get_row($_POST['id']);
+		$this->load->view('home/edit_finance_bc_master',$data);
+		}else{
+		$this->load->model('home_model');
+		$data['rows'] = $this->home_model->finance_bc_get_row($_GET['id']);
+		$this->load->view('home/edit_finance_bc_master',$data);
+			
+		}
+		
+	}
+	public function finance_bc_branch_editpop(){
+		
+		
+		
+		if(isset($_POST['submit'])){
+		$this->load->model('home_model');
+		$data['status'] = $this->home_model->finance_bc_branch_edit_row($_POST);	
+		$data['rows'] = $this->home_model->finance_bc_branch_get_row($_POST['id']);
+		$data['bc_details'] = $this->home_model->get_finance_bc();
+		$this->load->view('home/edit_finance_bc_branch_master',$data);
+		}else{
+		$this->load->model('home_model');
+		$data['rows'] = $this->home_model->finance_bc_branch_get_row($_GET['id']);
+		$data['bc_details'] = $this->home_model->get_finance_bc();
+		$this->load->view('home/edit_finance_bc_branch_master',$data);
+			
+		}
+		
+	}
 	public function finance_master_show(){
 		
 		$this->load->model('home_model');
@@ -149,7 +290,7 @@ class Home extends CI_Controller {
 		if($postData['action'] == ''){
 		$data = $this->home_model->finance_bc_show();
 		for($i=0;$i<count($data);$i++){
-			$arr[] = array('id'=> $data[$i]['id'] , 'name'=>  $data[$i]['name'], 'description'=>  $data[$i]['description']);
+			$arr[] = array('id'=> $data[$i]['id'] , 'name'=>  $data[$i]['name'], 'description'=>  $data[$i]['description'],'edit'=>  '<button id="edit" onclick="edit('.$data[$i]['id'].')"value="'.$data[$i]['id'].'" class="btn btn-default">Edit</button>');
 			
 		}
 		
@@ -199,7 +340,7 @@ class Home extends CI_Controller {
 		if($postData['action'] == ''){
 		$data = $this->home_model->finance_bc_branch_show();
 		 for($i=0;$i<count($data);$i++){
-			$arr[] = array('id'=> $data[$i]['branch_auto_id'] ,'bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name']);
+			$arr[] = array('id'=> $data[$i]['branch_auto_id'] ,'bc_name'=> $data[$i]['bc_name'] , 'bc_id'=>  $data[$i]['bc_id'], 'branch_code'=>  $data[$i]['branch_code'], 'branch_name'=>  $data[$i]['branch_name'],'edit'=> '<button id="edit" onclick="edit('.$data[$i]['branch_auto_id'].')" value="'.$data[$i]['branch_auto_id'].'" class="btn btn-default">Edit</button>');
 			
 		} 
 		
@@ -213,6 +354,7 @@ class Home extends CI_Controller {
 		
 		
 	}
+	
 	public function details()
 	{
 		$this->load->view('home/details');
@@ -230,7 +372,7 @@ class Home extends CI_Controller {
 		
 		$this->load->model('home_model');
 		$data = $this->home_model->under_process();
-		
+		$arr = array();
 		for($i=0;$i<count($data['main']);$i++){
 			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
 			
@@ -238,8 +380,8 @@ class Home extends CI_Controller {
 		
 				echo '{
 			    "draw": '.$_POST['draw'].',
-			    "recordsFiltered": "'.$data['total'].'",
-			    "recordsTotal": "'.$data['total'].'",
+			    "recordsFiltered": "'.($data['total'] == null ? '0' : $data['total']).'",
+			    "recordsTotal": "'.($data['total'] == null ? '0' : $data['total']).'",
 				"data":'.json_encode( $arr, JSON_NUMERIC_CHECK ).'}';
 		
 	}
@@ -296,9 +438,9 @@ class Home extends CI_Controller {
 		
 		$this->load->model('home_model');
 		
-		$this->home_model->case_id();
+		$data = $this->home_model->case_id();
 		
-		echo "Case ID Updated";
+		echo $data;
 		
 	}
 	public function submit_discrepancy(){
@@ -307,7 +449,7 @@ class Home extends CI_Controller {
 		
 		$this->home_model->submit_discrepancy();
 		
-		echo "Case ID Updated";
+		echo "Discrepancy Updated";
 		
 	}
 	public function lead_csv_upload(){

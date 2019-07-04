@@ -2,7 +2,26 @@
 $this->load->view('header');
 $this->load->view('left-menu');
 ?>
-	
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?=base_url();?>assets/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+
+		$(".fancybox").fancybox({'width':400,
+                         'height':250,
+                         'autoSize' : false,
+						 'openEffect': 'elastic',
+						 'closeEffect': 'elastic',
+						 afterClose  : function() {
+							location.href = "";
+							}
+		});
+
+		});
+	</script>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -20,23 +39,25 @@ $this->load->view('left-menu');
 
     <!-- Main content -->
     <section class="content">
-		<div class="row">
-		<div class="box box-danger" style="padding:10px 5px; height:100%;">
+		
+		<div class="box box-success" style="padding:10px 5px; height:100%;">
 			<div class="box-header with-border" id="Container"
 			 style=" position:relative; display:block; width: 100%">
 			 
 			 
-	 
+	<a style="margin:5px;" class="btn btn-success fancybox fancybox.iframe" href="<?=base_url();?>home/create_finance_bc_master">ADD</a>	
+	
 		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
 	
         <thead>
             <tr>
         
-                <th></th>
+              
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Edit</th>
                 
             </tr>
         </thead>
@@ -47,7 +68,7 @@ $this->load->view('left-menu');
 			  
 			</div>
 			</div>
-		</div>
+		
     </section>
     <!-- /.content -->
   </div>
@@ -67,7 +88,7 @@ $this->load->view('footer');
 </div>
 <!-- ./wrapper -->
 
-	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url();?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -133,7 +154,32 @@ function exportCSV(){
 		
 		
 }
+
+function edit(id){
+	
+	  $.fancybox({
+        width: 400,
+        height: 250,
+        autoSize: false,
+        href: "<?=base_url();?>home/finance_bc_editpop?id="+id,
+        type: 'iframe',
+		'openEffect': 'elastic',
+		'closeEffect': 'elastic',
+		afterClose  : function() {
+        location.href = "";
+		}
+    });
+}
 $(document).ready(function() {
+	
+	
+	
+	
+	
+	
+	
+	
+	
  //form Submit
    $("#uploadform").submit(function(evt){	 
       evt.preventDefault();
@@ -184,27 +230,23 @@ $(document).ready(function() {
 		
 		ajax: "<?=base_url();?>home/finance_bc_show",
 		columns: [
-			{
-				data: null,
-				defaultContent: '',
-				className: 'select-checkbox',
-				orderable: false
-			},
+			
 			{ data: "id" },
 			{ data: "name" },
-			{ data: "description" }
+			{ data: "description" },
+			{ data: "edit" }
 		],
 		order: [ 1, 'asc' ],
 		select: {
 			style:    'os',
 			selector: 'td:first-child'
-		},
-		buttons: [
+		}
+		/*buttons: [
 			{ extend: "create", editor: editor },
-			{ extend: "edit",   editor: editor }/* ,
-			{ extend: "remove", editor: editor } */
-		],
-		"dom": '<"toolbar">Bfrtip'
+			{ extend: "edit",   editor: editor } ,
+			{ extend: "remove", editor: editor } 
+		],*/
+		
 	} );
 	$("div.toolbar").html('<button  type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal"> Import Template </button><button  style="margin:0px 10px;" id="export_csv" onclick="exportCSV();" type="button" class="btn btn-success pull-right" > Export Template </button>');
 	

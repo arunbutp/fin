@@ -115,6 +115,73 @@
 			
 			
 		}
+		public function finance_master_editpop($id){
+			
+			//$session = $this->session->userdata('MY_SESS2');
+			
+			$SQL = "SELECT * from finance_master where id='$id'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+			
+		}
+		public function get_finance_bc(){
+			
+			$SQL = "SELECT * from finance_bc_master";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+			
+		}
+		public function finance_bc_branch_create_popup($vals){
+			$SQL2 = "SELECT * FROM finance_bc_branch_master where branch_name = '".$vals['branch_name']."' and branch_code = '".$vals['branch_code']."'";
+			
+			$query2 = $this->db->query($SQL2);
+		   
+			$chk =  $query2->result_array();
+			
+			if(!$chk){
+			
+			 $SQL =  "INSERT INTO finance_bc_branch_master (bc_id,branch_code,branch_name) VALUES ('".$vals['bc_id']."', '".$vals['branch_code']."', '".$vals['branch_name']."')";
+		
+		
+			
+			$query = $this->db->query($SQL);
+			return "<span class='text-success'>Successfully created</span>";
+			}else{
+				
+			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+				
+			}
+		}
+		public function finance_master_sub_edit_popup($data){
+			
+			
+			 $SQL2 = "SELECT * FROM finance_master where finance_name = '".$data['finance_name']."'";
+			
+			$query2 = $this->db->query($SQL2);
+		   
+			$chk =  $query2->result_array();
+			
+			if(!$chk){
+			
+			//print_r($data['data'][$pure_id]['finance_name']);
+			
+			$SQL = "UPDATE finance_master SET finance_name='".$data['finance_name']."' WHERE id='".$data['id']."'";
+			
+			$query = $this->db->query($SQL);
+
+			return "<span class='text-success'>Successfully updated</span>";
+			}else{
+				
+			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+			}
+			
+			
+		}
 		public function finance_master_edit($data){
 			
 			$session = $this->session->userdata('MY_SESS2');
@@ -141,21 +208,26 @@
 			//echo "<pre>";
 			//print_r($data);
 			
-			// $id = array_keys($data['data']);
+			 $SQL2 = "SELECT * FROM finance_master where finance_name = '".$data['finance_name']."'";
 			
-		//	$pure_id = $id[0];
+			$query2 = $this->db->query($SQL2);
+		   
+			$chk =  $query2->result_array();
 			
-			//print_r($data['data'][$pure_id]['finance_name']);
+			if(!$chk){
 			
-			$SQL =  "INSERT INTO finance_master (finance_name, status) VALUES ('".$data['data'][0]['finance_name']."', '".$data['data'][0]['status']."')";
+			 $SQL =  "INSERT INTO finance_master (finance_name, status) VALUES ('".$data['finance_name']."', '".$data['status']."')";
 		
 		
 			
 			$query = $this->db->query($SQL);
-
-			return $query;
-			
-			
+			return "<span class='text-success'>Successfully created</span>";
+			}else{
+				
+			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+				
+			}
+	
 		}
 		public function finance_bc_show(){
 			
@@ -191,25 +263,107 @@
 		}
 		public function finance_bc_create($data){
 			
-			$session = $this->session->userdata('MY_SESS2');
-			//echo "<pre>";
-			//print_r($data);
 			
-			// $id = array_keys($data['data']);
+			$SQL = "SELECT * from finance_bc_master where name='".$data['name']."'";
 			
-		//	$pure_id = $id[0];
+			$query = $this->db->query($SQL);
+
+			$chk = $query->result_array();
 			
-			//print_r($data['data'][$pure_id]['finance_name']);
+			if(!$chk){
 			
-			$SQL =  "INSERT INTO finance_bc_master (name, description) VALUES ('".$data['data'][0]['name']."', '".$data['data'][0]['description']."')";
+			
+			$SQL =  "INSERT INTO finance_bc_master (name, description) VALUES ('".$data['name']."', '".$data['data']['description']."')";
 		
 		
 			
 			$query = $this->db->query($SQL);
+			return "<span class='text-success'>Successfully added.</span>";
+			
+			}else{
+				
+				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+			}
 
-			return $query;
 			
 			
+			
+		}
+		public function finance_bc_edit_row($data){
+			
+			
+			$SQL = "SELECT * from finance_bc_master where name='".$data['name']."'";
+			
+			$query = $this->db->query($SQL);
+
+			$chk = $query->result_array();
+			
+			if(!$chk){
+			
+			
+			$SQL =  "UPDATE finance_bc_master SET name= '".$data['name']."', description='".$data['description']."' where id= '".$data['id']."'";
+		
+		
+			
+			$query = $this->db->query($SQL);
+			return "<span class='text-success'>Successfully added.</span>";
+			
+			}else{
+				
+				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+			}
+
+			
+			
+			
+		}
+		public function finance_bc_branch_edit_row($data){
+			
+			
+			$SQL = "SELECT * from finance_bc_branch_master where branch_code='".$data['branch_code']."' and branch_name='".$data['branch_name']."'";
+			
+			$query = $this->db->query($SQL);
+
+			$chk = $query->result_array();
+			
+			if(!$chk){
+			
+			
+			$SQL =  "UPDATE finance_bc_branch_master SET branch_code= '".$data['branch_code']."', branch_name='".$data['branch_name']."' where branch_auto_id= '".$data['id']."'";
+		
+		
+			
+			$query = $this->db->query($SQL);
+			return "<span class='text-success'>Successfully added.</span>";
+			
+			}else{
+				
+				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+			}
+
+			
+			
+			
+		}
+		public function finance_bc_get_row($id){
+			
+			$SQL = "SELECT * from finance_bc_master where id='".$id."'";
+			
+			$query = $this->db->query($SQL);
+
+			$data = $query->result_array();
+			
+			return $data;
+		}
+		public function finance_bc_branch_get_row($id){
+			
+			$SQL = "SELECT * from finance_bc_branch_master where branch_auto_id='".$id."'";
+			
+			$query = $this->db->query($SQL);
+
+			$data = $query->result_array();
+			
+			return $data;
 		}
 		public function finance_bc_branch_show(){
 			
@@ -279,7 +433,7 @@
 			}
 			$task = $this->input->get('task');
 			
-			if($task == 'other_lead'){
+			if($task == 'Other Leads'){
 				
 				$lead_type = '(lp.lead_type != 1) AND';
 			}else{
@@ -288,7 +442,7 @@
 			}
 			
 			
-			if($task == 'total_lead'){
+			if($task == 'Total Lead'){
 				$lead_type = '';
 				$status = '';
 			}	
@@ -355,14 +509,26 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 			$id 	 = $this->input->get('id');
 			$case_id = $this->input->get('case_id');
 			
-			$SQL = "UPDATE orderlead_info SET case_id='$case_id' WHERE id='$id'";
+			$SQL = "SELECT * FROM orderlead_info where case_id='$case_id'";
+			$query = $this->db->query($SQL);
+		   
+		    $chk = $query->result_array();
+			
+			if(!$chk){
+			
+			 $SQL = "UPDATE orderlead_info SET case_id='$case_id' WHERE id='$id'";
 
 			$query = $this->db->query($SQL);
 			
 			$SQL = "INSERT INTO orderlead_upload_history (parent_id, action, reason,process,status)
-VALUES ('$id', '-', 'Case ID Updated','RCF Document Check','');";
+VALUES ('$id', '-', 'Case ID Updated','','');";
 
 			$query = $this->db->query($SQL);
+			return "<p class='text-success'>Case ID Updated</p>" ;
+			}else{
+				
+			return "<p class='text-danger'>Given Case ID already exists. Please use differently.</p>" ;	
+			}
 			
 			
 			
