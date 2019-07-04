@@ -12,8 +12,7 @@ $this->load->view('left-menu');
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#"> Config</a></li>
+        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">New Lead Creation</li>
       </ol>
     </section>

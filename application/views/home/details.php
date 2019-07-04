@@ -8,7 +8,7 @@ $this->load->view('left-menu');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Under Process
+        <?php echo $_GET['task']; ?>
         <small><!--Preview sample---></small>
       </h1>
       <ol class="breadcrumb">

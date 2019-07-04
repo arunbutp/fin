@@ -28,9 +28,9 @@ $this->load->view('left-menu');
             <div class="box-body">
              
               <button  onclick="location.href = '<?=base_url();?>home/new_lead';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
-                New Lead
+               <span class="glyphicon glyphicon-user"></span> New Lead
               </button>
-              <button type="button" class="btn btn-success " style="margin:0px 5px;" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>
+              <button type="button" class="btn btn-success " style="margin:0px 5px;" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-menu-hamburger"></span> CSV UPLOAD</button>
 			  <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -45,7 +45,7 @@ $this->load->view('left-menu');
 				<form id="csvupload" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 				  <label for="email">File:</label>
-				   <input type="file" id="file" accept=".csv"  name="myFile">
+				   <input  type="file" id="file" accept=".csv"  name="myFile">
 				</div>
 				
 				

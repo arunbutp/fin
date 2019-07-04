@@ -46,8 +46,8 @@ $this->load->view('left-menu');
 			 style=" position:relative; display:block; width: 100%">
 			 
 			 
-	<a style="margin:5px;" class="btn btn-success fancybox fancybox.iframe" href="<?=base_url();?>home/create_finance_master">ADD</a>
-	<button style="margin:5px;" type="button" id="edit" class="btn btn-success">Edit</button>		 
+	<a style="margin:5px;" class="btn btn-success fancybox fancybox.iframe" href="<?=base_url();?>home/create_finance_master"><span class="glyphicon glyphicon-th-list">  </span> ADD</a>
+	<button style="margin:5px;" type="button" id="edit" class="btn btn-success"><span class="glyphicon glyphicon-edit">  </span>Edit</button>		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
         <thead>
             <tr>
