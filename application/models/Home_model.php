@@ -150,10 +150,10 @@
 		
 			
 			$query = $this->db->query($SQL);
-			return "<span class='text-success'>Successfully created</span>";
+			return "<div class='alert alert-success'><strong>Success!</strong>Successfully Added.</div>";
 			}else{
 				
-			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+			return "<div class='alert alert-danger'>Given name already exist please use different name</div>";	
 				
 			}
 		}
@@ -174,10 +174,10 @@
 			
 			$query = $this->db->query($SQL);
 
-			return "<span class='text-success'>Successfully updated</span>";
+			return "<div class='alert alert-success'>Successfully updated</div>";
 			}else{
 				
-			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+			return "<div class='alert alert-danger'>Given name already exist please use different name</div>";	
 			}
 			
 			
@@ -221,10 +221,10 @@
 		
 			
 			$query = $this->db->query($SQL);
-			return "<span class='text-success'>Successfully created</span>";
+			return "<div class='alert alert-success'>Successfully created</div>";
 			}else{
 				
-			return "<span class='text-danger'>Given name already exist please use different name</span>";	
+			return "<div class='alert alert-danger'>Given name already exist please use different name</div>";	
 				
 			}
 	
@@ -278,11 +278,11 @@
 		
 			
 			$query = $this->db->query($SQL);
-			return "<span class='text-success'>Successfully added.</span>";
+			return "<div class='alert alert-success'>Successfully added.</div>";
 			
 			}else{
 				
-				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+				return "<div class='alert alert-danger'>Given name already exist. please use different one.</div>";
 			}
 
 			
@@ -306,11 +306,11 @@
 		
 			
 			$query = $this->db->query($SQL);
-			return "<span class='text-success'>Successfully added.</span>";
+			return "<div class='alert alert-success'>Successfully added.</div>";
 			
 			}else{
 				
-				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+				return "<div class='alert alert-danger'>Given name already exist. please use different one.</div>";
 			}
 
 			
@@ -334,11 +334,11 @@
 		
 			
 			$query = $this->db->query($SQL);
-			return "<span class='text-success'>Successfully added.</span>";
+			return "<div class='alert alert-success'>Successfully added.</div>";
 			
 			}else{
 				
-				return "<span class='text-danger'>Given name already exist. please use different one.</span>";
+				return "<div class='alert alert-danger'>Given name already exist. please use different one.</div>";
 			}
 
 			
@@ -524,10 +524,10 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 VALUES ('$id', '-', 'Case ID Updated','','');";
 
 			$query = $this->db->query($SQL);
-			return "<p class='text-success'>Case ID Updated</p>" ;
+			return "<div class='alert alert-success'>Case ID Updated</div>" ;
 			}else{
 				
-			return "<p class='text-danger'>Given Case ID already exists. Please use differently.</p>" ;	
+			return "<div class='alert alert-danger'>Given Case ID already exists. Please use differently.</div>" ;	
 			}
 			
 			

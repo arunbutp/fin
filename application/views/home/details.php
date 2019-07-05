@@ -140,10 +140,10 @@ $this->load->view('footer');
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/dataTables/js/dataTables.select.min.js"></script>
-	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/js/dataTables.editor.js"></script>
+
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/syntax/shCore.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/demo.js"></script>
-	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/editor-demo.js"></script>
+	
 	
 
 
@@ -181,7 +181,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
  });
 	
 	
-	editor = new $.fn.dataTable.Editor( {
+/* 	editor = new $.fn.dataTable.Editor( {
 		ajax: "<?=base_url();?>home/under_process_json/?task=<?php echo $_GET['task']?>",
 		table: "#example",
 		idSrc:  'id',
@@ -195,7 +195,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 				name: "lead_id"
 			}
 		]
-	} );
+	} ); */
 
 	// Activate an inline edit on click of a table cell
 	/* $('#example').on( 'click', 'tbody td:not(:first-child)', function (e) {

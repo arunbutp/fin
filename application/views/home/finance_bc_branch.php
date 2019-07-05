@@ -16,7 +16,9 @@ $this->load->view('left-menu');
 						 'openEffect': 'elastic',
 						 'closeEffect': 'elastic',
 						 'afterClose'  : function() {
-						   location.href = "";
+						   var table = $('#example').DataTable();
+							table.clear().draw();
+							table.ajax.reload();
 						 }
 						 });
 
@@ -113,10 +115,10 @@ $this->load->view('footer');
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/js/dataTables.editor.js"></script>
+
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/syntax/shCore.js"></script>
 	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/demo.js"></script>
-	<script type="text/javascript" language="javascript" src="<?=base_url();?>assets/resources/editor-demo.js"></script>
+
 <script type="text/javascript" language="javascript" class="init">
 	
 
@@ -133,7 +135,9 @@ function edit(id){
 		'openEffect': 'elastic',
 		'closeEffect': 'elastic',
 		afterClose  : function() {
-		location.href = "";
+		var table = $('#example').DataTable();
+			table.clear().draw();
+			table.ajax.reload();
 		}
     });
 }
