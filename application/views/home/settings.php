@@ -29,6 +29,11 @@ echo "</pre>"; */
 
     <!-- Main content -->
     <section class="content">
+	
+	
+	
+	
+	
 
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-success">
@@ -195,9 +200,17 @@ echo "</pre>"; */
 		  </div>
 		  </div>
 		  </div>
-		  
-		  
-
+		 <hr style="border-top: 1px dotted red;">
+		<div class="row">
+		<div class="col-md-12">
+		<div class="box-header ">
+          <h3 class="box-title">Documents to Download</h3>
+        </div> 
+		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   Before Approval</button>
+		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   After Approval</button>
+		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   PDF INV</button>  
+		</div>
+		</div>
 		<hr style="border-top: 1px dotted red;">
 
 		<div class="box-header with-border">
@@ -226,8 +239,8 @@ echo "</pre>"; */
 			<div class=" ">
 			  <button <?php echo ($data[0]['case_id'] == '' ? '' : 'disabled'); ?> type="button" id="update"  class="col-md-3 center-block btn btn-success custom"><span class="glyphicon glyphicon-edit"></span> Update</button>
 			  <button type="button" id="discrepency" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>
-			  <button disabled type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
-			  <button disabled type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>
+			 <!-- <button disabled type="button" id="reject"  class="col-md-3 center-block btn btn-danger custom"><span class="glyphicon glyphicon-share-alt"></span> Reject</button>
+			  <button disabled type="button" id="un_assign"  class="col-md-3 center-block btn btn-info custom"><span class="glyphicon glyphicon-remove"></span> Un Assign</button>-->
 			</div>		
 		  </div>
 		  </div>
