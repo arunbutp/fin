@@ -80,6 +80,16 @@
 	
 			
 		}
+		public function get_pdf(){
+			
+			$id = 	$this->input->get('id', TRUE);
+			
+			$SQL = "SELECT * FROM `orderlead_info` where id = '$id'";
+			
+			$query = $this->db->query($SQL);
+
+			return $query->result_array();
+		}
 		public function check_assigned(){
 			
 			$name = 	$this->input->post('username', TRUE);

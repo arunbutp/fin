@@ -17,7 +17,7 @@ echo "</pre>"; */
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Advanced Form Elements
+        Loan Details
         <small>Preview</small>
       </h1>
       <ol class="breadcrumb">
@@ -206,9 +206,9 @@ echo "</pre>"; */
 		<div class="box-header ">
           <h3 class="box-title">Documents to Download</h3>
         </div> 
-		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   Before Approval</button>
-		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   After Approval</button>
-		<button type="button" style="border-radius: 27px;" class="btn btn-danger col-md-3 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   PDF INV</button>  
+		<a  target="_blank" href='<?=base_url();?>home/before_approval?id=<?php echo $_GET['id']; ?>'  style="border-radius: 27px;" class="btn btn-danger col-md-2 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   Before Approval</a>
+		<a    target="_blank" href='<?=base_url();?>home/after_approval?id=<?php echo $_GET['id']; ?>'  style="border-radius: 27px;" class="btn btn-danger col-md-2 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   After Approval</a>
+		<a  target="_blank" href='<?=base_url();?>home/pdf_inv?id=<?php echo $_GET['id']; ?>'  style="border-radius: 27px;" class="btn btn-danger col-md-2 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   PDF INV</a>  
 		</div>
 		</div>
 		<hr style="border-top: 1px dotted red;">

@@ -129,4 +129,11 @@ WHERE u.username= '$username'";
 		return $query->result_array();
 			
 		}
+		public function disapprove($disapp,$cur_date,$id){
+			
+			
+			 $updatesql = "UPDATE orderlead_info SET status='Canceled',is_approved=1,note='".$disapp."',updated_at='".$cur_date."' WHERE id = ".$id."";
+			 
+			 $query = $this->db->query($updatesql);
+		}
 	}

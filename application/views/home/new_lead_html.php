@@ -107,6 +107,94 @@ $this->load->view('left-menu');
       </div>
       </div>
 	  
+	  
+	  
+	  <div class="row">
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Date of Birth:</label>
+        <input type="date" class="form-control" name="dob" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Martial Status:</label>
+        
+		<select name="m_status" id="m_status" class="form-control">
+		<option value="">-- please select --</option>
+		<option value="married">Married</option>
+		<option value="un_married">Un Married</option>
+		</select>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Select Education:</label>
+       <select name="m_status" id="m_status" class="form-control">
+		<option value="">-- please select --</option>
+		<option value="high school">High School</option>
+		<option value="gratuate">Gratuate</option>
+		<option value="post_gratuate">Post Gratuate</option>
+		<option value="other">Other</option>
+		</select>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">select Residence:</label>
+        <select name="m_status" id="m_status" class="form-control">
+		<option value="">-- please select --</option>
+		<option value="self_owned">Self owned</option>
+		<option value="rented">Rented</option>
+	
+		</select>
+        <span class=""></span>
+      </div>
+      </div>
+      </div>
+	  
+	  <div class="row">
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Mobile:</label>
+        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Email:</label>
+        <input type="text" class="form-control" name="email" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">AAdhar Number:</label>
+        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Gender:</label>
+          <select name="gender" id="gender" class="form-control">
+		<option value="">-- please select --</option>
+		<option value="male">Male</option>
+		<option value="female">Female</option>
+	
+		</select>
+        <span class=""></span>
+      </div>
+      </div>
+      </div>
+	  
+	  
 	   <div class="row">
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
@@ -172,6 +260,9 @@ $this->load->view('left-menu');
       </div>
       </div>
       </div>
+	  
+	  
+	  
 	  
 	  <div class="row">
 	  <div class="col-md-12">
@@ -243,8 +334,40 @@ $this->load->view('left-menu');
       </div>
       </div>
       </div>
+ 
 	 </div>
-	 
+	  <div class="row">
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Aadhar Front:</label>
+        <input type="file" class="form-control" name="aadhar_front" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Aadhar Front:</label>
+        <input type="file" class="form-control" name="aadhar_back" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Declaration:</label>
+        <input type="file" class="form-control" name="declaration" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <!--<label for="firstname">Years at Current Address:</label>
+        <input type="password" class="form-control" name="passWord" placeholder="" required>-->
+        <span class=""></span>
+      </div>
+      </div>
+      </div>
+	  
 	
 	 
 	  

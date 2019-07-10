@@ -391,6 +391,22 @@ if(isset($_POST['submit'])){
 		$this->load->view('home/register');	
 		
 	}
+	public function before_approval(){
+		
+		$this->load->model('home_model');
+		$data['data'] = $this->home_model->get_pdf();
+		
+		
+		$this->load->view('home/before_approval',$data);	
+	}
+	
+	public function after_approval(){
+		
+		$this->load->model('home_model');
+		$data['data'] = $this->home_model->get_pdf();
+		
+		$this->load->view('home/after_approval',$data);	
+	}
 	public function finance_bc_upload(){
 		
 		$csv = $_FILES['myFile']['name'];
