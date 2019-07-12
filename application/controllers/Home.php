@@ -387,7 +387,7 @@ if(isset($_POST['submit'])){
 	}
 	public function register(){
 		
-	
+		
 		$this->load->view('home/register');	
 		
 	}
@@ -465,7 +465,7 @@ if(isset($_POST['submit'])){
 		
 		$this->home_model->submit_discrepancy();
 		
-		echo "Discrepancy Updated";
+		echo "<div class='alert alert-success'>Discrepancy Updated</div>";
 		
 	}
 	public function lead_csv_upload(){
@@ -508,7 +508,7 @@ if(isset($_POST['submit'])){
 			}
 			//echo "<pre>";
 			//print_r($original_array);
-			$str = "<div style='overflow-x:auto; height:300px;'><table  class='table table-bordered'><tr><td>ROW</td><td>Status</td></tr>";
+			$str = "<div style='overflow-x:auto; height:300px;'><table  class='table table-bordered'><tr><td>Case ID</td><td>Status</td></tr>";
 			for($m=0;$m<count($original_array);$m++){
 				
 				if($m != 0){
@@ -516,7 +516,7 @@ if(isset($_POST['submit'])){
 				if($original_array[$m]['case_id'] == ''){
 					
 					//echo $m . '<br/>';
-				$str .= "<tr><td>".$m."</td><td>Case ID Not Available</td></tr>";	
+				$str .= "<tr><td>NA</td><td>Case ID Not Available</td></tr>";	
 					
 				}else{
 					
@@ -663,7 +663,7 @@ if(isset($_POST['submit'])){
 				
 					
 				
-				$str .= "<tr><td>".$m."</td><td>".implode(" ",$cell_err)."</td></tr>";	
+				$str .= "<tr><td>".$original_array[$m]['case_id']."</td><td>".implode(" ",$cell_err)."</td></tr>";	
 					
 				}
 				}
@@ -685,9 +685,42 @@ if(isset($_POST['submit'])){
 	}
 	public function new_lead(){
 		
-		$this->load->view('home/new_lead_html');	
 		
 		
+		$data = array();
+		$session = $this->session->userdata('MY_SESS2');
+		if( $session['data'][0]['role'] == '6'){
+		$this->load->model('home_model');
+		$data['get_fin'] = $this->home_model->get_fin();
+		}
+		
+		$this->load->view('home/new_lead_html',$data);	
+		
+		
+	}
+	public function get_bra(){
+		
+		$this->load->model('home_model');
+		$data['get_bra'] = $this->home_model->get_bra();
+		
+		
+		$str = '<option value="">-- please select --</option>';
+		for($i=0;$i<count($data['get_bra']);$i++){
+		$str .= '<option value="'.$data['get_bra'][$i]['branch_code'].'">'.$data['get_bra'][$i]['branch_name'].'</option>';	
+		}
+		echo $str;
+	}
+	public function get_field(){
+		
+		$this->load->model('home_model');
+		$data['get_bra'] = $this->home_model->get_field();
+		
+		
+		$str = '<option value="">-- please select --</option>';
+		for($i=0;$i<count($data['get_bra']);$i++){
+		$str .= '<option value="'.$data['get_bra'][$i]['userName'].'">'.$data['get_bra'][$i]['firstname'].'</option>';	
+		}
+		echo $str;
 	}
 	
 }

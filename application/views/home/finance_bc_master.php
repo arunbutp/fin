@@ -48,7 +48,8 @@ $this->load->view('left-menu');
 			 
 			 
 	<a style="margin:5px;" class="btn btn-success fancybox fancybox.iframe" href="<?=base_url();?>home/create_finance_bc_master"><span class="glyphicon glyphicon-th-list">   </span> ADD</a>	
-	
+	  <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal">Bulk Upload</button>
+
 		 
 	<table id="example" class="display" cellspacing="0" width="100%" height="100%">
 	

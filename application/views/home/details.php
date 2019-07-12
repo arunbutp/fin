@@ -43,9 +43,8 @@ $this->load->view('left-menu');
 						<th>State</th>
 						<th>Item Code</th>
 						<th>Status</th>
-						<?php
-						if($_GET['task']=='Under Process'){
-						?>
+						<?php if($_GET['task']!='Disbursed'){
+						?>	
 						<th>Settings</th>
 						<?php
 						}
@@ -230,7 +229,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 			{ data: "item_code" },
 			{ data: "status" }
 			<?php
-			if($_GET['task']=='Under Process'){
+			if($_GET['task']!='Disbursed'){
 			?>,
 			{ data: "settings" }
 			<?php

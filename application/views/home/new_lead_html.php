@@ -1,6 +1,10 @@
 <?php 
 $this->load->view('header');
 $this->load->view('left-menu');
+$session = $this->session->userdata('MY_SESS2');
+/* echo "<pre>";
+print_r($session['data'][0]['role']);
+echo "</pre>"; */
 ?>
 	
   <!-- Content Wrapper. Contains page content -->
@@ -33,20 +37,40 @@ $this->load->view('left-menu');
 
     <form id="form2" action= "" method="post">
 	<div class="row">
-	<div class="col-md-3">
+	<?php
+	if($session['data'][0]['role'] == '6'){
+	?>
+	<div class="col-md-4">
       <div class="form-group has-feedback">
 	  <label for="firstname">Select Finance:</label>
         <!--<input type="text" class="form-control" name="firstname" placeholder="John" required>-->
-		<select  class="form-control">
+		<select  id="finance" name="finance" class="form-control">
+		
+		<?php
+		
+		$str = '<option value="">-- please select --</option>';
+		for($i=0;$i<count($get_fin);$i++){
+			
+		$str .= "<option value='".$get_fin[$i]['id']."-".$get_fin[$i]['name']."'>".$get_fin[$i]['name']."</option>";	
+			
+			
+		}
+		
+		echo $str;
+		
+		
+		?>
+		
+		
 		
 		</select>
         <span class=""></span>
       </div>
 	  </div>
-	  <div class="col-md-3">
+	  <div class="col-md-4">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Branch:</label>
-       <select  class="form-control">
+       <select id="branch" name="branch"  class="form-control">
 		
 		</select>
         <span class=""></span>
@@ -54,46 +78,51 @@ $this->load->view('left-menu');
       </div>
 	  
 	  
-	  <div class="col-md-3">
+	  <div class="col-md-4">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Field Officer:</label>
-         <select  class="form-control">
+        <select id="field_officer" name="field_officer" class="form-control">
 		
 		</select>
         <span class=""></span>
       </div>
       </div>
 	  
+	 <?php
+	}
+	 ?>
 	 
 	 
-	 <div class="col-md-3">
-	 <div class="form-group">
-	 <label for="firstname">Applicant First Name:</label>
-		<input type="text" class="form-control" name="firstname" placeholder="" required>
-	 </div>
-	 </div>
 	</div>
 	 
 
 	  <div class="row">
-	  <div class="col-md-3">
+	 <div class="col-md-2">
+	 <div class="form-group">
+	 <label for="firstname">Applicant F Name:</label>
+		<input type="text" class="form-control" name="firstname" placeholder="" required>
+	 </div>
+	 </div>
+	 
+	 
+	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Applicant Middle Name:</label>
+	  <label for="firstname">Applicant M Name:</label>
         <input type="text" class="form-control" name="mobile" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  
-	  <div class="col-md-3">
+	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Applicant Last Name:</label>
+	  <label for="firstname">Applicant L Name:</label>
         <input type="text" class="form-control" name="email" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Father/Spouse Name:</label>
+	  <label for="firstname">Father/Spou Name:</label>
         <input type="text" class="form-control" name="userName" placeholder="" required>
         <span class=""></span>
       </div>
@@ -110,15 +139,23 @@ $this->load->view('left-menu');
 	  
 	  
 	  <div class="row">
-	  <div class="col-md-3">
+	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Date of Birth:</label>
-        <input type="date" class="form-control" name="dob" placeholder="" required>
+	  <label for="firstname">No. of dependants:</label>
+        <input type="text" class="form-control" id="dependants" name="dependants" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  
-	  <div class="col-md-3">
+	  <div class="col-md-2">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Date of Birth:</label>
+        <input type="text" class="form-control" id="datepicker" name="dob" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
+	  
+	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Martial Status:</label>
         
@@ -367,7 +404,20 @@ $this->load->view('left-menu');
       </div>
       </div>
       </div>
-	  
+	  <div class="row">
+	  <div class="col-md-12">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Income & Expenses:</label>
+        <select name="income_expense" id="income_expense" class="form-control">
+		<option value="">-- please select --</option>
+		<option value="UPPER">UPPER</option>
+		<option value="MIDDLE">MIDDLE</option>
+		
+		</select>
+        <span class=""></span>
+      </div>
+      </div>
+      </div>
 	
 	 
 	  
@@ -424,10 +474,56 @@ $this->load->view('footer');
 <!-- AdminLTE for demo purposes -->
 <script src="<?=base_url();?>assets/dist/js/demo.js"></script>
 <!-- page script -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
    $(document).ready(function(){
 	   
+	   
+	$("#finance").on('change',function(){
+		//alert();
+		$("#field_officer").html('');
+		$.ajax({
+			url: '<?=base_url();?>home/get_bra',
+			dataType:'html',
+			type:'POST',
+			data:{'finance':$("#finance").val()},
+			success:function(result){
+				
+				$("#branch").html(result);
+			}
+			
+		});
+	})  
+
+	$("#branch").on('change',function(){
+		//alert();
+		$.ajax({
+			url: '<?=base_url();?>home/get_field',
+			dataType:'html',
+			type:'POST',
+			data:{'branch':$("#branch").val()},
+			success:function(result){
+				
+				$("#field_officer").html(result);
+			}
+			
+		});
+	}) 	
+	   
+	   
+	   
+   $( "#datepicker" ).datepicker({
+    dateFormat: 'yy-mm-dd',
+	changeMonth: true,
+     changeYear: true,
+	minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+    startDate: '-3d'
+});
+   
 	 $('#check_address').click(function() {
 			//$("#present_address").toggle(this.checked);
 			

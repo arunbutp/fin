@@ -12,7 +12,40 @@ echo "</pre>"; */
    margin:0px 5px;
    width:23%;
 }
+img {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 150px; /* Set a small width */
+}
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
 </style>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?=base_url();?>assets/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+
+		$(".fancybox").fancybox({'width':400,
+                         'height':250,
+                         'autoSize' : false,
+						 'openEffect': 'elastic',
+						 'closeEffect': 'elastic',
+						 afterClose  : function() {
+							var table = $('#example').DataTable();
+							table.clear().draw();
+							table.ajax.reload();
+							}
+		});
+
+		});
+	</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -204,6 +237,27 @@ echo "</pre>"; */
 		<div class="row">
 		<div class="col-md-12">
 		<div class="box-header ">
+          <h3 class="box-title">Uploaded Images</h3>
+        </div> 
+		
+		<a style="margin:0px 5px;" target="_blank" class="fancybox" rel="gallery1" href="<?php echo $data[0]['aadhar_front'];?>">
+			  <img width="100px" height="100px" src="<?php echo $data[0]['aadhar_front'];?>" alt="Forest">
+		</a>
+		<a style="margin:0px 5px;" target="_blank" class="fancybox" rel="gallery1" href="<?php echo $data[0]['aadhar_back'];?>">
+			  <img width="100px" height="100px" src="<?php echo $data[0]['aadhar_back'];?>" alt="Forest">
+		</a>
+		<a style="margin:0px 5px;" target="_blank" class="fancybox" rel="gallery1" href="<?php echo $data[0]['alernate_id'];?>">
+			  <img width="100px" height="100px" src="<?php echo $data[0]['alernate_id'];?>" alt="Forest">
+		</a>
+
+
+		
+		</div>
+		</div>
+		<hr style="border-top: 1px dotted red;">
+		<div class="row">
+		<div class="col-md-12">
+		<div class="box-header ">
           <h3 class="box-title">Documents to Download</h3>
         </div> 
 		<a  target="_blank" href='<?=base_url();?>home/before_approval?id=<?php echo $_GET['id']; ?>'  style="border-radius: 27px;" class="btn btn-danger col-md-2 center-block custom"><span class="fa fa-fw fa-file-pdf-o"></span>   Before Approval</a>
@@ -281,7 +335,7 @@ $this->load->view('footer');
 </div>
 <!-- ./wrapper -->
 
-	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url();?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 

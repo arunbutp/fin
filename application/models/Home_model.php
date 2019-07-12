@@ -514,6 +514,42 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 		   
 		   
 		}
+		public function get_fin(){
+		   
+		   $session = $this->session->userdata('MY_SESS2');
+		   
+		   
+		   $SQL = "SELECT * FROM `finance_bc_master` where id IN (".$session['data'][0]['rso_bc_ids'].")";
+		
+		   
+		   $query = $this->db->query($SQL);
+		   
+		   return $query->result_array();
+			
+		}
+		public function get_bra(){
+		   
+		   $finance = $this->input->get_post('finance');
+		   
+		   $arr_fin = explode('-',$finance);
+		   $SQL = "SELECT * FROM `finance_bc_branch_master` where bc_id = '".$arr_fin[0]."'";
+
+		   $query = $this->db->query($SQL);
+		   
+		   return $query->result_array();
+			
+		}
+		public function get_field(){
+		   
+		   $branch = $this->input->get_post('branch');
+		   
+		   $SQL = "SELECT * FROM `users` where branch_id = '$branch'";
+
+		   $query = $this->db->query($SQL);
+		   
+		   return $query->result_array();
+			
+		}
 		public function case_id(){
 			
 			$id 	 = $this->input->get('id');
@@ -591,7 +627,7 @@ VALUES ('$id', 'Discrepancy', '','','RCF Document Check','');";
 			if($history_arr[0]['action'] == '-' && ($history_arr[0]['process']== 'RCF QDE' || $history_arr[0]['process']== '' )){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Loan Eligible' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Loan Eligible',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			
 			$query = $this->db->query($SQL);
 			
@@ -661,7 +697,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','RCF Document Check','');"
 			if($history_arr[0]['action'] == 'Discrepancy' && ($history_arr[0]['process']== 'RCF Document Check' || $history_arr[0]['process']== 'RCF QDE')){
 			
 			
-			$SQL = "UPDATE orderlead_info SET status='Under Process' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Under Process',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -753,7 +789,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','Post Approval','');";
 			if(($history_arr[0]['action'] == 'Discrepancy' || $history_arr[0]['action'] == '') && ($history_arr[0]['process']== 'Post Approval' || $history_arr[0]['process']== '-' )){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Sanctioned' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Sanctioned',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -801,7 +837,7 @@ VALUES ('".$chk_arr[0]['id']."', 'SS Completed', '','','Post Approval','');";
 			if($history_arr[0]['action'] == 'SS Completed' && $history_arr[0]['process']== 'Post Approval' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Pending Order Confirmation' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Pending Order Confirmation',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -849,7 +885,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
 			if($history_arr[0]['action'] == 'Processed' && $history_arr[0]['process']== 'Boonbox Upload' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -897,7 +933,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Boonbox Upload','');";
 			if($history_arr[0]['action'] == 'Processed' && $history_arr[0]['process']== 'Boonbox Upload' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -993,7 +1029,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy', '','','','BC Discrepancy');";
 			if($history_arr[0]['status'] == 'BC Discrepancy' && $history_arr[0]['action']== 'Discrepancy' ){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursement In Progress',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -1038,10 +1074,10 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','Hero-Ops','');";
 			$history_arr =  $query2->result_array();
 			
 			
-			if($history_arr[0]['status'] == '' && $history_arr[0]['action']== 'Processed' && $history_arr[0]['process']== 'Hero-Ops' ){
+			if(($history_arr[0]['status'] == '' || $history_arr[0]['status'] == 'BB Discrepancy' ) && ($history_arr[0]['action']== 'Processed' || $history_arr[0]['action']== 'Discrepancy') && ($history_arr[0]['process']== 'Hero-Ops' ||  $history_arr[0]['process']== 'Boonbox Upload' || $history_arr[0]['process']== '')){
 				
 	
-			$SQL = "UPDATE orderlead_info SET status='Disbursed' WHERE case_id = '".$vars['case_id']."'";
+			$SQL = "UPDATE orderlead_info SET status='Disbursed',discrepancy_comment='' WHERE case_id = '".$vars['case_id']."'";
 			$query = $this->db->query($SQL);
 			
 			$SQL2 = "INSERT INTO orderlead_upload_history (parent_id, action, reason,remarks,process,status)
@@ -1052,7 +1088,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 				
 			}else{
 				
-				return "Please Do Previous Step";
+				return "Disbursement In Progress not Done.";
 			}
 			
 		   }
