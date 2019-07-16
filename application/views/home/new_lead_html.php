@@ -5,6 +5,8 @@ $session = $this->session->userdata('MY_SESS2');
 /* echo "<pre>";
 print_r($session['data'][0]['role']);
 echo "</pre>"; */
+//echo "<pre>";
+//print_r($fields);
 ?>
 	
   <!-- Content Wrapper. Contains page content -->
@@ -36,6 +38,10 @@ echo "</pre>"; */
     <p class="login-box-msg">New lead Creation</p>
 
     <form id="form2" action= "" method="post">
+		  <input type="hidden" value="<?php echo $fields['itemcode'] ?>" name="itemcode" >
+	  <input type="hidden" value="<?php echo $fields['amount'] ?>" name="amount" >
+	  <input type="hidden" value="<?php echo $fields['product_name'] ?>" name="product_name" >
+	  <input type="hidden" value="<?php echo $fields['storeid'] ?>" name="storeid" >
 	<div class="row">
 	<?php
 	if($session['data'][0]['role'] == '6'){
@@ -77,7 +83,7 @@ echo "</pre>"; */
       </div>
       </div>
 	  
-	  
+
 	  <div class="col-md-4">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Field Officer:</label>
@@ -100,7 +106,7 @@ echo "</pre>"; */
 	 <div class="col-md-2">
 	 <div class="form-group">
 	 <label for="firstname">Applicant F Name:</label>
-		<input type="text" class="form-control" name="firstname" placeholder="" required>
+		<input type="text" class="form-control" name="app_fname" placeholder="" required>
 	 </div>
 	 </div>
 	 
@@ -108,7 +114,7 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Applicant M Name:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" class="form-control" name="app_mname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -116,21 +122,21 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Applicant L Name:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" class="form-control" name="app_lname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Father/Spou Name:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="fname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Mother Name:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>
+        <input type="text" class="form-control" name="mname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -161,8 +167,10 @@ echo "</pre>"; */
         
 		<select name="m_status" id="m_status" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="married">Married</option>
-		<option value="un_married">Un Married</option>
+		<option value="Married">Married</option>
+		<option value="Un Married">Un Married</option>
+		<option value="Divorced">Divorced</option>
+		<option value="Widowed">Widowed</option>
 		</select>
         <span class=""></span>
       </div>
@@ -170,12 +178,12 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Education:</label>
-       <select name="m_status" id="m_status" class="form-control">
+       <select name="education" id="education" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="high school">High School</option>
-		<option value="gratuate">Gratuate</option>
-		<option value="post_gratuate">Post Gratuate</option>
-		<option value="other">Other</option>
+		<option value="High School">High School</option>
+		<option value="Gratuate">Gratuate</option>
+		<option value="Post Gratuate">Post Gratuate</option>
+		<option value="Other">Other</option>
 		</select>
         <span class=""></span>
       </div>
@@ -183,10 +191,10 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">select Residence:</label>
-        <select name="m_status" id="m_status" class="form-control">
+        <select name="residence" id="residence" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="self_owned">Self owned</option>
-		<option value="rented">Rented</option>
+		<option value="Self Owned">Self owned</option>
+		<option value="Rented">Rented</option>
 	
 		</select>
         <span class=""></span>
@@ -213,7 +221,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">AAdhar Number:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="aadhar_number" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -236,7 +244,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 1:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" class="form-control" name="address_1" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -244,21 +252,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 2:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" class="form-control" name="address_2" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Nearest Landmark:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="land_mark" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">City/Village:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>
+        <input type="text" class="form-control" name="city" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -270,7 +278,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">District:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" class="form-control" name="district" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -278,21 +286,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">State:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" class="form-control" name="state" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Pincode:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="pincode" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Years at Current Address:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>
+        <input type="text" class="form-control" name="year_address" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -303,7 +311,7 @@ echo "</pre>"; */
 	  
 	  <div class="row">
 	  <div class="col-md-12">
-	  <label class="checkbox-inline"><input type="checkbox" id="check_address" value="">Please check if Shipping Address Different</label>
+	  <label class="checkbox-inline"><input type="checkbox" name="check_address" id="check_address" value="1">Please check if Shipping Address Different</label>
 	  </div>
 	  </div>
 	  <div id="present_address" style="display:none">
@@ -311,7 +319,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 1:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" class="form-control" name="s_address_1" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -319,21 +327,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 2:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" class="form-control" name="s_address_2" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Nearest Landmark:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="s_landmark" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">City/Village:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>
+        <input type="text" class="form-control" name="s_city" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -344,7 +352,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">District:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" class="form-control" name="s_district" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -352,21 +360,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">State:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" class="form-control" name="s_state" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Pincode:</label>
-        <input type="text" class="form-control" name="userName" placeholder="" required>
+        <input type="text" class="form-control" name="s_pincode" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Years at Current Address:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>
+        <input type="text" class="form-control" name="s_year_address" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -482,6 +490,33 @@ $this->load->view('footer');
 
    $(document).ready(function(){
 	   
+	   
+	$("#form2").submit(function(evt){
+		alert()
+	$("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
+	//alert();
+		  evt.preventDefault();
+		  var formData = new FormData($(this)[0]);
+		  
+	   $.ajax({
+		   url: "<?=base_url();?>home/lead_upload",
+		   type: 'POST',
+		   data: formData,
+		   async: false,
+		   cache: false,
+		   contentType: false,
+		   enctype: 'multipart/form-data',
+		   processData: false,
+		   success: function (response) {
+			 $("#csv_status").html(response);
+			// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
+
+		   }
+	   });
+	   return false;
+	 });
+ 
+ 
 	   
 	$("#finance").on('change',function(){
 		//alert();

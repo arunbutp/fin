@@ -27,7 +27,7 @@ $this->load->view('left-menu');
             </div>-->
             <div class="box-body">
              
-              <button  onclick="location.href = '<?=base_url();?>home/new_lead';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
+              <button  onclick="location.href = '<?=base_url();?>home/products';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
                <span class="glyphicon glyphicon-user"></span> New Lead
               </button>
               <button type="button" class="btn btn-success " style="margin:0px 5px;" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-menu-hamburger"></span> CSV UPLOAD</button>

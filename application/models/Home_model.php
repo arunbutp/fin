@@ -1100,11 +1100,196 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			
 			$query = $this->db->query($SQL);
 		   
-		   $chk_arr =  $query->result_array();
-			
-			
-			
-			
+		    $chk_arr =  $query->result_array();
 			return $chk_arr;
+		}
+		public function insert_lead(){
+			
+			
+		$session = $this->session->userdata('MY_SESS2');
+		
+		
+		echo "a<pre>";
+		print_r($session);
+		
+		if($session['data'][0]['role']== 5){
+			
+		 echo   $SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$session['data'][0]['branch_id']."'";
+			
+			$query = $this->db->query($SQL);
+		   
+		    $chk_arr =  $query->result_array();	
+			
+			$branch_name = $chk_arr[0]['branch_name'];
+			
+			$SQL2 = "SELECT * FROM finance_bc_master where id = '".$session['data'][0]['bc_id']."'";
+			
+			$query2 = $this->db->query($SQL2);
+		   
+		    $chk_arr2 =  $query2->result_array();	
+			
+			$bc_name = $chk_arr2[0]['name'];
+			$bc_id = $session['data'][0]['bc_id'];
+			
+			
+		}else{
+			
+		echo		$SQL2 = "SELECT * FROM users where userName = '".$_POST['field_officer']."'";
+				
+				$query2 = $this->db->query($SQL2);
+			   
+				$users =  $query2->result_array();
+				
+				
+				echo "<pre>";
+				print_r($chk_arr[0]['branch_name']);
+			
+				$branch_name = $chk_arr[0]['branch_name'];
+				$branch_code = $_POST['branch'];
+				
+				$bc		 = $_POST['finance'];
+				$bc = explode('-',$bc);
+			
+				$bc_id = $bc[0];
+				$bc_name = $bc[1];
+			
+		}
+		
+		if($_POST['check_address'] == 1){
+			
+			$address_1 = $_POST['s_address_1'];
+			$address_2 = $_POST['s_address_2'];
+			$land_mark = $_POST['s_land_mark'];
+			$pincode = $_POST['s_pincode'];
+			$city = $_POST['s_city'];
+			$district = $_POST['s_district'];
+			$state = $_POST['s_state'];
+			$year_at_currentaddress = $_POST['s_year_address'];
+			
+			$perm_address_1 = $_POST['address_1'];
+			$perm_address_2 = $_POST['address_2'];
+			$perm_land_mark = $_POST['land_mark'];
+			$perm_pincode = $_POST['pincode'];
+			$perm_city = $_POST['city'];
+			$perm_district = $_POST['district'];
+			$perm_state = $_POST['state'];
+			
+			
+		}else{
+			$address_1 = $_POST['address_1'];
+			$address_2 = $_POST['address_2'];
+			$land_mark = $_POST['land_mark'];
+			$pincode = $_POST['pincode'];
+			$city = $_POST['city'];
+			$district = $_POST['district'];
+			$state = $_POST['state'];
+			$year_at_currentaddress = $_POST['year_address'];
+			
+			$perm_address1 = $_POST['address_1'];
+			$perm_address2 = $_POST['address_2'];
+			$perm_landmark = $_POST['land_mark'];
+			$perm_pincode = $_POST['pincode'];
+			$perm_city = $_POST['city'];
+			$perm_district = $_POST['district'];
+			$perm_state = $_POST['state'];
+		}
+			
+			$temp = explode(".", $_FILES["aadhar_front"]["name"]);
+			$aadhar_front = 'aadhar_front'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["aadhar_front"]["tmp_name"], "uploads/" . $aadhar_front);
+			
+			$temp = explode(".", $_FILES["aadhar_back"]["name"]);
+			$aadhar_back = 'aadhar_back'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["aadhar_back"]["tmp_name"], "uploads/" . $aadhar_back);
+			
+			$temp = explode(".", $_FILES["declaration"]["name"]);
+			$declaration = 'declaration'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["declaration"]["tmp_name"], "uploads/" . $declaration);
+
+		
+			echo $SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$_POST['branch']."'";
+			
+			$query = $this->db->query($SQL);
+		   
+		    $chk_arr =  $query->result_array();
+			
+			
+			
+			
+			$field_officer_name = $users[0]['firstname'];
+		
+			
+			$itemcode = $_POST['itemcode'];
+			$price = str_replace( ',', '', $_POST['amount'] );
+			$applicant_name = $_POST['app_fname'].' '.$_POST['app_lname'];
+			$app_firstname = $_POST['app_fname'];
+			$app_lastname = $_POST['app_lname'];
+			$app_midname = $_POST['app_mname'];
+			$mothername = $_POST['mname'];
+			$fathername = $_POST['fname'];
+			$aadhar_number = $_POST['aadhar_number'];
+			$dob = $_POST['dob'];
+			$gender = $_POST['gender'];
+			$martial = $_POST['m_status'];
+			$education = $_POST['education'];
+			$residence = $_POST['residence'];
+			$address_1 = $_POST['address_1'];
+			$address_2 = $_POST['address_2'];
+			$land_mark = $_POST['land_mark'];
+			$pincode = $_POST['pincode'];
+			$city = $_POST['city'];
+			$district = $_POST['district'];
+			$state = $_POST['state'];
+			$mobile = $_POST['mobile'];
+			$email = $_POST['email'];
+			$dependants = $_POST['dependants'];
+			
+			$year_in_currentcity = '20';
+
+			$branch_code = $_POST['branch'];
+			$storeid = $_POST['storeid'];
+			$field_officer = $_POST['field_officer'];
+			$grosstenure = 0.0;
+			$net_tenure = 0.0;
+		
+			$aadhar_front = base_url().'/uploads/'.$aadhar_front;
+			$aadhar_back = base_url().'/uploads/'.$aadhar_back;
+			$alternate_id = base_url().'/uploads/'.$declaration;
+			
+			if($_POST['income_expense']=='UPPER'){
+				
+			$monthly_income = 'a:2:{i:0;a:3:{s:9:"familyMem";s:7:"Husband";s:6:"amount";s:5:"20000";s:12:"relationName";s:0:"";}i:1;a:3:{s:9:"familyMem";s:4:"Wife";s:6:"amount";s:5:"15000";s:12:"relationName";s:0:"";}}';
+			$monthly_expenditure = 'a:12:{s:4:"Food";s:4:"5000";s:9:"Transport";s:4:"2000";s:7:"Medical";s:4:"1500";s:15:"Loans Repayment";s:4:"1500";s:9:"Education";s:4:"1000";s:2:"EB";s:3:"300";s:3:"Gas";s:3:"500";s:5:"Cable";s:3:"200";s:4:"Milk";s:3:"800";s:14:"Other Expenses";s:4:"2000";s:7:"Savings";s:5:"15000";s:12:"Cash In Hand";s:4:"5200";}';
+				
+			}else{
+			$monthly_income = 'a:2:{i:0;a:3:{s:9:"familyMem";s:7:"Husband";s:6:"amount";s:5:"15000";s:12:"relationName";s:0:"";}i:1;a:3:{s:9:"familyMem";s:4:"Wife";s:6:"amount";s:5:"10000";s:12:"relationName";s:0:"";}}';
+			$monthly_expenditure = 'a:12:{s:4:"Food";s:4:"3000";s:9:"Transport";s:4:"2000";s:7:"Medical";s:4:"1000";s:15:"Loans Repayment";s:4:"1500";s:9:"Education";s:4:"1000";s:2:"EB";s:3:"200";s:3:"Gas";s:3:"300";s:5:"Cable";s:3:"200";s:4:"Milk";s:3:"600";s:14:"Other Expenses";s:4:"1500";s:7:"Savings";s:5:"10000";s:12:"Cash In Hand";s:4:"3700";}';
+			}	
+			
+			
+			
+			
+			
+			
+			$finalprice = $price;
+			$insurance_amount = round($finalprice * $insurance_rate/1000);
+			// $loan_amount = $item['loan_amount'];
+			$loan_amount = round($insurance_amount + $finalprice);
+			$cal_process_fee = ($processing_fee / 100) * $loan_amount;
+			$total_process = round($taxes/100 *($cal_process_fee),0);	
+			$total_process_amount = $cal_process_fee + $total_process;
+			// $emi_amount =  loancalculateAction($finalprice);
+			$emi_amount = ceil(($loan_amount+$loan_amount*12/100)/12);
+			$advance_emi = 0;
+			
+			
+			
+					
+			echo "<pre>";
+			print_r($_POST);
+			
+		echo	$sql = "INSERT INTO `orderlead_info` ( location_name , disburse_to,disburse_code,bc_name,bc_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname,applicant_middlename,mother_name,father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,monthly_income,monthly_expenditure,loan_amount,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,perm_district,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,store_id,branch_code,mobile_order,username,status,rso_username,ngo_officername,field_officername,lead_type,processing_fee,emi_amount,advance_emi_amount,gross_tenure,net_tenure,created_at ,perm_pincode,branch_officername) VALUES ( '$branch_name','Boonbox','Boon','$bc_name','$bc_id','RCF','Vanilla','$itemcode','$price','1','$applicant_name' , '$app_firstname', '$app_lastname', '$app_midname','$mothername','$fathername','Aadhar','$aadhar_number','$dob','$gender','$martial','$education','$residence','$address_1','$address_2','$land_mark','$pincode','$city','$district','$state','$mobile','$monthly_income','$monthly_expenditure','$price','$email','$dependants','$year_at_currentaddress','$year_in_currentcity','$perm_address1','$perm_address2','$perm_landmark','$perm_district','$perm_city','$perm_state','$aadhar_front','$aadhar_back','$alternate_id','$storeid','$branch_code','0','$field_officer','Under Process','','$bc_name','$field_officer_name','1','$total_process_amount','$emi_amount','$advance_emi','$grosstenure','$net_tenure',NOW(),'$perm_pincode','$branch_name' );";
+			
+			$query = $this->db->query($sql);
 		}
 	}

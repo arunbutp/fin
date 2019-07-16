@@ -693,6 +693,7 @@ if(isset($_POST['submit'])){
 		$this->load->model('home_model');
 		$data['get_fin'] = $this->home_model->get_fin();
 		}
+		$data['fields'] = $_POST; 
 		
 		$this->load->view('home/new_lead_html',$data);	
 		
@@ -721,6 +722,18 @@ if(isset($_POST['submit'])){
 		$str .= '<option value="'.$data['get_bra'][$i]['userName'].'">'.$data['get_bra'][$i]['firstname'].'</option>';	
 		}
 		echo $str;
+	}
+	public function products(){
+		
+		$this->load->view('home/products');
+	}
+	public function lead_upload(){
+		
+		$this->load->model('home_model');
+		$data['get_bra'] = $this->home_model->insert_lead();
+
+		//echo "<pre>";
+		//print_r($_FILES);
 	}
 	
 }
