@@ -481,6 +481,7 @@
 				
 				$lead_type = '(lp.lead_type != 1) AND';
 			}else{
+				//echo $task;
 				$lead_type = '(lp.lead_type = 1) AND';
 				$status = "AND (lp.status = '$task')"; 
 			}
@@ -490,11 +491,11 @@
 				$lead_type = '';
 				$status = '';
 			}
-
+			
 
 			if($session['data'][0]['role'] == 2){
 				
-				$str = "";
+				$str = "WHERE (lp.lead_type = 1)  $status";
 			}else if($session['data'][0]['role'] == 4){
 				
 				
@@ -517,7 +518,7 @@
  lp.branch_code = '01001,01002') $status";
 			}			
 			
-			$SQL = "SELECT SQL_CALC_FOUND_ROWS lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
+			 $SQL = "SELECT SQL_CALC_FOUND_ROWS lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
 IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') AS cas_id,
  IF(lp.case_id IS NULL,'','') AS cas_id_empty,IFNULL(lp.discrepancy_comment,'') AS discrepancy_comment,
  IFNULL(lp.case_id,'') AS case_id,lp.id AS lead_id,fb.finance_name 
