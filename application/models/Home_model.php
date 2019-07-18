@@ -1,5 +1,10 @@
 <?php
 	class Home_model extends CI_Model{
+		public function __construct(){
+			
+			
+			
+		}
 		
          public function menu_names(){
 			
@@ -105,7 +110,36 @@
 			
 			$session = $this->session->userdata('MY_SESS2');
 			
-			$SQL = "SELECT COUNT(*) AS total_lead,IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,IFNULL(SUM(IF(oi.status='Under Process' AND lead_type = 1,1,0)),0) AS under_process, IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, IFNULL(SUM(IF(oi.status='Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi WHERE oi.username = '".$session['data'][0]['userName']."' OR oi.rso_username = '".$session['data'][0]['userName']."' OR oi.branch_code = '01001,01002'";
+			//echo "<pre>";
+			//print_r($session['data'][0]['rso_bc_ids']);
+			
+			
+			
+			if($session['data'][0]['role'] == 2){
+				
+				$str = "";
+			}else if($session['data'][0]['role'] == 4){
+				
+				
+				$str = "WHERE oi.branch_code = '".$session['data'][0]['branch_id']."' OR oi.branch_code = '01001,01002'";
+			}else if($session['data'][0]['role'] == 3){
+				
+				
+				$str = "WHERE oi.bc_code = '".$session['data'][0]['bc_id']."' OR oi.branch_code = '01001,01002'";
+			}else if($session['data'][0]['role'] == 6){
+				
+				$bc_ids = $session['data'][0]['rso_bc_ids'];
+				$str = "WHERE bc_code IN (".$bc_ids.")  OR oi.branch_code = '01001,01002'";
+			}else if($session['data'][0]['role'] == 5){
+				
+				
+				$str = "WHERE oi.username = '".$session['data'][0]['userName']."' OR oi.rso_username = '".$session['data'][0]['userName']."' OR oi.branch_code = '01001,01002'";
+			}else{
+				
+				$str = "WHERE oi.username = '".$session['data'][0]['userName']."' OR oi.rso_username = '".$session['data'][0]['userName']."' OR oi.branch_code = '01001,01002'";
+			}
+			
+			 $SQL = "SELECT COUNT(*) AS total_lead,IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,IFNULL(SUM(IF(oi.status='Under Process' AND lead_type = 1,1,0)),0) AS under_process, IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, IFNULL(SUM(IF(oi.status='Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi $str";
 			
 			$query = $this->db->query($SQL);
 
@@ -455,7 +489,33 @@
 			if($task == 'Total Lead'){
 				$lead_type = '';
 				$status = '';
-			}	
+			}
+
+
+			if($session['data'][0]['role'] == 2){
+				
+				$str = "";
+			}else if($session['data'][0]['role'] == 4){
+				
+				
+				$str = "WHERE $lead_type lp.branch_code = '".$session['data'][0]['branch_id']."' OR lp.branch_code = '01001,01002' $status";
+			}else if($session['data'][0]['role'] == 3){
+				
+				
+				$str = "WHERE $lead_type lp.bc_code = '".$session['data'][0]['bc_id']."' OR lp.branch_code = '01001,01002' $status";
+			}else if($session['data'][0]['role'] == 6){
+				
+				$bc_ids = $session['data'][0]['rso_bc_ids'];
+				$str = "WHERE $lead_type lp.bc_code IN (".$bc_ids.")  OR lp.branch_code = '01001,01002' $status";
+			}else if($session['data'][0]['role'] == 5){
+				
+				$str = "WHERE $lead_type  (lp.username = '".$session['data'][0]['userName']."' OR lp.rso_username = '".$session['data'][0]['userName']."' OR 
+ lp.branch_code = '01001,01002') $status";
+ 
+			}else{
+				$str = "WHERE $lead_type  (lp.username = '".$session['data'][0]['userName']."' OR lp.rso_username = '".$session['data'][0]['userName']."' OR 
+ lp.branch_code = '01001,01002') $status";
+			}			
 			
 			$SQL = "SELECT SQL_CALC_FOUND_ROWS lp.*,CONCAT(lp.applicant_firstname,'',lp.applicant_lastname) AS applicant_name,
 IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') AS cas_id,
@@ -464,8 +524,7 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
  AS bc_name FROM orderlead_info AS lp  
  LEFT JOIN finance_bc_branch_master AS jd ON jd.branch_code = lp.branch_code 
  LEFT JOIN finance_master AS fb ON fb.id = jd.bc_id
- WHERE $lead_type  (lp.username = '".$session['data'][0]['userName']."' OR lp.rso_username = '".$session['data'][0]['userName']."' OR 
- lp.branch_code = '01001,01002') $status ORDER BY id DESC $limit_rows";
+ $str ORDER BY id DESC $limit_rows";
 			
 			$query = $this->db->query($SQL);
 			
@@ -1111,8 +1170,9 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 		
 		echo "a<pre>";
 		print_r($session);
+		print_r($_POST);
 		
-		if($session['data'][0]['role']== 5){
+		/* if($session['data'][0]['role']== 5){
 			
 		 echo   $SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$session['data'][0]['branch_id']."'";
 			
@@ -1152,6 +1212,67 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			
 				$bc_id = $bc[0];
 				$bc_name = $bc[1];
+			
+		} */
+		
+		
+		if($session['data'][0]['role']== 6){
+			
+			
+			
+				$SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$_POST['branch']."'";
+				
+				$query = $this->db->query($SQL);
+			   
+				$chk_arr =  $query->result_array();	
+				
+				
+				
+				
+				$SQL2 = "SELECT * FROM users where userName = '".$_POST['field_officer']."'";
+				
+				$query2 = $this->db->query($SQL2);
+			   
+				$chk_arr2 =  $query2->result_array();	
+				
+
+				$bc		 = $_POST['finance'];
+				$bc = explode('-',$bc);
+				$bc_id = $bc[0];
+				$bc_name = $bc[1];
+				$rso_username = $session['data'][0]['userName'];
+				$field_officer = $_POST['field_officer'];
+				$field_officer_name = $chk_arr2[0]['firstname'];
+				$branch_name = $chk_arr[0]['branch_name'];
+				$field_officer = $_POST['field_officer']; 
+				$branch_code = $_POST['branch'];
+			
+		}elseif($session['data'][0]['role']== 5){
+			
+			//echo $session['data'][0]['role'];
+				$SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$session['data'][0]['branch_id']."'";
+				
+				$query = $this->db->query($SQL);
+			   
+				$chk_arr =  $query->result_array();	
+				
+				$SQL2 = "SELECT * FROM finance_bc_master where id = '".$chk_arr[0]['bc_id']."'";
+				
+				$query2 = $this->db->query($SQL2);
+			   
+				$chk_arr2 =  $query2->result_array();	
+				
+				$bc_name 		= $chk_arr2[0]['name'];
+				
+				$bc_id 			= $chk_arr[0]['bc_id'];
+			
+				$branch_name 	= $chk_arr[0]['branch_name'];
+				
+				$field_officer = $session['data'][0]['userName'];
+				$branch_code = $session['data'][0]['branch_id'];
+			
+		}else{
+			
 			
 		}
 		
@@ -1205,9 +1326,17 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$temp = explode(".", $_FILES["declaration"]["name"]);
 			$declaration = 'declaration'.round(microtime(true)) . '.' . end($temp);
 			move_uploaded_file($_FILES["declaration"]["tmp_name"], "uploads/" . $declaration);
+			
+			$temp = explode(".", $_FILES["schdule"]["name"]);
+			$schdule = 'schdule'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["schdule"]["tmp_name"], "uploads/" . $schdule);
+			
+			$temp = explode(".", $_FILES["demand"]["name"]);
+			$demand = 'demand'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["demand"]["tmp_name"], "uploads/" . $demand);
 
 		
-			echo $SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$_POST['branch']."'";
+			$SQL = "SELECT * FROM finance_bc_branch_master where branch_code = '".$_POST['branch']."'";
 			
 			$query = $this->db->query($SQL);
 		   
@@ -1216,7 +1345,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			
 			
 			
-			$field_officer_name = $users[0]['firstname'];
+			
 		
 			
 			$itemcode = $_POST['itemcode'];
@@ -1243,18 +1372,28 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$mobile = $_POST['mobile'];
 			$email = $_POST['email'];
 			$dependants = $_POST['dependants'];
+			$tm_name = '';
+			$se_name = '';
+			$tm_code='';
+			$tm_code='';
+			$couponcode = '';
+			$rule_id=0;
+			$discount_amount = 0.00;			
+					
 			
 			$year_in_currentcity = '20';
 
-			$branch_code = $_POST['branch'];
+			
 			$storeid = $_POST['storeid'];
-			$field_officer = $_POST['field_officer'];
+			
 			$grosstenure = 0.0;
-			$net_tenure = 0.0;
+			$net_tenure = 12;	
 		
 			$aadhar_front = base_url().'/uploads/'.$aadhar_front;
 			$aadhar_back = base_url().'/uploads/'.$aadhar_back;
 			$alternate_id = base_url().'/uploads/'.$declaration;
+			$schdule = base_url().'/uploads/'.$schdule;
+			$demand = base_url().'/uploads/'.$demand;
 			
 			if($_POST['income_expense']=='UPPER'){
 				
@@ -1285,10 +1424,10 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			
 			
 					
-			echo "<pre>";
-			print_r($_POST);
+		//	echo "<pre>";
+		//	print_r($_POST);
 			
-		echo	$sql = "INSERT INTO `orderlead_info` ( location_name , disburse_to,disburse_code,bc_name,bc_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname,applicant_middlename,mother_name,father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,monthly_income,monthly_expenditure,loan_amount,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,perm_district,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,store_id,branch_code,mobile_order,username,status,rso_username,ngo_officername,field_officername,lead_type,processing_fee,emi_amount,advance_emi_amount,gross_tenure,net_tenure,created_at ,perm_pincode,branch_officername) VALUES ( '$branch_name','Boonbox','Boon','$bc_name','$bc_id','RCF','Vanilla','$itemcode','$price','1','$applicant_name' , '$app_firstname', '$app_lastname', '$app_midname','$mothername','$fathername','Aadhar','$aadhar_number','$dob','$gender','$martial','$education','$residence','$address_1','$address_2','$land_mark','$pincode','$city','$district','$state','$mobile','$monthly_income','$monthly_expenditure','$price','$email','$dependants','$year_at_currentaddress','$year_in_currentcity','$perm_address1','$perm_address2','$perm_landmark','$perm_district','$perm_city','$perm_state','$aadhar_front','$aadhar_back','$alternate_id','$storeid','$branch_code','0','$field_officer','Under Process','','$bc_name','$field_officer_name','1','$total_process_amount','$emi_amount','$advance_emi','$grosstenure','$net_tenure',NOW(),'$perm_pincode','$branch_name' );";
+			$sql = "INSERT INTO `orderlead_info` ( location_name , disburse_to,disburse_code,bc_name,bc_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname,applicant_middlename,mother_name,father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,monthly_income,monthly_expenditure,loan_amount,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,perm_district,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,store_id,branch_code,mobile_order,username,status,rso_username,ngo_officername,field_officername,lead_type,processing_fee,emi_amount,advance_emi_amount,gross_tenure,net_tenure,created_at ,perm_pincode,branch_officername,tm_name,tm_code,se_name,se_code,schdule_link,demand_link) VALUES ( '$branch_name','Boonbox','Boon','$bc_name','$bc_id','RCF','Vanilla','$itemcode','$price','1','$applicant_name' , '$app_firstname', '$app_lastname', '$app_midname','$mothername','$fathername','Aadhar','$aadhar_number','$dob','$gender','$martial','$education','$residence','$address_1','$address_2','$land_mark','$pincode','$city','$district','$state','$mobile','$monthly_income','$monthly_expenditure','$price','$email','$dependants','$year_at_currentaddress','$year_in_currentcity','$perm_address1','$perm_address2','$perm_landmark','$perm_district','$perm_city','$perm_state','$aadhar_front','$aadhar_back','$alternate_id','$storeid','$branch_code','0','$field_officer','Under Process','$rso_username','$bc_name','$field_officer_name','1','$total_process_amount','$emi_amount','$advance_emi','$grosstenure','$net_tenure',NOW(),'$perm_pincode','$branch_name','$tm_name','$tm_code','$se_name','$se_code','$schdule','$demand' );";
 			
 			$query = $this->db->query($sql);
 		}

@@ -35,7 +35,7 @@ echo "</pre>"; */
 			 
 	
   <div style="" id="register_show" class="register-box-body">
-    <p class="login-box-msg">New lead Creation</p>
+    <h4 class="login-box-msg"><?php echo $fields['product_name'] ?></h4>
 
     <form id="form2" action= "" method="post">
 		  <input type="hidden" value="<?php echo $fields['itemcode'] ?>" name="itemcode" >
@@ -385,7 +385,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Aadhar Front:</label>
-        <input type="file" class="form-control" name="aadhar_front" required>
+        <input type="file" class="form-control" name="aadhar_front" accept="image/*" required>
         <span class=""></span>
       </div>
       </div>
@@ -393,25 +393,34 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Aadhar Front:</label>
-        <input type="file" class="form-control" name="aadhar_back" required>
+        <input type="file" class="form-control" name="aadhar_back" accept="image/*" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Declaration:</label>
-        <input type="file" class="form-control" name="declaration" required>
+        <input type="file" class="form-control" name="declaration" accept="image/*" required>
         <span class=""></span>
       </div>
       </div>
+	 <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Schdule A:</label>
+        <input type="file" class="form-control" name="schdule" accept="image/*" required>
+        <span class=""></span>
+      </div>
+      </div>
+      </div>
+	  <div class="row">
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
-	  <!--<label for="firstname">Years at Current Address:</label>
-        <input type="password" class="form-control" name="passWord" placeholder="" required>-->
+	  <label for="firstname">Demand & Promissary:</label>
+        <input type="file" class="form-control" name="demand" accept="image/*" required>
         <span class=""></span>
       </div>
       </div>
-      </div>
+	  </div>
 	  <div class="row">
 	  <div class="col-md-12">
 	  <div class="form-group has-feedback">
