@@ -1373,6 +1373,12 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$mobile = $_POST['mobile'];
 			$email = $_POST['email'];
 			$dependants = $_POST['dependants'];
+			$earning_members=$_POST['earning_members'];
+			$member_amount=$_POST['member_amount'];
+			$member_name=$_POST['member_name'];
+			
+			$food_expenditure = $_POST['food_expenditure'];
+			$exp_amount = $_POST['exp_amount'];
 			$tm_name = '';
 			$se_name = '';
 			$tm_code='';
@@ -1382,7 +1388,7 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$discount_amount = 0.00;			
 					
 			
-			$year_in_currentcity = '20';
+			$year_in_currentcity = $_POST['year_city'];
 
 			
 			$storeid = $_POST['storeid'];
@@ -1401,16 +1407,50 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$monthly_income = 'a:2:{i:0;a:3:{s:9:"familyMem";s:7:"Husband";s:6:"amount";s:5:"20000";s:12:"relationName";s:0:"";}i:1;a:3:{s:9:"familyMem";s:4:"Wife";s:6:"amount";s:5:"15000";s:12:"relationName";s:0:"";}}';
 			$monthly_expenditure = 'a:12:{s:4:"Food";s:4:"5000";s:9:"Transport";s:4:"2000";s:7:"Medical";s:4:"1500";s:15:"Loans Repayment";s:4:"1500";s:9:"Education";s:4:"1000";s:2:"EB";s:3:"300";s:3:"Gas";s:3:"500";s:5:"Cable";s:3:"200";s:4:"Milk";s:3:"800";s:14:"Other Expenses";s:4:"2000";s:7:"Savings";s:5:"15000";s:12:"Cash In Hand";s:4:"5200";}';
 				
-			}else{
+			}else if($_POST['income_expense']=='UPPER'){
 			$monthly_income = 'a:2:{i:0;a:3:{s:9:"familyMem";s:7:"Husband";s:6:"amount";s:5:"15000";s:12:"relationName";s:0:"";}i:1;a:3:{s:9:"familyMem";s:4:"Wife";s:6:"amount";s:5:"10000";s:12:"relationName";s:0:"";}}';
 			$monthly_expenditure = 'a:12:{s:4:"Food";s:4:"3000";s:9:"Transport";s:4:"2000";s:7:"Medical";s:4:"1000";s:15:"Loans Repayment";s:4:"1500";s:9:"Education";s:4:"1000";s:2:"EB";s:3:"200";s:3:"Gas";s:3:"300";s:5:"Cable";s:3:"200";s:4:"Milk";s:3:"600";s:14:"Other Expenses";s:4:"1500";s:7:"Savings";s:5:"10000";s:12:"Cash In Hand";s:4:"3700";}';
+			}else{
+				$custom_expend_str = "";
+				
+				for($i=0;$i<count($earning_members);$i++){
+					
+				$mem_name =	explode('-',$earning_members[$i]);
+					
+				$custom_expend_str .= "i:".$i.";a:3:{s:9:'familyMem';s:8:'".$mem_name[1]." ';s:6:'amount';s:5:'".$member_amount[$i]."';s:12:'relationName';s:0:'".$member_name[$i]."';}";
+					
+				}
+				
+				$monthly_income = addslashes("a:2:{".$custom_expend_str."}");
+				
+				
+				$food_expend_str = "";
+				
+				for($i=0;$i<count($food_expenditure);$i++){
+					
+				$exp_name =	explode('-',$food_expenditure[$i]);
+					
+				$food_expend_str .= "s:4:'".$exp_name[1]."';s:4:'".$exp_amount[$i]."';";
+					
+				}
+				
+				$monthly_expenditure = addslashes("a:12:{".$food_expend_str."}");
+				
 			}	
+			//echo $monthly_income ."<BR/>";
+			//echo $monthly_expenditure;
 			
 			
+			$this->load->model('api_model');
+			$config = $this->api_model->get_config($storeid);
+			$processing_fee = $config->processingfee;
+			$taxes = $config->taxes;
+			$interestrate = $config->interestrate;
+			$insurance_rate = $config->insurance;
+			$gross_tenure = $config->grosstenure;
+			$roi = $config->roi;
 			
-			
-			
-			
+			//echo 'KKK'.$price;
 			$finalprice = $price;
 			$insurance_amount = round($finalprice * $insurance_rate/1000);
 			// $loan_amount = $item['loan_amount'];

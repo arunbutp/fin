@@ -84,12 +84,12 @@ img:hover {
             <div class="col-md-3">
               <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" value="<?php echo $data[0]['first_name'];?>" readonly>
+                <input type="text" class="form-control" value="<?php echo $data[0]['applicant_firstname'];?>" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" value="<?php echo $data[0]['last_name'];?>" readonly>
+                <input type="text" class="form-control" value="<?php echo $data[0]['applicant_name'];?>" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -97,7 +97,7 @@ img:hover {
             <div class="col-md-3">
               <div class="form-group">
                 <label>Number of Dependants</label>
-               <input type="text"  class="form-control" readonly>
+               <input type="text"  class="form-control" value="<?php echo $data[0]['no_of_dependants'];?>"  readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group">

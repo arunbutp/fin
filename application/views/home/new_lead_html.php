@@ -306,8 +306,18 @@ echo "</pre>"; */
       </div>
       </div>
 	  
+	  <div class="row">
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Years in City:</label>
+        <input type="text" class="form-control" name="year_city" placeholder="" required>
+        <span class=""></span>
+      </div>
+      </div>
 	  
 	  
+	  
+	  </div>
 	  
 	  <div class="row">
 	  <div class="col-md-12">
@@ -429,14 +439,113 @@ echo "</pre>"; */
 		<option value="">-- please select --</option>
 		<option value="UPPER">UPPER</option>
 		<option value="MIDDLE">MIDDLE</option>
+		<option value="CUSTOM">CUSTOM</option>
 		
 		</select>
         <span class=""></span>
       </div>
       </div>
       </div>
-	
-	 
+	  
+		<div class="row" style="display:none;" id="members">
+		<div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Earning Members:</label>
+			<select name="earning_members[]" id="earning_members" class="form-control">
+			<option value="">-- please select --</option>
+			<option value="1-Husband">Husband</option>
+			<option value="2-Wife">Wife</option>
+			<option value="3-Son">Son</option>
+			<option value="4-Daughter">Daughter</option>
+			<option value="5-Others">Others</option>
+			
+			
+			</select>
+			<span class=""></span>
+		  </div>
+		  </div>
+		  
+		  <div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Amount:</label>
+			<input type="text" class="form-control" id="member_amount" name="member_amount[]" value="">
+			
+			<span class=""></span>
+		  </div>
+		  </div>
+		  
+		  <div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Member Name:</label>
+			<input type="text" class="form-control" id="member_name" name="member_name[]" value="">
+			
+			<span class=""></span>
+		  </div>
+		  </div>
+		  
+		  
+		  <div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Action:</label>
+			<button type="button" id="add_member" class="form-control btn btn-default">ADD</button>
+			
+			<span class=""></span>
+		  </div>
+		  </div>
+		</div>
+		
+		<div id="append_member"></div>
+		
+		
+		
+		
+		
+		<div class="row" style="display:none;" id="food">
+		<div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Eexpenditure:</label>
+			<select name="food_expenditure[]" id="food_expenditure" class="form-control">
+			<option value="">-- please select --</option>
+			<option value="1-Food">Food</option>
+			<option value="2-Transport">Transport</option>
+			<option value="3-Loans Repayment">Loans Repayment</option>
+			<option value="4-Education">Education</option>
+			<option value="5-EB">EB</option>
+			<option value="6-Gas">Gas</option>
+			<option value="7-Cable">Cable</option>
+			<option value="8-Milk">Milk</option>
+			<option value="9-Other Expenses">Other Expenses</option>
+			<option value="10-Savings">Savings</option>
+			<option value="11-Cash In Hand">Cash In Hand</option>
+			<option value="12-Medical">Medical</option>
+			
+			
+			</select>
+			<span class=""></span>
+		  </div>
+		  </div>
+		  
+		  <div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Amount:</label>
+			<input type="text" class="form-control" id="exp_amount" name="exp_amount[]" value="">
+			
+			<span class=""></span>
+		  </div>
+		  </div>
+
+		  
+		  <div class="col-md-3">
+		  <div class="form-group has-feedback">
+		  <label for="firstname">Action:</label>
+			<button type="button" id="add_food" class="form-control btn btn-default">ADD</button>
+			
+			<span class=""></span>
+		  </div>
+		  </div>
+		</div>
+		
+		<div id="append_food"></div>
 	  
       <div class="row">
         <div class="col-xs-8">
@@ -496,8 +605,50 @@ $this->load->view('footer');
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+  function delete_mem(){
+		   
+		   alert();
+		   $(this).parent().parent().fadeOut(300);
+
+	   }
 
    $(document).ready(function(){
+	   
+	   $("#add_member").on("click",function(){
+		   
+		   $("#append_member").append('<div class="row"><div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Earning Members:</label><select name="earning_members[]" id="earning_members" class="form-control"><option value="">-- please select --</option><option value="1-Husband">Husband</option><option value="2-Wife">Wife</option><option value="3-Son">Son</option><option value="4-Daughter">Daughter</option><option value="5-Others">Others</option></select><span class=""></span> </div> </div> <div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Amount:</label><input type="text" class="form-control" id="member_amount" name="member_amount[]" value=""><span class=""></span> </div> </div> <div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Member Name:</label><input type="text" class="form-control" id="member_name" name="member_name[]" value=""><span class=""></span> </div> </div> <div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Action:</label><button type="button"  class="form-control btn btn-default delete_member" onclick="return this.parentNode.parentNode.parentNode.remove();">DELETE</button><span class=""></span> </div> </div></div>');
+	   });
+	   
+	   
+	   $("#add_food").on("click",function(){
+		   
+		//   alert();
+		   
+		   $("#append_food").append('<div class="row" id="food"><div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Eexpenditure:</label><select name="food_expenditure[]" id="food_expenditure" class="form-control"><option value="">-- please select --</option><option value="1-Food">Food</option><option value="2-Transport">Transport</option><option value="3-Loans Repayment">Loans Repayment</option><option value="Education">Education</option><option value="4-EB">EB</option><option value="5-Gas">Gas</option><option value="6-Cable">Cable</option><option value="7-Milk">Milk</option><option value="8-Other Expenses">Other Expenses</option><option value="9-Savings">Savings</option><option value="10-Cash In Hand">Cash In Hand</option><option value="11-Medical">Medical</option></select><span class=""></span> </div> </div> <div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Amount:</label><input type="text" class="form-control" id="exp_amount" name="exp_amount[]" value=""><span class=""></span> </div> </div> <div class="col-md-3"> <div class="form-group has-feedback"> <label for="firstname">Action:</label><button type="button" class="form-control btn btn-default delete_food" onclick="return this.parentNode.parentNode.parentNode.remove();">DELETE</button><span class=""></span> </div> </div></div>');
+	   });
+	   
+	  
+	 
+	   
+	 
+		$("#income_expense").change(function () {   
+		   
+		  // alert($(this).val());
+		   
+		   if($(this).val() == 'CUSTOM'){
+			   
+			   
+			   $("#members").show();
+			   $("#food").show();
+			   
+		   }else{
+			   
+			  $("#members").hide(); 
+			  $("#food").hide(); 
+		   }
+		   
+		   
+	   });
 	   
 	   
 	$("#form2").submit(function(evt){
