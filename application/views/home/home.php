@@ -66,7 +66,7 @@ $this->load->view('left-menu');
 </div>
             </div>
           </div>
-      <div class="row">
+      
 	   <?php
 	 // echo "<pre>";
 	 // print_r($dashboard);
@@ -76,8 +76,8 @@ $this->load->view('left-menu');
 	  
 	
 	?>	
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+        <!--<div class="col-lg-3 col-xs-6">
+         
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3><?php echo $dashboard[0]['total_lead']; ?></h3>
@@ -89,9 +89,9 @@ $this->load->view('left-menu');
             </div>
             <a href="<?=base_url();?>home/details/?task=Total Lead" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
+        </div>-->
 		
-		
+		<div class="row">
 		
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
@@ -135,15 +135,15 @@ $this->load->view('left-menu');
             <div class="icon">
               <i class="ion ion-briefcase"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=loan_eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home/details/?task=Loan Eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-      </div>
+     
       <!-- /.row -->
      
       <!-- Small boxes (Stat box) -->
-      <div class="row">
+      
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-olive">
@@ -204,11 +204,11 @@ $this->load->view('left-menu');
           </div>
         </div>
         <!-- ./col -->
-      </div>
+    
       <!-- /.row -->
 	  
 	  
-	  <div class="row">
+	  
 	   <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-teal">

@@ -374,7 +374,7 @@ if(isset($_POST['submit'])){
 		$data = $this->home_model->under_process();
 		$arr = array();
 		for($i=0;$i<count($data['main']);$i++){
-			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Settings</button>');
+			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Scrutiny</button>', 'edit'=>  '<button type="button" class="btn btn-default" onclick="edit('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Edit</button>');
 			
 		}
 		
@@ -383,6 +383,21 @@ if(isset($_POST['submit'])){
 			    "recordsFiltered": "'.($data['total'] == null ? '0' : $data['total']).'",
 			    "recordsTotal": "'.($data['total'] == null ? '0' : $data['total']).'",
 				"data":'.json_encode( $arr, JSON_NUMERIC_CHECK ).'}';
+		
+	}
+	public function edit_lead(){
+		
+		$this->load->model('home_model');
+		$data['data'] = $this->home_model->orderLeadByID();
+		
+		$this->load->view('home/edit_lead',$data);	
+		
+	}
+	public function lead_update(){
+		$this->load->model('home_model');
+		$data['data'] = $this->home_model->update_lead();
+		
+		
 		
 	}
 	public function register(){

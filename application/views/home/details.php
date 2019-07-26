@@ -43,6 +43,7 @@ $this->load->view('left-menu');
 						<th>State</th>
 						<th>Item Code</th>
 						<th>Status</th>
+						<th>Edit</th>
 						<?php if($_GET['task']!='Disbursed'){
 						?>	
 						<th>Settings</th>
@@ -227,7 +228,8 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 			{ data: "district" },
 			{ data: "state" },
 			{ data: "item_code" },
-			{ data: "status" }
+			{ data: "status" },
+			{ data: "edit" }
 			<?php
 			if($_GET['task']!='Disbursed'){
 			?>,
@@ -268,6 +270,14 @@ function settings(id){
 	
 	//alert()
 	window.location.href='<?=base_url();?>home/settings?id='+id;
+	
+	
+}
+
+function edit(id){
+	
+	//alert()
+	window.location.href='<?=base_url();?>home/edit_lead?id='+id;
 	
 	
 }

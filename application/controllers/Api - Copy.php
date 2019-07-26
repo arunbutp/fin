@@ -227,9 +227,7 @@ foreach($json1 as $item){
 	$mobile_number = $item['mobile_number'];
 	$occupation = $item['occupation'];
 	$monthly_income = $item['monthly_income'];
-	echo "sssss";
-	echo $family_income = $item['income_exp'];
-//	echo 'ssssssss';
+	$family_income = $item['income_exp'];
 	$foodly_income = $item['food_exp'];
 	$username = $item['username'];
 	
@@ -395,14 +393,14 @@ $storeid = 0;
 		
 		
  
-echo	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
+	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
 advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
 perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type) VALUES 
 ('".$location."', '".$disburse_to."', '".$disburse_code."','".$bc_name."', '".$bc_code."', '".$tm_name."', 
 '".$tm_code."','".$se_name."','".$se_code."','".$program_name."','".$scheme_name."','".$item_code."', '".$finalprice."', ".$qty.", '".$applicant_name."',  
 '".$applicant_fname."','".$applicant_lname."','".$applicant_middlename."','".$mother_name."','".$father_name."','".$id_proof."', '".$aadhaar_id ."', '".$date_of_birth."','".$gender."', 
 '".$marital_status."', '".$education."', '".$residence."', '".$address_line1."','".$address_line2."','".$landmark."', '".$pincode."', 
-'".$city."', '".$district."', '".$cust_state."','".$mobile_number."','".$occupation."', '".$family_income."','".$foodly_income."',
+'".$city."', '".$district."', '".$cust_state."','".$mobile_number."','".$occupation."', '".$monthly_income_ser."','".$monthly_exp_ser."',
 '".$repaying_capacity."', '".$emi_eligibility."',
 '".$manufacturer."','".$make."','".$model."','".$cal_process_fee."','".$emi_amount."', '".$advance_emi."',
 '".$grosstenure."', '".$net_tenure."', '".$item_code."','".$finalprice."','".$roi."','".$email_id."', ".$no_of_dependants.",'".$year_at_currentaddress."', '".$year_in_currentcity."','".$perm_addressline1."',
@@ -453,8 +451,8 @@ district ='".$district."',
 cust_state ='".$cust_state."',
 mobile_number ='".$mobile_number."',
 occupation ='".$occupation."',
-monthly_income ='".$family_income."',
-monthly_expenditure ='".$foodly_income."',
+monthly_income ='".$monthly_income_ser."',
+monthly_expenditure ='".$monthly_exp_ser."',
 repaying_capacity ='".$repaying_capacity."',
 emi_eligibility ='".$emi_eligibility."',
 

@@ -574,6 +574,7 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 		   
 		   
 		}
+		
 		public function get_fin(){
 		   
 		   $session = $this->session->userdata('MY_SESS2');
@@ -1471,5 +1472,90 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			$sql = "INSERT INTO `orderlead_info` ( location_name , disburse_to,disburse_code,bc_name,bc_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname,applicant_middlename,mother_name,father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,monthly_income,monthly_expenditure,loan_amount,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,perm_district,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,store_id,branch_code,mobile_order,username,status,rso_username,ngo_officername,field_officername,lead_type,processing_fee,emi_amount,advance_emi_amount,gross_tenure,net_tenure,created_at ,perm_pincode,branch_officername,tm_name,tm_code,se_name,se_code,schdule_link,demand_link) VALUES ( '$branch_name','Boonbox','Boon','$bc_name','$bc_id','RCF','Vanilla','$itemcode','$price','1','$applicant_name' , '$app_firstname', '$app_lastname', '$app_midname','$mothername','$fathername','Aadhar','$aadhar_number','$dob','$gender','$martial','$education','$residence','$address_1','$address_2','$land_mark','$pincode','$city','$district','$state','$mobile','$monthly_income','$monthly_expenditure','$price','$email','$dependants','$year_at_currentaddress','$year_in_currentcity','$perm_address1','$perm_address2','$perm_landmark','$perm_district','$perm_city','$perm_state','$aadhar_front','$aadhar_back','$alternate_id','$storeid','$branch_code','0','$field_officer','Under Process','$rso_username','$bc_name','$field_officer_name','1','$total_process_amount','$emi_amount','$advance_emi','$grosstenure','$net_tenure',NOW(),'$perm_pincode','$branch_name','$tm_name','$tm_code','$se_name','$se_code','$schdule','$demand' );";
 			
 			$query = $this->db->query($sql);
+		}
+		public function update_lead(){
+			
+			echo "<pre>";
+			print_r($_POST);
+			
+			$id = $_GET['id'];
+			
+		
+			$applicant_name = $_POST['app_fname'].' '.$_POST['app_lname'];
+			$app_firstname = $_POST['app_fname'];
+			$app_lastname = $_POST['app_lname'];
+			$app_midname = $_POST['app_mname'];
+			$mothername = $_POST['mname'];
+			$fathername = $_POST['fname'];
+			$aadhar_number = $_POST['aadhar_number'];
+			$dob = $_POST['dob'];
+			$gender = $_POST['gender'];
+			$martial = $_POST['m_status'];
+			$education = $_POST['education'];
+			$residence = $_POST['residence'];
+			$address_1 = $_POST['address_1'];
+			$address_2 = $_POST['address_2'];
+			$land_mark = $_POST['land_mark'];
+			$pincode = $_POST['pincode'];
+			$city = $_POST['city'];
+			$district = $_POST['district'];
+			$state = $_POST['state'];
+			$mobile = $_POST['mobile'];
+			$email = $_POST['email'];
+			$dependants = $_POST['dependants'];
+			$s_address_1 = $_POST['s_address_1'];
+			$s_address_2 = $_POST['s_address_2'];
+			$s_landmark = $_POST['s_landmark'];
+			$s_city = $_POST['s_city'];
+			$s_district = $_POST['s_district'];
+			$s_state = $_POST['s_state'];
+			$s_pincode = $_POST['s_pincode'];
+			
+			$files = '';
+			
+			if($_FILES["aadhar_front"]["name"]){
+			$temp = explode(".", $_FILES["aadhar_front"]["name"]);
+			$aadhar_front = 'aadhar_front'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["aadhar_front"]["tmp_name"], "uploads/" . $aadhar_front);
+			$aadhar_front = base_url().'/uploads/'.$aadhar_front;
+			$files .= ",aadhar_front='$aadhar_front'";
+			}
+			
+			if($_FILES["aadhar_back"]["name"]){
+			$temp = explode(".", $_FILES["aadhar_back"]["name"]);
+			$aadhar_back = 'aadhar_back'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["aadhar_back"]["tmp_name"], "uploads/" . $aadhar_back);
+			$aadhar_back = base_url().'/uploads/'.$aadhar_back;
+			
+			$files .= ",aadhar_back='$aadhar_back'"; 
+			}
+			if($_FILES["declaration"]["name"]){
+			$temp = explode(".", $_FILES["declaration"]["name"]);
+			$declaration = 'declaration'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["declaration"]["tmp_name"], "uploads/" . $declaration);
+			$alternate_id = base_url().'/uploads/'.$declaration;
+			$files .= ",alernate_id='$alternate_id'";
+			}
+			if($_FILES["schdule"]["name"]){
+			$temp = explode(".", $_FILES["schdule"]["name"]);
+			$schdule = 'schdule'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["schdule"]["tmp_name"], "uploads/" . $schdule);
+			$schdule = base_url().'/uploads/'.$schdule;
+			$files .= ",schdule_link='$schdule'";
+			}
+			if($_FILES["demand"]["name"]){
+			$temp = explode(".", $_FILES["demand"]["name"]);
+			$demand = 'demand'.round(microtime(true)) . '.' . end($temp);
+			move_uploaded_file($_FILES["demand"]["tmp_name"], "uploads/" . $demand);
+			$demand = base_url().'/uploads/'.$demand;
+			$files .= ",demand_link='$demand'";
+			}
+			
+			
+			
+			
+		echo	$SQL = "UPDATE orderlead_info SET applicant_firstname='$app_firstname', applicant_lastname='$app_lastname',applicant_middlename='$app_lastname',mother_name='$mothername',father_name='$fathername',applicant_middlename='$app_midname',proof_number='$aadhar_number',date_of_birth='$dob',gender='$gender',marital_status='$martial',education = '$education',residence='$residence',address_line1 = '$s_address_1',address_line2 = '$s_address_2',landmark = '$s_landmark',pincode = '$s_pincode',city = '$s_city',district = '$s_district',cust_state = '$s_state',mobile_number='$mobile',email_id='$email',no_of_dependants = '$dependants',perm_addressline1='$address_1',perm_addressline2='$address_2',perm_landmark='$land_mark',perm_pincode='$pincode',perm_city='$city',perm_state='$state' $files WHERE id='$id' ";
+		
+		$query = $this->db->query($SQL);
 		}
 	}

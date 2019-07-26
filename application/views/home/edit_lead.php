@@ -6,7 +6,10 @@ $session = $this->session->userdata('MY_SESS2');
 print_r($session['data'][0]['role']);
 echo "</pre>"; */
 //echo "<pre>";
-//print_r($fields);
+//print_r($data);
+//echo "</pre>";
+
+$vals = $data[0];
 ?>
 	
   <!-- Content Wrapper. Contains page content -->
@@ -14,12 +17,12 @@ echo "</pre>"; */
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        New Lead Creation
+        Edit Lead
         <small>Preview sample</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">New Lead Creation</li>
+        <li class="active">Edit Lead </li>
       </ol>
     </section>
 
@@ -38,10 +41,10 @@ echo "</pre>"; */
     <h4 class="login-box-msg"><?php echo $fields['product_name'] ?></h4>
 
     <form id="form2" action= "" method="post">
-		  <input type="hidden" value="<?php echo $fields['itemcode'] ?>" name="itemcode" >
+	 <!--  <input type="hidden" value="<?php echo $fields['itemcode'] ?>" name="itemcode" >
 	  <input type="hidden" value="<?php echo $fields['amount'] ?>" name="amount" >
 	  <input type="hidden" value="<?php echo $fields['product_name'] ?>" name="product_name" >
-	  <input type="hidden" value="<?php echo $fields['storeid'] ?>" name="storeid" >
+	  <input type="hidden" value="<?php echo $fields['storeid'] ?>" name="storeid" > -->
 	<div class="row">
 	<?php
 	if($session['data'][0]['role'] == '6'){
@@ -106,7 +109,7 @@ echo "</pre>"; */
 	 <div class="col-md-2">
 	 <div class="form-group">
 	 <label for="firstname">Applicant F Name:</label>
-		<input type="text" class="form-control" name="app_fname" placeholder="" required>
+		<input type="text" class="form-control" value="<?php echo $vals['applicant_firstname'];?>" name="app_fname" placeholder="" required>
 	 </div>
 	 </div>
 	 
@@ -114,7 +117,7 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Applicant M Name:</label>
-        <input type="text" class="form-control" name="app_mname" placeholder="" required>
+        <input type="text" class="form-control" value="<?php echo $vals['applicant_middlename'];?>" name="app_mname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -122,21 +125,21 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Applicant L Name:</label>
-        <input type="text" class="form-control" name="app_lname" placeholder="" required>
+        <input type="text" class="form-control" value="<?php echo $vals['applicant_lastname'];?>" name="app_lname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Father/Spou Name:</label>
-        <input type="text" class="form-control" name="fname" placeholder="" required>
+        <input type="text" class="form-control" value="<?php echo $vals['father_name'];?>" name="fname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Mother Name:</label>
-        <input type="text" class="form-control" name="mname" placeholder="" required>
+        <input type="text" class="form-control" value="<?php echo $vals['mother_name'];?>" name="mname" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -148,7 +151,7 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">No. of dependants:</label>
-        <input type="text" class="form-control" id="dependants" name="dependants" placeholder="" required>
+        <input type="text" class="form-control" id="dependants" value="<?php echo $vals['no_of_dependants'];?>" name="dependants" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -156,7 +159,7 @@ echo "</pre>"; */
 	  <div class="col-md-2">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Date of Birth:</label>
-        <input type="text" class="form-control" id="datepicker" name="dob" placeholder="" required>
+        <input type="text" class="form-control" id="datepicker" value="<?php echo $vals['date_of_birth'];?>" name="dob" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -167,10 +170,10 @@ echo "</pre>"; */
         
 		<select name="m_status" id="m_status" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="Married">Married</option>
-		<option value="Un Married">Un Married</option>
-		<option value="Divorced">Divorced</option>
-		<option value="Widowed">Widowed</option>
+		<option <?php echo ($vals['marital_status'] == 'Married' ? 'selected' : '');?> value="Married">Married</option>
+		<option <?php echo ($vals['marital_status'] == 'Un Married' ? 'selected' : '');?> value="Un Married">Un Married</option>
+		<option <?php echo ($vals['marital_status'] == 'Divorced' ? 'selected' : '');?> value="Divorced">Divorced</option>
+		<option <?php echo ($vals['marital_status'] == 'Widowed' ? 'selected' : '');?> value="Widowed">Widowed</option>
 		</select>
         <span class=""></span>
       </div>
@@ -180,10 +183,10 @@ echo "</pre>"; */
 	  <label for="firstname">Select Education:</label>
        <select name="education" id="education" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="High School">High School</option>
-		<option value="Gratuate">Gratuate</option>
-		<option value="Post Gratuate">Post Gratuate</option>
-		<option value="Other">Other</option>
+		<option <?php echo ($vals['education'] == 'High School' ? 'selected' : '');?> value="High School">High School</option>
+		<option <?php echo ($vals['education'] == 'Gratuate' ? 'selected' : '');?> value="Gratuate">Gratuate</option>
+		<option <?php echo ($vals['education'] == 'Post Gratuate' ? 'selected' : '');?> value="Post Gratuate">Post Gratuate</option>
+		<option <?php echo ($vals['education'] == 'Other' ? 'selected' : '');?> value="Other">Other</option>
 		</select>
         <span class=""></span>
       </div>
@@ -193,8 +196,8 @@ echo "</pre>"; */
 	  <label for="firstname">select Residence:</label>
         <select name="residence" id="residence" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="Self Owned">Self owned</option>
-		<option value="Rented">Rented</option>
+		<option <?php echo ($vals['residence'] == 'Self Owned' ? 'selected' : '');?> value="Self Owned">Self owned</option>
+		<option <?php echo ($vals['residence'] == 'Rented' ? 'selected' : '');?> value="Rented">Rented</option>
 	
 		</select>
         <span class=""></span>
@@ -206,7 +209,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Mobile:</label>
-        <input type="text" class="form-control" name="mobile" placeholder="" required>
+        <input type="text" value="<?php echo $vals['mobile_number'];?>" class="form-control" name="mobile" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -214,14 +217,14 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Email:</label>
-        <input type="text" class="form-control" name="email" placeholder="" required>
+        <input type="text" value="<?php echo $vals['email_id'];?>" class="form-control" name="email" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">AAdhar Number:</label>
-        <input type="text" class="form-control" name="aadhar_number" placeholder="" required>
+        <input type="text" value="<?php echo $vals['proof_number'];?>" class="form-control" name="aadhar_number" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -230,8 +233,8 @@ echo "</pre>"; */
 	  <label for="firstname">Gender:</label>
           <select name="gender" id="gender" class="form-control">
 		<option value="">-- please select --</option>
-		<option value="male">Male</option>
-		<option value="female">Female</option>
+		<option <?php echo ($vals['gender'] == 'male' ? 'selected' : '');?> value="male">Male</option>
+		<option <?php echo ($vals['gender'] == 'female' ? 'selected' : '');?> value="female">Female</option>
 	
 		</select>
         <span class=""></span>
@@ -244,7 +247,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 1:</label>
-        <input type="text" class="form-control" name="address_1" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_addressline1'];?>" class="form-control" name="address_1" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -252,21 +255,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 2:</label>
-        <input type="text" class="form-control" name="address_2" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_addressline2'];?>" class="form-control" name="address_2" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Nearest Landmark:</label>
-        <input type="text" class="form-control" name="land_mark" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_landmark'];?>" class="form-control" name="land_mark" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">City/Village:</label>
-        <input type="text" class="form-control" name="city" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_city'];?>" class="form-control" name="city" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -278,7 +281,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">District:</label>
-        <input type="text" class="form-control" name="district" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_district'];?>" class="form-control" name="district" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -286,21 +289,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">State:</label>
-        <input type="text" class="form-control" name="state" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_state'];?>"  class="form-control" name="state" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Pincode:</label>
-        <input type="text" class="form-control" name="pincode" placeholder="" required>
+        <input type="text" value="<?php echo $vals['perm_pincode'];?>"  class="form-control" name="pincode" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Years at Current Address:</label>
-        <input type="text" class="form-control" name="year_address" placeholder="" required>
+        <input type="text" value="<?php echo $vals['year_at_currentaddress'];?>"  class="form-control" name="year_address" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -310,7 +313,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Years in City:</label>
-        <input type="text" class="form-control" name="year_city" placeholder="" required>
+        <input type="text" value="<?php echo $vals['year_in_currentcity'];?>"  class="form-control" name="year_city" placeholder="" required>
         <span class=""></span>
       </div>
       </div>
@@ -321,15 +324,16 @@ echo "</pre>"; */
 	  
 	  <div class="row">
 	  <div class="col-md-12">
-	  <label class="checkbox-inline"><input type="checkbox" name="check_address" id="check_address" value="1">Please check if Shipping Address Different</label>
+	  <label class="checkbox-inline"><input type="checkbox" name="check_address" <?php  echo ($vals['address_line1'] == $vals['perm_addressline1'] ? 'checked' : ''); ?> id="check_address" value="1">Please check if Shipping Address Different</label>
 	  </div>
 	  </div>
-	  <div id="present_address" style="display:none">
+	 <!-- <div id="present_address"  style="display:<?php  echo ($vals['address_line1'] == $vals['perm_addressline1'] ? 'none' : 'block'); ?>">-->
+	  <div id="present_address"  style="">
 	   <div class="row">
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 1:</label>
-        <input type="text" class="form-control" name="s_address_1" placeholder="" >
+        <input type="text" value="<?php echo $vals['address_line1'];?>" class="form-control" name="s_address_1" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -337,21 +341,21 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Address 2:</label>
-        <input type="text" class="form-control" name="s_address_2" placeholder="" >
+        <input type="text" value="<?php echo $vals['address_line2'];?>" class="form-control" name="s_address_2" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Nearest Landmark:</label>
-        <input type="text" class="form-control" name="s_landmark" placeholder="" >
+        <input type="text" value="<?php echo $vals['landmark'];?>" class="form-control" name="s_landmark" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">City/Village:</label>
-        <input type="text" class="form-control" name="s_city" placeholder="" >
+        <input type="text" value="<?php echo $vals['city'];?>" class="form-control" name="s_city" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -362,7 +366,7 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">District:</label>
-        <input type="text" class="form-control" name="s_district" placeholder="" >
+        <input type="text" value="<?php echo $vals['district'];?>" class="form-control" name="s_district" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -370,24 +374,18 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">State:</label>
-        <input type="text" class="form-control" name="s_state" placeholder="" >
+        <input type="text" value="<?php echo $vals['cust_state'];?>" class="form-control" name="s_state" placeholder="" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Pincode:</label>
-        <input type="text" class="form-control" name="s_pincode" placeholder="" >
+        <input type="text" value="<?php echo $vals['pincode'];?>" class="form-control" name="s_pincode" placeholder="" >
         <span class=""></span>
       </div>
       </div>
-	  <div class="col-md-3">
-	  <div class="form-group has-feedback">
-	  <label for="firstname">Years at Current Address:</label>
-        <input type="text" class="form-control" name="s_year_address" placeholder="" >
-        <span class=""></span>
-      </div>
-      </div>
+	 
       </div>
  
 	 </div>
@@ -395,29 +393,73 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Aadhar Front:</label>
-        <input type="file" class="form-control" name="aadhar_front" accept="image/*" required>
+		<?php
+		if($vals['aadhar_front']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['aadhar_front'];?>">
+	  <img width="50px" height="50px" src="<?php echo $vals['aadhar_front'];?>">
+	  </a>
+	  <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="aadhar_front" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
 	  
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Aadhar Front:</label>
-        <input type="file" class="form-control" name="aadhar_back" accept="image/*" required>
+	  <label for="firstname">Aadhar Back:</label>
+	  <?php
+		if($vals['aadhar_back']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['aadhar_back'];?>">
+	  <img width="50px" height="50px" src="<?php echo $vals['aadhar_back'];?>">
+	  </a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="aadhar_back" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Declaration:</label>
-        <input type="file" class="form-control" name="declaration" accept="image/*" required>
+	   <?php
+		if($vals['alernate_id']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['alernate_id'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['alernate_id'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="declaration" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
 	 <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Schdule A:</label>
-        <input type="file" class="form-control" name="schdule" accept="image/*" required>
+	   <?php
+		if($vals['schdule_link']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['schdule_link'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['schdule_link'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="schdule" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
@@ -426,12 +468,23 @@ echo "</pre>"; */
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Demand & Promissary:</label>
-        <input type="file" class="form-control" name="demand" accept="image/*" required>
+	  <?php
+		if($vals['demand_link']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['demand_link'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['demand_link'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="demand" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
 	  </div>
-	  <div class="row">
+	  <div class="row" style="display:none">
 	  <div class="col-md-12">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Income & Expenses:</label>
@@ -553,7 +606,7 @@ echo "</pre>"; */
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-success btn-block btn-flat">Create Lead</button>
+          <button type="submit" class="btn btn-success btn-block btn-flat">Update Lead</button>
         </div>
         <!-- /.col -->
       </div>
@@ -604,6 +657,22 @@ $this->load->view('footer');
 
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Add fancyBox main JS and CSS files -->
+	<script type="text/javascript" src="<?=base_url();?>assets/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+
+		$(".fancybox").fancybox({'width':400,
+                         'height':250,
+                         'autoSize' : false,
+						 'openEffect': 'elastic',
+						 'closeEffect': 'elastic'
+		});
+
+		});
+	</script>
 <script>
   function delete_mem(){
 		   
@@ -659,7 +728,7 @@ $this->load->view('footer');
 		  var formData = new FormData($(this)[0]);
 		  
 	   $.ajax({
-		   url: "<?=base_url();?>home/lead_upload",
+		   url: "<?=base_url();?>home/lead_update?id=<?php echo $_GET['id']; ?>",
 		   type: 'POST',
 		   data: formData,
 		   async: false,
@@ -669,8 +738,8 @@ $this->load->view('footer');
 		   processData: false,
 		   success: function (response) {
 			 $("#csv_status").html(response);
-			// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');
-			alert("Successfully Added");			
+			 alert("Edited Successfully");
+			// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
 
 		   }
 	   });

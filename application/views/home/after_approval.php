@@ -520,10 +520,13 @@ Address  </td>
     <td width="27%"></td>
   </tr>
   
-</table>
-<h2 style="text-align: center;">Declaration</h2>
-<img src="'.$details['alernate_id'].'" width= "100%" height="100%">
-<h2 style="text-align: center;">Aadhar Proof</h2>
+</table>');
+$mpdf->AddPage();
+
+$mpdf->WriteHTML('<h2 style="text-align: center;">Declaration</h2>
+<img src="'.$details['alernate_id'].'" width= "100%" height="100%">');
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Aadhar Proof</h2>
 <img src="'.$details['aadhar_front'].'" width= "100%" height="100%">
 <img src="'.$details['aadhar_back'].'" width= "100%" height="100%">
 ');
