@@ -101,6 +101,7 @@ class Api extends CI_Controller {
 						"order_mode"	=> 0,
 						"website_id"	=> 0,
 						"web"			=> "bc",
+						"role"          => $data[0]['role'],
 						"user_type"		=> "agent",
 						"retailer_detail"=> null,
 						"return_terms" => "As per the policy, the replacement is applicable only for Wrong \/ Faulty shipment of the product and which is informed us within 7 days from the date of receipt. Will not accept any other returns or replacements.",
@@ -227,8 +228,38 @@ foreach($json1 as $item){
 	$mobile_number = $item['mobile_number'];
 	$occupation = $item['occupation'];
 	$monthly_income = $item['monthly_income'];
-	echo "sssss";
-	echo $family_income = $item['income_exp'];
+	
+	$address_proof_front = $item['address_proof_front'];
+	$address_proof_back = $item['address_proof_back'];
+	$ship_proof_back = $item['ship_proof_back'];
+	$ship_proof_front = $item['ship_proof_front'];
+	$form60_proof = $item['form60_proof'];
+	
+	$nominee_title = $item['nominee_title'];
+	$nominee_name = $item['nominee_name'];
+	$nominee_mobile = $item['nominee_mobile'];
+	$nominee_dob = $item['nominee_dob'];
+	$nominee_gender = $item['nominee_gender'];
+	$nominee_relation = $item['nominee_relation'];
+	$nominee_add_type = $item['nominee_add_type'];
+	$nominee_address = $item['nominee_address'];
+	
+	
+	
+	$id_proof_type = $item['id_proof_type'];
+	$address_proof_type = $item['address_proof_type'];
+	$shipping_proof_type = $item['shipping_proof_type'];
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//echo "sssss";
+	$family_income = $item['income_exp'];
 //	echo 'ssssssss';
 	$foodly_income = $item['food_exp'];
 	$username = $item['username'];
@@ -394,10 +425,10 @@ $storeid = 0;
 		
 		
 		
- 
-echo	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
+
+	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
 advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
-perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type) VALUES 
+perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type,address_proof_front,address_proof_back,ship_proof_back,ship_proof_front,form60_proof,nominee_title,nominee_name,nominee_mobile,nominee_dob,nominee_gender,nominee_relation,nominee_add_type,nominee_address,id_proof_type,address_proof_type,shipping_proof_type) VALUES 
 ('".$location."', '".$disburse_to."', '".$disburse_code."','".$bc_name."', '".$bc_code."', '".$tm_name."', 
 '".$tm_code."','".$se_name."','".$se_code."','".$program_name."','".$scheme_name."','".$item_code."', '".$finalprice."', ".$qty.", '".$applicant_name."',  
 '".$applicant_fname."','".$applicant_lname."','".$applicant_middlename."','".$mother_name."','".$father_name."','".$id_proof."', '".$aadhaar_id ."', '".$date_of_birth."','".$gender."', 
@@ -407,7 +438,9 @@ perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernat
 '".$manufacturer."','".$make."','".$model."','".$cal_process_fee."','".$emi_amount."', '".$advance_emi."',
 '".$grosstenure."', '".$net_tenure."', '".$item_code."','".$finalprice."','".$roi."','".$email_id."', ".$no_of_dependants.",'".$year_at_currentaddress."', '".$year_in_currentcity."','".$perm_addressline1."',
 '".$perm_addressline2."','".$perm_landmark."','".$perm_district."', '".$perm_pincode."','".$perm_city."','".$perm_state."',
-'".$aadhar_front."','".$aadhar_back."','".$alernate_id."','".$alernate_id_type."','".$ownhouse_proof."','".$Profile_img."','".$signature_img."', ".$order_id.",".$storeid.",'".$branch_code."','".$username."','0','0','','".date("Y-m-d H:i:s")."', '".$couponcode."', '".$rule_id."', '".$discount_amount."', '".$rso_username."','".$pd_assess."','".$pd_repaying."','".$pd_month_emi."','".$pd_monthemi_eligibility."','".$pd_loan_amount."','".$ngo_officername."','".$field_officername."','".$branch_officername."',".$lead_type.")";
+'".$aadhar_front."','".$aadhar_back."','".$alernate_id."','".$alernate_id_type."','".$ownhouse_proof."','".$Profile_img."','".$signature_img."', ".$order_id.",".$storeid.",'".$branch_code."','".$username."','0','0','','".date("Y-m-d H:i:s")."', '".$couponcode."', '".$rule_id."', '".$discount_amount."', '".$rso_username."','".$pd_assess."','".$pd_repaying."','".$pd_month_emi."','".$pd_monthemi_eligibility."','".$pd_loan_amount."','".$ngo_officername."','".$field_officername."','".$branch_officername."','".$lead_type."','".$address_proof_front."','".$address_proof_back."','".$ship_proof_back."','".$ship_proof_front."','".$form60_proof."','".$nominee_title."','".$nominee_name."','".$nominee_mobile."','".$nominee_dob."','".$nominee_gender."','".$nominee_relation."','".$nominee_add_type."','".$nominee_address."','".$id_proof_type."','".$address_proof_type."','".$shipping_proof_type."')";
+
+
 
   	 $query = $this->db->query($sql); 
 
@@ -481,6 +514,37 @@ alternateid_type ='".$alernate_id_type."',
 ownhouse_proof = IF('".$ownhouse_proof."' = '' ,ownhouse_proof,'".$ownhouse_proof."'),
 signature_img = IF('".$signature_img."' = '' ,signature_img,'".$signature_img."'), 
 Profile_img = IF('".$Profile_img."' = '' ,Profile_img,'".$Profile_img."'),
+
+	nominee_title = ".$nominee_title.",
+	nominee_name = ".$nominee_name.",
+	nominee_mobile = ".$nominee_mobile.",
+	nominee_gender = ".$nominee_gender.",
+	nominee_relation = ".$nominee_relation.",
+	nominee_add_type = ".$nominee_add_type.",
+	nominee_address = ".$nominee_address.",
+	update_execute = ".$update_execute.",
+	
+	
+	id_proof_type = ".$id_proof_type.",
+	address_proof_type = ".$address_proof_type.",
+	shipping_proof_type = ".$shipping_proof_type.",
+	
+	
+
+
+address_proof_front = IF('".$address_proof_front."' = '' ,address_proof_front,'".$address_proof_front."'),  
+address_proof_back = IF('".$address_proof_back."' = '' ,address_proof_back,'".$address_proof_back."'),  
+ship_proof_back = IF('".$ship_proof_back."' = '' ,ship_proof_back,'".$ship_proof_back."'),  
+ship_proof_front = IF('".$ship_proof_front."' = '' ,ship_proof_front,'".$ship_proof_front."'),  
+form60_proof = IF('".$form60_proof."' = '' ,form60_proof,'".$form60_proof."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
+
+
 order_id = ".$order_id.",
 store_id = ".$storeid.",
 branch_code = '".$branch_code."',
@@ -499,7 +563,8 @@ status = 'Under Process',
 
 updated_at = NOW() where username = '".$item["username"]."' AND id = '".$item["server_id"]."' ";
 
-    $update_execute = $this->db->query($updatesql);
+
+$update_execute = $this->db->query($updatesql);
 	
  $this->db->query("INSERT INTO lead_api_log(request_json,result,username) values ('".$data."','update','$username')");
  $this->db->query("INSERT INTO orderlead_upload_history(parent_id,action,process,reason) values ('".$item["server_id"]."','-','RCF QDE','under process changed through mobile')");
@@ -607,7 +672,7 @@ $store_id = $json["store_id"];
 	
 
     if($details){
-    foreach($details as $key =>$value)
+    /* foreach($details as $key =>$value)
     {
         $monthly_inc = $value['monthly_income'];
         $monthly_exp = $value['monthly_expenditure'];
@@ -630,7 +695,7 @@ $store_id = $json["store_id"];
         }
         unset($income_arr);
         unset($expenditure_arr);
-    }
+    } */
 	$output['orderlead'] = $details;
     $output['res_msg']="order lead success";
 	$output['res_code']=1;	
@@ -734,6 +799,83 @@ $store_id = $json["store_id"];
 		}
 
 		echo json_encode($output);
+		
+		
+	}
+	public function bb_uploadfintech_image(){
+		 $file_path = "uploaded_documents/"; 
+	$output = array();
+	/* $file = 'samp/image_'.$id."_". (strtotime(date("Y/m/d h:i:sa"))*1000);
+	$data = "data image".date("Y/m/d h:i:sa");
+	$current = file_get_contents($file);
+	$current = $data;
+	file_put_contents($file, $current); */ 
+	
+	  $aadhar_front = $file_path . basename( $_FILES['aadhar_front']['name']);
+    $aadhar_back = $file_path . basename( $_FILES['aadhar_back']['name']);
+	$alernate_id = $file_path . basename( $_FILES['alernate_id']['name']);
+	$ownhouse_proof = $file_path . basename( $_FILES['ownhouse_proof']['name']);
+	$signature_img = $file_path . basename( $_FILES['signature_img']['name']);
+	$Profile_img = $file_path . basename( $_FILES['Profile_img']['name']);
+	
+	$address_proof_front = $file_path . basename( $_FILES['address_proof_front']['name']);
+	$address_proof_back = $file_path . basename( $_FILES['address_proof_back']['name']);
+	$ship_proof_back = $file_path . basename( $_FILES['ship_proof_back']['name']);
+	$ship_proof_front = $file_path . basename( $_FILES['ship_proof_front']['name']);
+	$form60_proof = $file_path . basename( $_FILES['form60_proof']['name']);
+	
+	// file_put_contents($file, $deliveryProof_path); 
+	//added by vasanth 
+	
+	try 
+	{
+		if($_FILES['alernate_id']['name'] != null){
+			move_uploaded_file($_FILES['alernate_id']['tmp_name'], $alernate_id);
+		}
+		if($_FILES['aadhar_front']['name'] != null){
+			move_uploaded_file($_FILES['aadhar_front']['tmp_name'], $aadhar_front);
+		}
+		if($_FILES['aadhar_back']['name'] != null){
+			move_uploaded_file($_FILES['aadhar_back']['tmp_name'], $aadhar_back);
+		}
+		if($_FILES['ownhouse_proof']['name'] != null){
+			move_uploaded_file($_FILES['ownhouse_proof']['tmp_name'], $ownhouse_proof);
+		}
+		if($_FILES['signature_img']['name'] != null){
+			move_uploaded_file($_FILES['signature_img']['tmp_name'], $signature_img);
+		}
+		if($_FILES['Profile_img']['name'] != null){
+			move_uploaded_file($_FILES['Profile_img']['tmp_name'], $Profile_img);
+		}
+		
+		
+		if($_FILES['address_proof_front']['name'] != null){
+			move_uploaded_file($_FILES['address_proof_front']['tmp_name'], $address_proof_front);
+		}
+		if($_FILES['address_proof_back']['name'] != null){
+			move_uploaded_file($_FILES['address_proof_back']['tmp_name'], $address_proof_back);
+		}
+		if($_FILES['ship_proof_back']['name'] != null){
+			move_uploaded_file($_FILES['ship_proof_back']['tmp_name'], $ship_proof_back);
+		}
+		if($_FILES['ship_proof_front']['name'] != null){
+			move_uploaded_file($_FILES['ship_proof_front']['tmp_name'], $ship_proof_front);
+		}
+		if($_FILES['form60_proof']['name'] != null){
+			move_uploaded_file($_FILES['form60_proof']['tmp_name'], $form60_proof);
+		}
+		}
+		catch(Exception $e) {
+      echo 'Message: ' .$e->getMessage();
+	  $output['res_msg'] = 'image failed';
+		$output['res_code'] = 0;
+		echo json_encode($output);
+      }
+	  $output['res_msg'] = 'image success';
+			    $output['res_code'] = 2;
+	echo json_encode($output);
+	
+	//vasanth
 		
 		
 	}
