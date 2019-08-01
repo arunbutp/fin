@@ -515,19 +515,19 @@ ownhouse_proof = IF('".$ownhouse_proof."' = '' ,ownhouse_proof,'".$ownhouse_proo
 signature_img = IF('".$signature_img."' = '' ,signature_img,'".$signature_img."'), 
 Profile_img = IF('".$Profile_img."' = '' ,Profile_img,'".$Profile_img."'),
 
-	nominee_title = ".$nominee_title.",
-	nominee_name = ".$nominee_name.",
-	nominee_mobile = ".$nominee_mobile.",
-	nominee_gender = ".$nominee_gender.",
-	nominee_relation = ".$nominee_relation.",
-	nominee_add_type = ".$nominee_add_type.",
-	nominee_address = ".$nominee_address.",
-	update_execute = ".$update_execute.",
+	nominee_title = '".$nominee_title."',
+	nominee_name = '".$nominee_name."',
+	nominee_mobile = '".$nominee_mobile."',
+	nominee_gender = '".$nominee_gender."',
+	nominee_relation = '".$nominee_relation."',
+	nominee_add_type = '".$nominee_add_type."',
+	nominee_address = '".$nominee_address."',
+
 	
 	
-	id_proof_type = ".$id_proof_type.",
-	address_proof_type = ".$address_proof_type.",
-	shipping_proof_type = ".$shipping_proof_type.",
+	id_proof_type = '".$id_proof_type."',
+	address_proof_type = '".$address_proof_type."',
+	shipping_proof_type = '".$shipping_proof_type."',
 	
 	
 
@@ -537,12 +537,6 @@ address_proof_back = IF('".$address_proof_back."' = '' ,address_proof_back,'".$a
 ship_proof_back = IF('".$ship_proof_back."' = '' ,ship_proof_back,'".$ship_proof_back."'),  
 ship_proof_front = IF('".$ship_proof_front."' = '' ,ship_proof_front,'".$ship_proof_front."'),  
 form60_proof = IF('".$form60_proof."' = '' ,form60_proof,'".$form60_proof."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
-aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
 
 
 order_id = ".$order_id.",
