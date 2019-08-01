@@ -98,9 +98,9 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-pink">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['otherleads']; ?><sup style="font-size: 20px"></sup></h3>
+              <h3><?php echo $dashboard[0]['new_leads']; ?><sup style="font-size: 20px"></sup></h3>
 
-              <p>Other Leads</p>
+              <p>New Leads</p>
             </div>
             <div class="icon">
               <i class="ion ion-male"></i>
@@ -113,9 +113,9 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['under_process']; ?></h3>
+              <h3><?php echo $dashboard[0]['my_leads']; ?></h3>
 
-              <p>Under Process</p>
+              <p>My Leads</p>
             </div>
             <div class="icon">
               <i class="ion ion-eye-disabled"></i>
@@ -231,6 +231,20 @@ $this->load->view('left-menu');
               <h3><?php echo $dashboard[0]['rejected']; ?></h3>
 
               <p>Rejected</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-cancel"></i>
+            </div>
+            <a href="<?=base_url();?>home/details/?task=Rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+		<div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><?php echo $dashboard[0]['rejected']; ?></h3>
+
+              <p>Partner</p>
             </div>
             <div class="icon">
               <i class="ion ion-android-cancel"></i>
