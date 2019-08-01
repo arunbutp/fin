@@ -1,0 +1,67 @@
+emi calc
+mother name not important
+
+id 
+
+in pdf all images should show.
+
+nominee details also we have to show
+sanction and confirm order same box
+
+
+first pdf proodfs all, id proof, shipping address proof if its there, then form 60 , then declaration
+second pdf schdule and DPN
+
+
+we have to add username for 
+
+<<<<<<for apps user only  can download 
+
+remove other leads remove, create one menu for that to show other leads.
+create new lead box for if not username in that column.....
+assign to me button if click its go to my lead. -- this is for appasadmin
+
+new lead common for all people.  -- - this is for appsadmin 
+
+
+b4 loan eliible pre approved dicrepancy. we have to handletype column for post and pre
+
+once case id having and status under progress it should go partner bucket. scrutinyty button edit button disable.
+
+move to partner bucket. button to show whenever comingg my leads.   it shoul
+
+
+we have to do only loan eligible, dicrepany my lead.
+
+
+
+if its not DPN value coming it should be loan eligible. if its there should go to DPN status
+
+if they are clicking loan eligible he has to upload DPN browse button and SA button. then it should goto DPN status
+
+after clicking DPN status box we have to show after approval button to download. then button for move to partner bucket.
+
+
+if its there any discrepancy it should go to post discrepancy.
+
+if its done chages in post discrepancy it should go to DPN box.
+
+
+
+
+after sanction we have to ask yes or no. if no then cancel order.. if yes we have to call API and create order id and store. bracnch amdmin only have to do confirm . if its confirm it shouldgo to confirm box
+
+confirm order box should have pDF invoice . it will  give nafgaraj. then move to partner.
+
+
+
+
+---- branch login
+
+
+
+it is in image section on camera
+
+for excel discrepancy we have to append reason,sub reason, remarks in one column.
+
+for cibil ok to process we have to check only "ok to process" keys . it may have someother words also.

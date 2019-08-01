@@ -1,0 +1,54 @@
+case id mention in that row....
+
+proof images also we have to show. -- Done
+
+upload images for changing the proof -- Done.
+
+full editable. -- Done
+
+discrepancy with editable option ahain. 
+
+under process and discrepancy only we have to show edit options.
+
+after under process we have to remove discrepancy comment.
+
+improper remarks comment
+
+setting button will come except disbursed. --Done
+
+Order status should be udated by calling boonbox API (For those leads which have order id and lead status  as  disbursed and order status not as Delivered ) 
+
+after appproval button should show only loan eligibe.
+
+payment receipt pdf via API(nagaraj will give)l
+
+disbursed and disbursement in progresss should show only in same box for field officer.
+
+
+teritary manager state head,-tm-rso
+
+
+after selecting rso IN USER MANAGEMENT FINANCE BC AND BRANCH
+
+IF ONE USER CLICKING SETTINGS ONE LEAD, OTHER USER CAN OPEN--- WE CAN SHOW NAME IN COUMNS ACCEPTED NAMES
+
+WE HSAVE TO MAKE ONE COLUMN WHICH PROCESS WHICH PERSON HAS DID LIKE THAT.
+
+WE CAN MAKE SOME DIFFERENCE FOR DICREPANCY WHILE UPLOADING EXCEL FILE OR MAKING TO WEB. 
+
+Lead Editable option for BRANCH AND BC login users ONLY.
+
+Disbursed we can show only Name, mobile, shipping address, case id, order id, columns.....   Status we can categorize Dispursement date, Shipping date, Deloivered  date.
+
+
+BC email id we have to add one more column
+
+Name, mobile, shipping address, case id, order id, for disbursed or report data
+
+Thanks Nagaraj 
+
+
+
+@Rajendran S  please use this api  for updating the status of order from ON hold to pending .
+
+This will be triggered when ever a loan gets disbursed .
