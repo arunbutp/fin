@@ -5,7 +5,7 @@ Sr#,Process,Action,Reason,Sub-Reason,Remarks,Status,Boonbox Lead Status,Boonbox 
 ,-,Discrepancy,,,,Discrepancy,Pre-Approval Discrepancy,,,If this comes check for our Lead Status. If Lead Status is Under Process or On Hold then mark Pre Approval Discrepancy
 ,-,Discrepancy,,,,In Queue,Under Process,,,
 ,-,Discrepancy,,,Rejected,Discrepancy,Loan Rejected,,,
-777888,-,Discrepancy,Cibil,ok to process,,Discrepancy,Loan Eligible,,,Check for Contains in Reason & Sub-Reason Column
+,-,Discrepancy,Cibil,ok to process,,Discrepancy,Loan Eligible,,,Check for Contains in Reason & Sub-Reason Column
 ,RCF QDE + Hunter Solution,Discrepancy,,,,In Queue,DPN SA Received,,,
 ,-,Discrepancy,,,,Discrepancy,Post Approval Discrepancy,,,If this comes check for our Lead Status. If Lead Status is Loan Eligible then mark Post Approval Discrepancy
 ,RCF DDE Solution,Discrepancy,,,,In Queue,DPN SA Received,,,
@@ -13,7 +13,7 @@ Sr#,Process,Action,Reason,Sub-Reason,Remarks,Status,Boonbox Lead Status,Boonbox 
 ,Post Approval Upload,Discrepancy,,,,Discrepancy,Post Approval Discrepancy,,,
 ,Post Approval Upload,SS Completed,,,,In Queue,Sanctioned,,,
 ,Hero-Ops,Processed,,,,In Queue,Disbursement In Progress,,,
-testcase,Boonbox Upload,Processed,,,,In Queue,Pending Order Confirmation,,Convert to Order or Cancel,
+,Boonbox Upload,Processed,,,,In Queue,Pending Order Confirmation,Disbursement In Progress,Convert to Order or Cancel,
 ,Boonbox Upload,Discrepancy,,,,BB-Discrepancy,Post Approval Discrepancy,,,
-,Post Approval Upload,Discrepancy,,,,BC-Discrepancy,Post Approval Discrepancy,,,
+vasanthtest2,Post Approval Upload,Discrepancy,,,,BC-Discrepancy,Post Approval Discrepancy,,,
 ,BB Delivery Confirmation,Processed,,,,In Queue,Disbursed,Pending,,
