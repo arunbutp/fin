@@ -55,8 +55,8 @@ img:hover {
         <small>Preview</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?=base_url();?>home/details/?task=Under Process">Under Process</a></li>
+        <li><a href="<?=base_url();?>home2/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?=base_url();?>home2/details/?task=Under Process">Under Process</a></li>
         <li class="active">Settings</li>
       </ol>
     </section>
@@ -79,7 +79,7 @@ img:hover {
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
 			
 			<button type="button" onclick="window.history.back();" class="btn btn-info"><span class="glyphicon glyphicon-hand-left"></span> Back</button>
-			<button type="button" onclick="location.href='<?=base_url();?>home/';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
+			<button type="button" onclick="location.href='<?=base_url();?>home2/';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
 			
 			
 			
@@ -412,29 +412,14 @@ img:hover {
 			}
 			}
 			?>		
-			<?php
-			if($_GET['task']!='Partner'){	
-			?>	
-			<button type="button" id="discrepency" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-transfer"></span> Discrepency</button>  
-			<?php
-			}
-			?>
+			
 			  <?php
-			  if($_GET['task']=='Sanctioned'){
+			  if($_GET['task']=='Sanction/Confirm'){
 				 echo ' <button type="button" id="confirm" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-pushpin"></span> Confirm ?? </button>'; 
 				 echo ' <button type="button" id="reject" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-pushpin"></span> Reject ?? </button>'; 
 			  }
 			  
-			   if($_GET['task']=='Confirmed' || $_GET['task']=='Post Approval Discrepancy' || $_GET['task']=='DPN SA Uploaded' ){
-				 echo ' <button type="button" id="move_partner" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-pushpin"></span> Move to Partner ?? </button>'; 
-			
-			  }
-			  
-			  if($_GET['task']=='My Leads'){
-				if($data[0]['case_id'] != ''){  
-				   echo ' <button type="button" id="move_partner" class="col-md-3 center-block btn btn-primary custom"><span class="glyphicon glyphicon-pushpin"></span> Move to Partner ?? </button>'; 
-			  }
-			  }
+			 
 			  ?>
 			 
 			  
@@ -550,7 +535,7 @@ $(document).ready(function() {
 		  type:'GET',
 		  data:{id:<?php echo $_GET['id']; ?>, status: 1},
 		  success: function(result){
-		//	window.location.href="<?=base_url();?>home";
+			window.location.href="<?=base_url();?>home2";
 		  }
 		});
 		} else {
@@ -634,7 +619,7 @@ $(document).ready(function() {
 			//  alert(result);
 			$("#status").html(result);
 			
-			//window.location.href="<?=base_url().$page?>";
+			window.location.href="<?=base_url().$page?>";
 		  }
 		});
 		}

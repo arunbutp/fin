@@ -3,8 +3,7 @@ $this->load->view('header');
 $this->load->view('left-menu');
 ?>
 <?php
-//$pages = array("Confirmed", "DPN SA Received", "Loan Eligible");
-$pages = array();
+$pages = array("Confirmed", "DPN SA Received", "Loan Eligible");
 
 
 
@@ -31,15 +30,7 @@ $pages = array();
           <div class="box box-success">
             <div class="box-header">
             <!--  <h3 class="box-title">Hover Data Table</h3>-->
-			  
             </div>
-			<div class="box-tools pull-right" style="margin: 5px 5px;">
-          <!--  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
-			
-			<button type="button" onclick="window.history.back();" class="btn btn-info"><span class="glyphicon glyphicon-hand-left"></span> Back</button>
-			<button type="button" onclick="location.href='<?=base_url();?>home/';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
-          </div>
             <!-- /.box-header -->
             <div class="box-body"><!-- Trigger the modal with a button -->
 <!--<button type="button" class="btn btn-success pull-right" style="margin:0px 0px 5px 0px" data-toggle="modal" data-target="#myModal">CSV UPLOAD</button>-->
@@ -49,41 +40,14 @@ $pages = array();
 					<tr>
 				
 						<!--<th></th>-->
-						<th>Case ID</th>
-						<th>Applicant Name</th>
+				
+						<th>Customer Name</th>
 						<th>Location Name</th>
-						<th>City</th>
-						<th>District</th>
-						<th>State</th>
-						<th>Item Code</th>
+						<th>Address</th>
+						<th>mobile</th>
+						
 						<th>Status</th>
-						<?php
-						if($_GET['task']=='Confirmed'){	
-						echo "<th>Order ID</th>";
-						}
-						?>
-						<?php
-						if (in_array(($_GET['task']), $pages))
-						{
-						echo "<th>Move</th>";
-						}
-						?>
-					
-						<?php
-						if($_GET['task']=='New Leads'){
-							echo "<th>Assign</th>";
-						}else{
-							if($_GET['task']!='Disbursed'){
-							echo "<th>Settings</th>";
-						}
-						if($_GET['task']!='Partner'){
-						echo "<th>Edit</th>";
-						}
 						
-
-						}
-						
-						?>
 					</tr>
 				</thead>
 				</table>
@@ -246,7 +210,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 		"searching": false,
         "ajax": {
 			'type': 'POST',
-			'url': "<?=base_url();?>home/under_process_json?task=<?php echo $_GET['task']?>"
+			'url': "<?=base_url();?>home/other_details_json"
 				},
 		columns: [
 			/* {
@@ -255,42 +219,17 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 				className: 'select-checkbox',
 				orderable: false
 			}, */
-			{ data: "case_id" },
+			
 			{ data: "applicant_name" },
 			{ data: "location_name" },
-			{ data: "city" },
-			{ data: "district" },
-			{ data: "state" },
-			{ data: "item_code" },
-			{ data: "status" },
-			<?php
-			if($_GET['task']=='Confirmed'){	
-			echo '{ data: "order_id" },';
-			}
-			?>
-						<?php
-						if (in_array(($_GET['task']), $pages))
-						{
-						echo '{ data: "mov_part" },';
-						}
-						?>
+			{ data: "address" },
+			{ data: "mobile_number" },
+			{ data: "status" }
+						
 
 		
 			
-			
-			<?php
-						if($_GET['task']=='New Leads'){
-							echo '{ data: "assign" }';
-						}else{
-							if($_GET['task']!='Disbursed'){
-							echo '{ data: "settings" },';
-						}
-						if($_GET['task']!='Partner'){
-						echo '{ data: "edit" }';
-						}
-						}
-						
-						?>
+		
 		],
 		order: [ 1, 'asc' ],
 		select: {
@@ -323,7 +262,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 function settings(id){
 	
 	//alert()
-	window.location.href='<?=base_url();?>home/settings?id='+id+'&task=<?=$_GET["task"];?>';
+	window.location.href='<?=base_url();?>home/settings?id='+id;
 	
 	
 }
@@ -331,7 +270,7 @@ function settings(id){
 function edit(id){
 	
 	//alert()
-	window.location.href='<?=base_url();?>home/edit_lead?id='+id+'&task=<?=$_GET["task"];?>';
+	window.location.href='<?=base_url();?>home/edit_lead?id='+id;
 	
 	
 }

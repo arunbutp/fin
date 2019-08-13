@@ -1,6 +1,8 @@
 <?php 
 $this->load->view('header');
 $this->load->view('left-menu');
+$session = $this->session->userdata('MY_SESS2');
+$page = $session['page'];
 ?>
 
 
@@ -13,7 +15,7 @@ $this->load->view('left-menu');
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?=base_url();?>home/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?=base_url().$page?>/"><i class="fa fa-dashboard"></i> Home</a></li>
         
       </ol>
     </section>
@@ -27,7 +29,7 @@ $this->load->view('left-menu');
             </div>-->
             <div class="box-body">
              
-              <button  onclick="location.href = '<?=base_url();?>home/products';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
+              <button  onclick="location.href = '<?=base_url().$page;?>/products';" type="button" class="btn btn-success " style="margin:0px 5px;"  >
                <span class="glyphicon glyphicon-user"></span> New Lead
               </button>
               <button type="button" class="btn btn-success " style="margin:0px 5px;" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-menu-hamburger"></span> CSV UPLOAD</button>
@@ -98,14 +100,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-pink">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['new_leads']; ?><sup style="font-size: 20px"></sup></h3>
+              <h3><?php echo $dashboard[0]['under_process']; ?><sup style="font-size: 20px"></sup></h3>
 
-              <p>New Leads</p>
+              <p>Under Process</p>
             </div>
             <div class="icon">
               <i class="ion ion-male"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=New Leads" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Under Process" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -113,14 +115,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['my_leads']; ?></h3>
+              <h3><?php echo $dashboard[0]['discrepancy']; ?></h3>
 
-              <p>My Leads</p>
+              <p>Discrepancy</p>
             </div>
             <div class="icon">
               <i class="ion ion-eye-disabled"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=My Leads" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -129,14 +131,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['pre_discrepancy']; ?></h3>
+              <h3><?php echo $dashboard[0]['loan_eligible']; ?></h3>
 
-              <p>Pre Discrepancy</p>
+              <p>Loan Eligible</p>
             </div>
             <div class="icon">
               <i class="ion ion-eye-disabled"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=Pre Approval Discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Loan Eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 		
@@ -145,48 +147,32 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['partner']; ?></h3>
-
-              <p>Partner</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-android-cancel"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Partner" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-		
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
-              <h3><?php echo $dashboard[0]['loan_eligible']; ?></h3>
-
-              <p>Loan Eligible</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-briefcase"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Loan Eligible" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-		
-		
-		 <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
               <h3><?php echo $dashboard[0]['dpn_sa_uploaded']; ?></h3>
 
               <p>DPN SA Uploaded</p>
             </div>
             <div class="icon">
+              <i class="ion ion-android-cancel"></i>
+            </div>
+            <a href="<?=base_url();?>home2/details/?task=DPN SA Uploaded" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+		
+       
+		
+		 <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3><?php echo $dashboard[0]['sanctioned_confirmed']; ?></h3>
+
+              <p>Sanction/Confirm?</p>
+            </div>
+            <div class="icon">
               <i class="ion ion-briefcase"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=DPN SA Uploaded" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Sanction/Confirm" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -197,14 +183,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-blue">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['dpn_sa_received']; ?></h3>
+              <h3><?php echo $dashboard[0]['confirmed']; ?></h3>
 
-              <p>DPN SA Received</p>
+              <p>Confirmed</p>
             </div>
             <div class="icon">
               <i class="ion ion-briefcase"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=DPN SA Received" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Confirmed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -217,14 +203,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-olive">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['post_discrepancy']; ?></h3>
+              <h3><?php echo $dashboard[0]['disbursement']; ?></h3>
 
-              <p>Post Discrepancy</p>
+              <p>Disbursement In Progress</p>
             </div>
             <div class="icon">
               <i class="ion ion-shuffle"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=Post Approval Discrepancy" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Disbursement In Progress" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -232,14 +218,14 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['sanctioned']; ?><sup style="font-size: 20px"></sup></h3>
+              <h3><?php echo $dashboard[0]['disbursed']; ?><sup style="font-size: 20px"></sup></h3>
 
-              <p>Sanctioned</p>
+              <p>Disbursed</p>
             </div>
             <div class="icon">
               <i class="ion ion-paper-airplane"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=Sanctioned" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Disbursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -247,82 +233,20 @@ $this->load->view('left-menu');
           <!-- small box -->
           <div class="small-box bg-maroon">
             <div class="inner">
-              <h3><?php echo $dashboard[0]['confirmed']; ?></h3>
+              <h3><?php echo $dashboard[0]['rejected']; ?></h3>
 
-              <p>Confirmed</p>
+              <p>Rejected</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-checkmark-outline"></i>
             </div>
-            <a href="<?=base_url();?>home/details/?task=Confirmed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?=base_url();?>home2/details/?task=Rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h3><?php echo $dashboard[0]['disbursement']; ?></h3>
-
-              <p>Disbursement In Progress</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-loop"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Disbursement In Progress" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
+      
     
       <!-- /.row -->
 	  
-	  
-	  
-	   <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-teal">
-            <div class="inner">
-              <h3><?php echo $dashboard[0]['disbursed']; ?></h3>
-
-              <p>Disbursed</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Disbursed" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-		
-		 <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-teal">
-            <div class="inner">
-              <h3><?php echo $dashboard[0]['rejected']; ?></h3>
-
-              <p>Rejected</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-		
-		<!--<div class="col-lg-3 col-xs-6">
-       
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?php echo $dashboard[0]['rejected']; ?></h3>
-
-              <p>Rejected</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-android-cancel"></i>
-            </div>
-            <a href="<?=base_url();?>home/details/?task=Rejected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>-->
-		
 	  </div>
 
     </section>

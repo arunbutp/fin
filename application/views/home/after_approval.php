@@ -5,8 +5,13 @@ $details = $data[0];
 $total_array = array();
 $_count =1;
 
-$monthly_income =unserialize($details['monthly_income']);
-$monthly_expenditure =unserialize($details['monthly_expenditure']);
+$monthly_income =json_decode($details['monthly_income']);
+$monthly_expenditure =json_decode($details['monthly_expenditure']);
+//echo "<pre>";
+//print_r($monthly_expenditure);
+//echo count($monthly_income);
+//exit;
+
 $total_array[0]['earning_member'] = 'Earning Members';
 $total_array[0]['income_amount'] = '';
 $total_array[0]['expenditure_type'] = 'Expenses';
@@ -14,20 +19,21 @@ $total_array[0]['exp_amount'] = '';
 $total_income = 0;
 $total_exp = 0;
 $repay ="";
- foreach($monthly_income as $key_inc => $val_inc)
+ for($i=0;$i<count($monthly_income);$i++)
 {
    // $total_array[$_count]['earning_member'] = $key_inc.' ........................';
     // $total_array[$_count]['income_amount'] = $val_inc;
-    $total_income += $monthly_income[$key_inc]['amount'];
+    $total_income += $monthly_income[$i]->amount;
     $_count +=1;
 }
 $_count =1;
-foreach($monthly_expenditure as $key_exp => $val_exp)
+//foreach($monthly_expenditure as $key_exp => $val_exp)
+for($i=0;$i<count($monthly_expenditure);$i++)
 {
-    $total_array[$_count]['expenditure_type'] = $key_exp;
-    $total_array[$_count]['exp_amount'] = $val_exp;
+    $total_array[$i+1]->expenditure_type = $monthly_expenditure[$i]->foodExpedi;
+    $total_array[$i+1]->exp_amount = $monthly_expenditure[$i]->amount;
     $_count +=1;
-    $total_exp += $val_exp;
+    $total_exp += $monthly_expenditure[$i]->amount;;
 }
 $repay = round($total_income - $total_exp);
 $string_table= '
@@ -49,27 +55,27 @@ $string_table= '
     <tr>
         <td height="500px" valign="top">';
 		
-		 foreach($monthly_income as $_key=>$_val)
+		 for($i=0;$i<count($monthly_income);$i++)
             {
-				if($_key == 0)
+				if($i == 0)
 				{
 					$string_table .= '&nbsp;&nbsp;&nbsp;Earning Members';
 					$string_table .= "<br><br>";
 				}
-                $string_table .= '&nbsp;&nbsp;&nbsp;'.$monthly_income[$_key]['familyMem'].'.....'.$monthly_income[$_key]['relationName'];
+                $string_table .= '&nbsp;&nbsp;&nbsp;'.$monthly_income[$i]->familyMem.'.....'.$monthly_income[$i]->relationName;
                 $string_table .= "<br><br>";
             }
             
        $string_table .=' </td>
         <td style="text-align:right;" valign="top">';
-         foreach($monthly_income as $_key=>$_val)
+         for($i=0;$i<count($monthly_income);$i++)
             {
-				if($_key == 0)
+				if($i == 0)
 				{
 					$string_table .= '&nbsp;&nbsp;&nbsp;';
 					$string_table .= "<br><br>";
 				}
-                $string_table .= '&nbsp;&nbsp;&nbsp;'.$monthly_income[$_key]['amount'];
+                $string_table .= '&nbsp;&nbsp;&nbsp;'.$monthly_income[$i]->amount;
                 $string_table .= "<br><br>";
             }
            
@@ -77,27 +83,27 @@ $string_table= '
         <td valign="top">';
            foreach($total_array as $_data)
             {
-                $string_table .= '&nbsp;&nbsp;&nbsp;'.$_data['expenditure_type'];
+                $string_table .= '&nbsp;&nbsp;&nbsp;'.$_data->expenditure_type;
                 $string_table .= "<br><br>";
             }
-            if($total_array)
+           /*  if($total_array)
             {
                 $string_table .= '&nbsp;&nbsp;&nbsp;Savings';
                 $string_table .= "<br><br>";
-            }
+            } */
               
         $string_table .= '</td>
         <td style="text-align:right;" valign="top">';
          foreach($total_array as $_data)
             {
-                $string_table .= $_data['exp_amount'].'&nbsp;&nbsp;&nbsp;';
+                $string_table .= $_data->exp_amount.'&nbsp;&nbsp;&nbsp;';
                 $string_table .= "<br><br>";
             }
-            if($total_array)
+           /*  if($total_array)
             {
                 $string_table .= $repay.'&nbsp;&nbsp;&nbsp;';
                 $string_table .= "<br><br>";
-            }
+            } */
            
       $string_table .=  '</td>
     </tr>
@@ -222,6 +228,8 @@ $string_table= '
 
 
 
+//echo $string_table;
+//exit;
 $details = $data[0];
 
 
@@ -300,25 +308,25 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td width="23%">Program Name</td>
-    <td width="27%">'.$details['program_name'].'</td>
+    <td width="27%">'.$details['program_name'].' <span style=" font-size: 14px;">&#10004;</span></td>
     <td width="23%"></td>
     <td width="27%"></td>
   </tr>
   <tr>
     <td width="23%">Scheme Name</td>
-    <td width="27%">'.$details['scheme_name'].'</td>
+    <td width="27%">'.$details['scheme_name'].' - No Advance Scheme</td>
     <td width="23%"></td>
     <td width="27%"></td>
   </tr>
   <tr>
     <td width="23%">Documents Provided</td>
-    <td width="27%">'.$details['id_proof'].'</td>
+    <td width="27%">'.$details['id_proof_type'].','.$details['address_proof_type'].'</td>
     <td width="23%"></td>
     <td width="27%"></td>
   </tr>
   <tr>
     <td width="23%">Type of ID Proof</td>
-    <td width="27%">'.$details['id_proof'].'</td>
+    <td width="27%">'.$details['id_proof_type'].'</td>
     <td width="23%">ID No.</td>
     <td width="27%">'.$details['proof_number'].'</td>
   </tr>
@@ -341,7 +349,7 @@ tr:nth-child(even) {
   </tr>
    <tr>
     <td width="23%">Date of Birth </td>
-    <td width="27%">'.$details['date_of_birth'].'</td>
+    <td width="27%">'.date("d/m/Y", strtotime($details['date_of_birth'])).'</td>
     <td width="23%">Gender Male </td>
     <td width="27%">'.$details['gender'].'</td>
   </tr>
@@ -501,6 +509,87 @@ Address  </td>
   
   
   
+</table><table class="table" width="100%" class="table" border="1">
+  <tr >
+    <td colspan="6" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Employement Details
+</td>
+   
+  </tr>
+ 
+  <tr>
+    <td width="20%">Occupation Type </td>
+    <td width="20%">Salaried</td>
+    <td width="20%">Salaried Daily wages</td>
+    <td width="20%">Self Employed</td>
+	<td colspan="2" width="20%">Self Employed Agriculture <span style=" font-size: 14px;">&#10004;</span> </td>
+   
+  </tr>
+  <tr>
+    <td  width="20%">Name of organization </td>
+   <td colspan="6" width="80%"></td>
+  </tr>
+  <tr>
+    <td  width="20%">Office/ Business Address </td>
+   <td colspan="6" width="80%"></td>
+  </tr>
+  
+    <tr>
+    <td  >Nearest Landmark</td>
+   <td ></td>
+   <td  >City/Village</td>
+   <td ></td>
+    <td  colspan="2">District</td>
+  </tr>
+    <tr>
+    <td  >State</td>
+   <td colspan="2"></td>
+   <td  >Pincode</td>
+   <td colspan="2"></td>
+
+  </tr>
+  
+  <tr>
+  <td>Company Type</td>
+  <td>Govt.    &nbsp;&nbsp;&nbsp;&nbsp;       /  &nbsp;&nbsp;&nbsp;&nbsp;   Pvt.Ltd. </td>
+
+  <td>Public.</td>
+  <td>Proprietorship.</td>
+  <td>Partnership.</td>
+  <td>Agriculture.</td>
+  
+  </tr>
+  
+  <tr>
+  
+  <td>Designation (Salaried)</td>
+  <td colspan= "2"></td>
+   <td>Designation (Self Employed)</td>
+  <td colspan= "2"></td>
+  
+  </tr>
+   <tr>
+  
+  <td>Nature of Business</td>
+  <td colspan= "2"></td>
+   <td>Nature of Business</td>
+  <td colspan= "2">Agriculture</td>
+  
+  </tr>
+  
+  
+    <tr>
+  
+  <td>Years in Current Job</td>
+  <td colspan= "2"></td>
+   <td>Years in previous Job</td>
+  <td colspan= "2"></td>
+  
+  </tr>
+  
+  
+ 
+  
+  
 </table><table class="table" border="1">
   <tr >
     <td colspan="4" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Bank Details
@@ -521,15 +610,164 @@ Address  </td>
   </tr>
   
 </table>');
-$mpdf->AddPage();
 
-$mpdf->WriteHTML('<h2 style="text-align: center;">Declaration</h2>
-<img src="'.$details['alernate_id'].'" width= "100%" height="100%">');
+
+//$mpdf->AddPage();
+$mpdf->WriteHTML('<table border="1" class="table"  style="width:100%">
+<tr> <td colspan="4" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Nominee Details
+</td></tr>
+  <tr>
+    <td>Nominee Name</td>
+    <td>'.$details['nominee_name'].'</td> 
+    <td>Nominee Mobile</td>
+    <td>'.$details['nominee_mobile'].'</td>
+  </tr>
+  
+   <tr>
+    <td>Nominee DOB</td>
+    <td>'.$details['nominee_dob'].'</td> 
+    <td>Nominee Gender</td>
+    <td>'.$details['nominee_gender'].'</td>
+  </tr>
+  
+   <tr>
+    <td>Nominee Address Type</td>
+    <td>'.$details['nominee_add_type'].'</td> 
+    <td>Nominee Address </td>
+    <td>'.$details['nominee_address'].'</td>
+  </tr>
+  
+</table>');
+
+
+$form_60 = '<div style="padding:10px 0px;">
+<p style="text-align: center;">Income-tax Rules, 1962</p>
+<h3 style="text-align: center;margin:2px;">FORM NO. 60</h3>
+<p style="text-align: center; font-style: italic;">[See Second Proviso to rule 114B]</p>
+<p style="text-align: center;line-height: 11pt; ">Form for declaration to be filed by an individual or a person (not being a company or firm) who does not have a permanent account number and who enters into any transaction specified in rule 114B</p>
+</div>
+<table style="border-collapse: collapse;font-size:11px;" border="0" style="width:100%">
+  <tr >
+    <td rowspan="3" width="10%">1</td>
+    <td width="20%">First Name</td>
+	<td width="70%">FirstName</td>
+  </tr>
+   <tr >
+
+    <td >Middle Name</td>
+	<td >FirstName</td>
+  </tr>
+   <tr >
+
+    <td >Last Name</td>
+	<td >FirstName</td>
+  </tr>
+  <tr>
+    <td width="10%">2</td>
+    <td width="50%">Date Of Birth/ Incorporation of declarant</td>
+    <td width="40%">DD/MM/YYYY</td>
+  </tr>
+  <tr>
+  <td width="10%">
+  3
+  </td>
+  <td width="90%" colspan="2">
+  Father\'s Name (In case of individual)
+  </td>
+  </tr>
+  <tr><td></td><td>First Name</td><td></td></tr>
+  <tr><td></td><td>Middle Name</td><td></td></tr>
+  <tr><td></td><td>Sur Name</td><td></td></tr>
+  <tr><td rowspan="2">4</td><td>Flat/Room No.</td><td rowspan="2"><table width="100%" border="1"><tr><td width="20%" rowspan="2" width="10%">5</td><td width="80%">Floor No.</td></tr><tr><td width="80%"> vv</td></tr></table></td></tr>
+  <tr><td>Flat/Room No.</td></tr>
+  
+  
+   <tr><td rowspan="2">6</td><td>Name of Premises.</td><td rowspan="2"><table width="100%" border="1"><tr><td width="20%" rowspan="2" width="10%">7</td><td width="80%">Block Name/No.</td></tr><tr><td width="80%"> vv</td></tr></table></td></tr>
+  <tr><td>Flat/Room No.</td></tr>
+  
+  
+   <tr><td rowspan="2">8</td><td>Road/Street/Lane.</td><td rowspan="2"><table width="100%" border="1"><tr><td width="20%" rowspan="2" width="10%">9</td><td width="80%">Area of Locality.</td></tr><tr><td width="80%"> vv</td></tr></table></td></tr>
+  <tr><td>Flat/Room No.</td></tr>
+  
+  
+     <tr><td rowspan="2">10</td><td>Town/City.</td><td rowspan="2"><table width="100%" border="1"><tr><td width="10%" rowspan="2">11</td><td width="40%">District.</td><td width="10%" rowspan="2" width="10%">12</td><td width="40%">State.</td></tr><tr><td width="40%"> vv</td><td width="40%"> vv</td></tr></table></td></tr>
+	 
+</table>
+
+<table border="1" width="100%"><tr><td rowspan="2" width="10%">13</td><td>Pincode</td><td rowspan="2">14</td><td>Telephone Number</td><td width="10%" rowspan="2">15</td><td>Mobile Number</td></tr>
+
+<tr><td>Pincode</td><td>Telephone Number</td><td>Mobile Number</td></tr>
+
+<tr><td>16</td><td colspan="5">Amount of transaction (Rs.)</td></tr>
+
+
+<tr><td>17</td><td width="40%" colspan="3">Date of Transaction</td><td>DD/MM/YYYY</td><td colspan="3"></td></tr>
+<tr><td>18</td><td colspan="4">Incase of Transaction in joint names, number of persons involved in the transaction</td><td></td></tr>
+
+<tr><td>19</td><td colspan="5">Mode of transaction:  &#10063; Cash, &#10063; Cheque, &#10063; Card, &#10063; Draft/Banker\'s Cheque, &#10063; Online transfer, &#10063; Other</td></tr>
+
+<tr><td>20</td><td colspan="4">Aadhar number issued by UIDAI (if available)</td><td></td></tr>
+
+</table>';
+//$mpdf->AddPage();
+//$mpdf->WriteHTML($form_60);
+
+if(!empty($details['aadhar_front'])){
 $mpdf->AddPage();
-$mpdf->WriteHTML('<h2 style="text-align: center;">Aadhar Proof</h2>
-<img src="'.$details['aadhar_front'].'" width= "100%" height="100%">
-<img src="'.$details['aadhar_back'].'" width= "100%" height="100%">
-');
+$mpdf->WriteHTML('<h2 style="text-align: center;">ID Proof Front</h2>
+<img src="'.$details['aadhar_front'].'" width= "100%" height="100%">');
+}
+if(!empty($details['aadhar_back'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">ID Proof Back</h2>
+<img src="'.$details['aadhar_back'].'" width= "100%" height="100%">');
+}
+
+
+
+if(!empty($details['address_proof_front'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Address Proof Front</h2>
+<img src="'.$details['address_proof_front'].'" width= "100%" height="100%">');
+}
+if(!empty($details['address_proof_back'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Address Proof Back</h2>
+<img src="'.$details['address_proof_back'].'" width= "100%" height="100%">');
+}
+if(!empty($details['ship_proof_front'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Ship Proof Front</h2>
+<img src="'.$details['ship_proof_front'].'" width= "100%" height="100%">');
+}
+
+if(!empty($details['ship_proof_back'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Ship Proof Back</h2>
+<img src="'.$details['ship_proof_back'].'" width= "100%" height="100%">');
+}
+
+if(!empty($details['form60_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Form 60</h2>
+<img src="'.$details['form60_proof'].'" width= "100%" height="100%">');
+}
+if(!empty($details['declaration_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Declaration proof</h2>
+<img src="'.$details['declaration_proof'].'" width= "100%" height="100%">');
+}
+if(!empty($details['schdule_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Schdule A</h2>
+<img src="'.$details['schdule_proof'].'" width= "100%" height="100%">');
+}
+if(!empty($details['dpn_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">DPN</h2>
+<img src="'.$details['dpn_proof'].'" width= "100%" height="100%">');
+}
+
 
 
 $mpdf->AddPage();

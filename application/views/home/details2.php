@@ -6,7 +6,8 @@ $this->load->view('left-menu');
 //$pages = array("Confirmed", "DPN SA Received", "Loan Eligible");
 $pages = array();
 
-
+$session = $this->session->userdata('MY_SESS2');
+$page = $session['page'];
 
 ?>	
   <!-- Content Wrapper. Contains page content -->
@@ -38,7 +39,7 @@ $pages = array();
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
 			
 			<button type="button" onclick="window.history.back();" class="btn btn-info"><span class="glyphicon glyphicon-hand-left"></span> Back</button>
-			<button type="button" onclick="location.href='<?=base_url();?>home/';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
+			<button type="button" onclick="location.href='<?=base_url().$page;?>';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
           </div>
             <!-- /.box-header -->
             <div class="box-body"><!-- Trigger the modal with a button -->
@@ -61,26 +62,18 @@ $pages = array();
 						if($_GET['task']=='Confirmed'){	
 						echo "<th>Order ID</th>";
 						}
-						?>
-						<?php
-						if (in_array(($_GET['task']), $pages))
-						{
-						echo "<th>Move</th>";
+							
+						if($_GET['task']=='Sanction/Confirm'){
+						echo "<th>Settings</th>";
 						}
 						?>
+						
+						
 					
 						<?php
-						if($_GET['task']=='New Leads'){
-							echo "<th>Assign</th>";
-						}else{
-							if($_GET['task']!='Disbursed'){
-							echo "<th>Settings</th>";
-						}
-						if($_GET['task']!='Partner'){
-						echo "<th>Edit</th>";
-						}
 						
-
+						if($_GET['task']=='Discrepancy'  || $_GET['task']=='Loan Eligible' ){
+						echo "<th>Edit</th>";
 						}
 						
 						?>
@@ -246,7 +239,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 		"searching": false,
         "ajax": {
 			'type': 'POST',
-			'url': "<?=base_url();?>home/under_process_json?task=<?php echo $_GET['task']?>"
+			'url': "<?=base_url();?>home2/under_process_json?task=<?php echo $_GET['task']?>"
 				},
 		columns: [
 			/* {
@@ -273,22 +266,20 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 						{
 						echo '{ data: "mov_part" },';
 						}
+						if($_GET['task']=='Sanction/Confirm'){
+							echo '{ data: "settings" },';
+						}
 						?>
 
 		
 			
 			
 			<?php
-						if($_GET['task']=='New Leads'){
-							echo '{ data: "assign" }';
-						}else{
-							if($_GET['task']!='Disbursed'){
-							echo '{ data: "settings" },';
-						}
-						if($_GET['task']!='Partner'){
+						
+						if($_GET['task']=='Discrepancy' || $_GET['task']=='Loan Eligible'){
 						echo '{ data: "edit" }';
 						}
-						}
+						
 						
 						?>
 		],
@@ -323,7 +314,7 @@ $("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/
 function settings(id){
 	
 	//alert()
-	window.location.href='<?=base_url();?>home/settings?id='+id+'&task=<?=$_GET["task"];?>';
+	window.location.href='<?=base_url();?>home2/settings?id='+id+'&task=<?=$_GET["task"];?>';
 	
 	
 }
@@ -331,7 +322,7 @@ function settings(id){
 function edit(id){
 	
 	//alert()
-	window.location.href='<?=base_url();?>home/edit_lead?id='+id+'&task=<?=$_GET["task"];?>';
+	window.location.href='<?=base_url();?>home2/edit_lead?id='+id+'&task=<?=$_GET["task"];?>';
 	
 	
 }
@@ -374,7 +365,7 @@ function mov_part(id){
 			table.clear().draw();
 			table.ajax.reload();
 			alert("Successfully Assigned");
-			window.location.href='<?=base_url();?>home';
+			window.location.href='<?=base_url();?>home2';
 			
 		}
 	});

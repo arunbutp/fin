@@ -87,7 +87,7 @@ class Api extends CI_Controller {
 			}
 			
 			
-			
+			if(!empty($data[0]['id'])){
 			$arr = array("userid"		=> $data[0]['id'],
 						"firstname"		=>$data[0]['firstname'],
 						"lastname"		=>$data[0]['firstname'],
@@ -147,6 +147,28 @@ class Api extends CI_Controller {
 						
 						
 			);
+			}else{
+				
+				$arr = array(
+				"userid"=> "",
+				"firstname"=> "",
+				"lastname"=> "",
+				"birthdate"=> "",
+				"email"=> "0",
+				"store_id"=> "0",
+				"group_id"=> "0",
+				"username"=> "0",
+				"password"=> "0",
+				"couponcode"=> [],
+				"branches"=> [],
+				"fieldofficers"=> [],
+				"order_mode"=> "",
+				"rechrgeno"=> "0",
+				"userrole"=> "0",
+				"retminqty"=> "0"
+				
+				);
+			}
 		//}
 		
 	//	bc = 60
@@ -180,7 +202,7 @@ class Api extends CI_Controller {
 		//echo "<pre>";
 		//print_r($json1);
 		
-		
+		//echo "ki"; 
 		
 		
 foreach($json1 as $item){
@@ -251,7 +273,11 @@ foreach($json1 as $item){
 	$shipping_proof_type = $item['shipping_proof_type'];
 	
 	
+	$schdule_proof = $item['schdule_proof'];
+	$dpn_proof = $item['dpn_proof'];
 	
+	$add_chkbox = $item['add_chkbox'];
+	$mobile_type = $item['mobile_type'];
 	
 	
 	
@@ -280,7 +306,7 @@ foreach($json1 as $item){
     $perm_state = $item['perm_state'];
     $aadhar_front = $item['aadhar_front'];
     $aadhar_back = $item['aadhar_back'];
-    $alernate_id = $item['alernate_id'];
+    $declaration_proof = $item['declaration_proof'];
 	$alernate_id_type = $item['alternative_type'];
     $ownhouse_proof = $item['ownhouse_proof'];
 	$Profile_img = $item['Profile_img'];
@@ -428,7 +454,7 @@ $storeid = 0;
 
 	 $sql ="INSERT INTO orderlead_info (location_name,disburse_to,disburse_code,bc_name,bc_code,tm_name,tm_code,se_name,se_code,program_name,scheme_name,item_code,price,qty,applicant_name,applicant_firstname,applicant_lastname, applicant_middlename, mother_name, father_name,id_proof,proof_number,date_of_birth,gender,marital_status,education,residence,address_line1,address_line2,landmark,pincode,city,district,cust_state,mobile_number,occupation,monthly_income, monthly_expenditure,repaying_capacity,emi_eligibility,manufacturer_name,asset_make,asset_model,processing_fee,emi_amount,
 advance_emi_amount,gross_tenure,net_tenure,item_number,loan_amount,roi,email_id,no_of_dependants,year_at_currentaddress,year_in_currentcity,perm_addressline1,perm_addressline2,perm_landmark,
-perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernate_id,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type,address_proof_front,address_proof_back,ship_proof_back,ship_proof_front,form60_proof,nominee_title,nominee_name,nominee_mobile,nominee_dob,nominee_gender,nominee_relation,nominee_add_type,nominee_address,id_proof_type,address_proof_type,shipping_proof_type) VALUES 
+perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,declaration_proof,alternateid_type,ownhouse_proof,Profile_img,signature_img,order_id,store_id,branch_code,username,is_approved,discrepancy,note,created_at,couponcode,rule_id,discount_amount,rso_username,pd_assessment,pd_repaying,pd_month_emi,pd_monthemi_eligibility,pd_loan_amount,ngo_officername,field_officername,branch_officername,lead_type,address_proof_front,address_proof_back,ship_proof_back,ship_proof_front,form60_proof,nominee_title,nominee_name,nominee_mobile,nominee_dob,nominee_gender,nominee_relation,nominee_add_type,nominee_address,id_proof_type,address_proof_type,shipping_proof_type,schdule_proof,dpn_proof,add_chkbox,mobile_type) VALUES 
 ('".$location."', '".$disburse_to."', '".$disburse_code."','".$bc_name."', '".$bc_code."', '".$tm_name."', 
 '".$tm_code."','".$se_name."','".$se_code."','".$program_name."','".$scheme_name."','".$item_code."', '".$finalprice."', ".$qty.", '".$applicant_name."',  
 '".$applicant_fname."','".$applicant_lname."','".$applicant_middlename."','".$mother_name."','".$father_name."','".$id_proof."', '".$aadhaar_id ."', '".$date_of_birth."','".$gender."', 
@@ -438,7 +464,7 @@ perm_district,perm_pincode,perm_city,perm_state,aadhar_front,aadhar_back,alernat
 '".$manufacturer."','".$make."','".$model."','".$cal_process_fee."','".$emi_amount."', '".$advance_emi."',
 '".$grosstenure."', '".$net_tenure."', '".$item_code."','".$finalprice."','".$roi."','".$email_id."', ".$no_of_dependants.",'".$year_at_currentaddress."', '".$year_in_currentcity."','".$perm_addressline1."',
 '".$perm_addressline2."','".$perm_landmark."','".$perm_district."', '".$perm_pincode."','".$perm_city."','".$perm_state."',
-'".$aadhar_front."','".$aadhar_back."','".$alernate_id."','".$alernate_id_type."','".$ownhouse_proof."','".$Profile_img."','".$signature_img."', ".$order_id.",".$storeid.",'".$branch_code."','".$username."','0','0','','".date("Y-m-d H:i:s")."', '".$couponcode."', '".$rule_id."', '".$discount_amount."', '".$rso_username."','".$pd_assess."','".$pd_repaying."','".$pd_month_emi."','".$pd_monthemi_eligibility."','".$pd_loan_amount."','".$ngo_officername."','".$field_officername."','".$branch_officername."','".$lead_type."','".$address_proof_front."','".$address_proof_back."','".$ship_proof_back."','".$ship_proof_front."','".$form60_proof."','".$nominee_title."','".$nominee_name."','".$nominee_mobile."','".$nominee_dob."','".$nominee_gender."','".$nominee_relation."','".$nominee_add_type."','".$nominee_address."','".$id_proof_type."','".$address_proof_type."','".$shipping_proof_type."')";
+'".$aadhar_front."','".$aadhar_back."','".$declaration_proof."','".$alernate_id_type."','".$ownhouse_proof."','".$Profile_img."','".$signature_img."', ".$order_id.",".$storeid.",'".$branch_code."','".$username."','0','0','','".date("Y-m-d H:i:s")."', '".$couponcode."', '".$rule_id."', '".$discount_amount."', '".$rso_username."','".$pd_assess."','".$pd_repaying."','".$pd_month_emi."','".$pd_monthemi_eligibility."','".$pd_loan_amount."','".$ngo_officername."','".$field_officername."','".$branch_officername."','".$lead_type."','".$address_proof_front."','".$address_proof_back."','".$ship_proof_back."','".$ship_proof_front."','".$form60_proof."','".$nominee_title."','".$nominee_name."','".$nominee_mobile."','".$nominee_dob."','".$nominee_gender."','".$nominee_relation."','".$nominee_add_type."','".$nominee_address."','".$id_proof_type."','".$address_proof_type."','".$shipping_proof_type."','".$schdule_proof."','".$dpn_proof."','".$add_chkbox."','".$mobile_type."')";
 
 
 
@@ -509,7 +535,7 @@ perm_city ='".$perm_city."',
 perm_state ='".$perm_state."',
 aadhar_front = IF('".$aadhar_front."' = '' ,aadhar_front,'".$aadhar_front."'),  
 aadhar_back = IF('".$aadhar_back."' = '' ,aadhar_back,'".$aadhar_back."'), 
-alernate_id = IF('".$alernate_id."' = '' ,alernate_id,'".$alernate_id."'),
+declaration_proof = IF('".$declaration_proof."' = '' ,declaration_proof,'".$declaration_proof."'),
 alternateid_type ='".$alernate_id_type."',
 ownhouse_proof = IF('".$ownhouse_proof."' = '' ,ownhouse_proof,'".$ownhouse_proof."'),
 signature_img = IF('".$signature_img."' = '' ,signature_img,'".$signature_img."'), 
@@ -528,8 +554,13 @@ Profile_img = IF('".$Profile_img."' = '' ,Profile_img,'".$Profile_img."'),
 	id_proof_type = '".$id_proof_type."',
 	address_proof_type = '".$address_proof_type."',
 	shipping_proof_type = '".$shipping_proof_type."',
+	add_chkbox = '".$add_chkbox."',
+	mobile_type = '".$mobile_type."',
 	
+
 	
+	schdule_proof = IF('".$schdule_proof."' = '' ,schdule_proof,'".$schdule_proof."'),
+	dpn_proof = IF('".$dpn_proof."' = '' ,dpn_proof,'".$dpn_proof."'),
 
 
 address_proof_front = IF('".$address_proof_front."' = '' ,address_proof_front,'".$address_proof_front."'),  
@@ -607,7 +638,7 @@ $store_id = $json["store_id"];
 		$data = $this->api_model->fintech_count($username);
     if($data)
 	{
-		$output['orderlead'][$i]['countDiscrepancy'] = $data->discrepancy;
+		/*$output['orderlead'][$i]['countDiscrepancy'] = $data->discrepancy;
 		$output['orderlead'][$i]['total_lead'] = $data->total_lead;
 		$output['orderlead'][$i]['countInprogress'] = $data->under_process;
 		$output['orderlead'][$i]['countPendingOrder'] = $data->order_confim;
@@ -616,9 +647,27 @@ $store_id = $json["store_id"];
 		$output['orderlead'][$i]['countRejected'] = $data->canceled;
 		$output['orderlead'][$i]['countDisburseProgress'] = $data->disbursement;
 		$output['orderlead'][$i]['countLoanEligible'] = $data->loan_eligible;
-		// $output['orderlead'] = $result;
+
+		$output['res_msg']="order lead success";
+		$output['res_code']=1;*/
+		$output['orderlead'][$i]['Otherleads'] = $data->otherleads;
+		$output['orderlead'][$i]['MyLeads'] = $data->my_leads;
+		$output['orderlead'][$i]['NewLeads'] = $data->new_leads;
+		$output['orderlead'][$i]['Partner'] = $data->partner;
+		$output['orderlead'][$i]['LoanEligible'] = $data->loan_eligible;
+		$output['orderlead'][$i]['PreApprovalDiscrepancy'] = $data->pre_discrepancy;
+		$output['orderlead'][$i]['PostApprovalDiscrepancy'] = $data->post_discrepancy;
+		$output['orderlead'][$i]['DPNSAUploaded'] = $data->dpn_sa_uploaded;
+		$output['orderlead'][$i]['DPNSAReceived'] = $data->dpn_sa_received;
+		$output['orderlead'][$i]['Sanctioned'] = $data->sanctioned;
+		$output['orderlead'][$i]['PendingOrderConfirmation'] = $data->order_confim;
+		$output['orderlead'][$i]['Confirmed'] = $data->confirmed;
+		$output['orderlead'][$i]['DisbursementInProgress'] = $data->disbursement;
+		$output['orderlead'][$i]['Disbursed'] = $data->disbursed;
+		$output['orderlead'][$i]['Canceled'] = $data->rejected;
 		$output['res_msg']="order lead success";
 		$output['res_code']=1;
+		
 	}
 	else {
 	$output['res_msg']="order lead failed";
@@ -870,6 +919,105 @@ $store_id = $json["store_id"];
 	echo json_encode($output);
 	
 	//vasanth
+		
+		
+	}
+	public function bb_search_fintech(){
+		header("Access-Control-Allow-Origin: *");
+		
+		 $data=file_get_contents('php://input');
+
+  $id="test";
+
+    $json = json_decode($data,true);
+
+    $file = 'orderxmls/logis_'.$id."_". (strtotime(date("Y/m/d h:i:sa"))*1000);
+
+    $current = file_get_contents($file);
+    $current = $data;
+    // file_put_contents($file, $current); 
+	
+    $output  = array();
+    $i=0;
+
+	$user_id = $json["user_id"];
+    $username = $json["username"];
+	$user_type = $json["user_type"];
+	$selecttype = $json["selecttype"];
+	$searchParameter = $json["searchParameter"];
+	$storeId = $json["store_id"];
+
+
+	 if($user_id != null){
+	 
+
+	 
+    $sql = "SELECT * from orderlead_info WHERE username = '".$username."' OR rso_username = '".$username."' "; 
+	
+	$result =mysqli_query ($connect,$sql);
+
+   $num_rows = mysqli_num_rows($result);
+ 	
+    if($num_rows > 0){
+  
+	
+			 if($searchParameter != null || $searchParameter != ''){
+			 if($selecttype == 'Mobile No'){
+			 
+			$inProgressQuery = "SELECT * from orderlead_info WHERE mobile_number LIKE '%$searchParameter%'   ";	 
+			 }else if($selecttype == 'Case ID'){
+		 
+			$inProgressQuery = "SELECT * from orderlead_info WHERE case_id = '".$searchParameter."'    ";	 
+			 }else if($selecttype == 'Lead ID'){
+			 	 
+			$inProgressQuery = "SELECT * from orderlead_info WHERE id = '".$searchParameter."'    ";	 	 
+		 }
+		 }
+		
+	
+	    $inProgressResult = mysqli_query ($connect,$inProgressQuery);
+		$countInProgress = mysqli_num_rows($inProgressResult);
+		if($countInProgress > 0){
+			while ($row = mysqli_fetch_assoc($inProgressResult)){
+			$output['orderlead_pending'][$i] = $row;	
+			$leadId = $row["id"];
+			$orderId = $row["order_id"];
+			if($orderId != 0){
+			$order_data = Mage::getModel('sales/order')->load($orderId);
+			// print_r($order_data);
+			// die;
+			
+			$output['orderlead_pending'][$i]['bbstatus'] = $order_data['status']  . " - ". $inc_id ;
+			$inc_id = $order_data['increment_id'];
+			$output['orderlead_pending'][$i]['bbstatus'] = $order_data['bbstatus'] . " - ". $inc_id ;
+			}else{
+			$output['orderlead_pending'][$i]['complete_status'] = "NIL";
+			$output['orderlead_pending'][$i]['bbstatus'] = "Order not genereated" ;	
+			}
+			
+			$i++;
+			}
+			 $output['res_msg']="order lead success";
+	$output['res_code']=1;
+		}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=5;
+    }
+
+   	
+	
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=3;
+    }
+
+	}else{
+	$output['res_msg']="order lead failed";
+	$output['res_code']=2;	
+	} 
+
+	echo json_encode($output);
+ 
 		
 		
 	}

@@ -110,7 +110,31 @@ WHERE u.username= '$username'";
 			}
 			
 			
-			$SQL = "SELECT COUNT(*) AS total_lead,IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,IFNULL(SUM(IF(oi.status='Under Process' AND lead_type = 1,1,0)),0) AS under_process, IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, IFNULL(SUM(IF(oi.status='Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi WHERE $str";
+			/*$SQL = "SELECT COUNT(*) AS total_lead,
+			IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,
+			IFNULL(SUM(IF(oi.status='Under Process' AND lead_type = 1,1,0)),0) AS under_process, 
+			IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, IFNULL(SUM(IF(oi.status='Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, 
+			IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, 
+			IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi WHERE $str";*/
+			
+			$SQL = "SELECT COUNT(*) AS total_lead,
+IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,
+IFNULL(SUM(IF(oi.status='Under Process' AND last_updated_by is not null  AND lead_type = 1,1,0 ) ),0) AS my_leads, 
+(select count(*) from orderlead_info where last_updated_by IS NULL AND STATUS='Under Process'  ) as new_leads,
+
+IFNULL(SUM(IF(oi.status='Partner' AND lead_type = 1,1,0)),0) AS partner, 
+
+IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, 
+IFNULL(SUM(IF(oi.status='Pre Approval Discrepancy' AND lead_type = 1,1,0)),0) AS pre_discrepancy, 
+IFNULL(SUM(IF(oi.status='Post Approval Discrepancy' AND lead_type = 1,1,0)),0) AS post_discrepancy, 
+IFNULL(SUM(IF(oi.status='DPN SA Uploaded' AND lead_type = 1,1,0)),0) AS dpn_sa_uploaded, 
+IFNULL(SUM(IF(oi.status='DPN SA Received' AND lead_type = 1,1,0)),0) AS dpn_sa_received, 
+IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, 
+IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, 
+IFNULL(SUM(IF(oi.status='Confirmed' AND lead_type = 1,1,0)),0) AS confirmed, 
+IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, 
+IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, 
+IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi WHERE $str";
 			
 			$query = $this->db->query($SQL);
 
@@ -121,10 +145,10 @@ WHERE u.username= '$username'";
 			
 		if($user_type == '1'){
 			
-			$sql = "SELECT * from orderlead_info WHERE rso_username = '".$username."' AND status = 'Discrepancy' "; 
+			$sql = "SELECT * from orderlead_info WHERE rso_username = '".$username."' AND status = 'Pre Approval Discrepancy' "; 
 		}else{
 			 
-			$sql = "SELECT * from orderlead_info WHERE username = '".$username."' AND status = 'Discrepancy' "; 
+			$sql = "SELECT * from orderlead_info WHERE username = '".$username."' AND status = 'Pre Approval Discrepancy' "; 
 		}
 		 
 		$query = $this->db->query($sql);
@@ -134,12 +158,29 @@ WHERE u.username= '$username'";
 		}
 		public function chk_pending($user_type,$username){
 			
+			
+			$SQL2 = "SELECT * FROM users where userName='$username' and role='4'";
+			
+			$query2 = $this->db->query($SQL2);
+			$check_bc = $query2->row();
+			
+		//	echo "<pre>";
+			//print_r($check_bc);
+			
+			if($check_bc->role == '4'){
+				
+				$str = "branch_code = '".$check_bc->branch_id."'"; 
+			}else{
+				
+				$str ="username = '".$username."' OR rso_username = '".$username."' OR branch_code = '01001,01002'";
+			}	
+			
 		if($user_type == '1'){
 			
-			$sql = "SELECT * from orderlead_info WHERE rso_username = '".$username."'  AND (status = 'Pending Order Confirmation' )  "; 
+			$sql = "SELECT * from orderlead_info WHERE $str  AND (status = 'Sanctioned' )  "; 
 		}else{
 			 
-			$sql = "SELECT * from orderlead_info WHERE username = '".$username."'  AND (status = 'Pending Order Confirmation' ) "; 
+			$sql = "SELECT * from orderlead_info WHERE $str  AND (status = 'Sanctioned' ) "; 
 		}
 		 
 		$query = $this->db->query($sql);

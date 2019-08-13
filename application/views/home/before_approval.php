@@ -82,13 +82,13 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td width="23%">Program Name</td>
-    <td width="27%">'.$details['program_name'].'</td>
+    <td width="27%">'.$details['program_name'].' <span style=" font-size: 14px;">&#10004;</span></td>
     <td width="23%"></td>
     <td width="27%"></td>
   </tr>
   <tr>
     <td width="23%">Scheme Name</td>
-    <td width="27%">'.$details['scheme_name'].'</td>
+    <td width="27%">'.$details['scheme_name'].' - No Advance Scheme</td>
     <td width="23%"></td>
     <td width="27%"></td>
   </tr>
@@ -123,7 +123,7 @@ tr:nth-child(even) {
   </tr>
    <tr>
     <td width="23%">Date of Birth </td>
-    <td width="27%">'.$details['date_of_birth'].'</td>
+    <td width="27%">'.date("d/m/Y", strtotime($details['date_of_birth'])).'</td>
     <td width="23%">Gender Male </td>
     <td width="27%">'.$details['gender'].'</td>
   </tr>
@@ -283,6 +283,87 @@ Address  </td>
   
   
   
+</table><table class="table" width="100%" class="table" border="1">
+  <tr >
+    <td colspan="6" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Employement Details
+</td>
+   
+  </tr>
+ 
+  <tr>
+    <td width="20%">Occupation Type </td>
+    <td width="20%">Salaried</td>
+    <td width="20%">Salaried Daily wages</td>
+    <td width="20%">Self Employed</td>
+	<td colspan="2" width="20%">Self Employed Agriculture <span style=" font-size: 14px;">&#10004;</span> </td>
+   
+  </tr>
+  <tr>
+    <td  width="20%">Name of organization </td>
+   <td colspan="6" width="80%"></td>
+  </tr>
+  <tr>
+    <td  width="20%">Office/ Business Address </td>
+   <td colspan="6" width="80%"></td>
+  </tr>
+  
+    <tr>
+    <td  >Nearest Landmark</td>
+   <td ></td>
+   <td  >City/Village</td>
+   <td ></td>
+    <td  colspan="2">District</td>
+  </tr>
+    <tr>
+    <td  >State</td>
+   <td colspan="2"></td>
+   <td  >Pincode</td>
+   <td colspan="2"></td>
+
+  </tr>
+  
+  <tr>
+  <td>Company Type</td>
+  <td>Govt.    &nbsp;&nbsp;&nbsp;&nbsp;       /  &nbsp;&nbsp;&nbsp;&nbsp;   Pvt.Ltd. </td>
+
+  <td>Public.</td>
+  <td>Proprietorship.</td>
+  <td>Partnership.</td>
+  <td>Agriculture.</td>
+  
+  </tr>
+  
+  <tr>
+  
+  <td>Designation (Salaried)</td>
+  <td colspan= "2"></td>
+   <td>Designation (Self Employed)</td>
+  <td colspan= "2"></td>
+  
+  </tr>
+   <tr>
+  
+  <td>Nature of Business</td>
+  <td colspan= "2"></td>
+   <td>Nature of Business</td>
+  <td colspan= "2">Agriculture</td>
+  
+  </tr>
+  
+  
+    <tr>
+  
+  <td>Years in Current Job</td>
+  <td colspan= "2"></td>
+   <td>Years in previous Job</td>
+  <td colspan= "2"></td>
+  
+  </tr>
+  
+  
+ 
+  
+  
 </table><table class="table" border="1">
   <tr >
     <td colspan="4" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Bank Details
@@ -303,12 +384,91 @@ Address  </td>
   </tr>
   
 </table>');
+
+
+//$mpdf->AddPage();
+$mpdf->WriteHTML('<table border="1" class="table"  style="width:100%">
+<tr> <td colspan="4" style="text-align: center; vertical-align: middle;font-weight:bold;background-color:#a9a3a3;color:#fff">Nominee Details
+</td></tr>
+  <tr>
+    <td>Nominee Name</td>
+    <td>'.$details['nominee_name'].'</td> 
+    <td>Nominee Mobile</td>
+    <td>'.$details['nominee_mobile'].'</td>
+  </tr>
+  
+   <tr>
+    <td>Nominee DOB</td>
+    <td>'.$details['nominee_dob'].'</td> 
+    <td>Nominee Gender</td>
+    <td>'.$details['nominee_gender'].'</td>
+  </tr>
+  
+   <tr>
+    <td>Nominee Address Type</td>
+    <td>'.$details['nominee_add_type'].'</td> 
+    <td>Nominee Address </td>
+    <td>'.$details['nominee_address'].'</td>
+  </tr>
+  
+</table>');
+
+if(!empty($details['aadhar_front'])){
 $mpdf->AddPage();
-$mpdf->WriteHTML('<h2 style="text-align: center;">Declaration</h2>
-<img src="'.$details['alernate_id'].'" width= "100%" height="100%">');
+$mpdf->WriteHTML('<h2 style="text-align: center;">ID Proof Front</h2>
+<img src="'.$details['aadhar_front'].'" width= "100%" height="100%">');
+}
+if(!empty($details['aadhar_back'])){
 $mpdf->AddPage();
-$mpdf->WriteHTML('<h2 style="text-align: center;">Aadhar Proof</h2>
-<img src="'.$details['aadhar_front'].'" width= "100%" height="100%">
+$mpdf->WriteHTML('<h2 style="text-align: center;">ID Proof Back</h2>
 <img src="'.$details['aadhar_back'].'" width= "100%" height="100%">');
+}
+
+
+
+if(!empty($details['address_proof_front'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Address Proof Front</h2>
+<img src="'.$details['address_proof_front'].'" width= "100%" height="100%">');
+}
+if(!empty($details['address_proof_back'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Address Proof Back</h2>
+<img src="'.$details['address_proof_back'].'" width= "100%" height="100%">');
+}
+if(!empty($details['ship_proof_front'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Ship Proof Front</h2>
+<img src="'.$details['ship_proof_front'].'" width= "100%" height="100%">');
+}
+
+if(!empty($details['ship_proof_back'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Ship Proof Back</h2>
+<img src="'.$details['ship_proof_back'].'" width= "100%" height="100%">');
+}
+
+if(!empty($details['form60_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Form 60</h2>
+<img src="'.$details['form60_proof'].'" width= "100%" height="100%">');
+}
+if(!empty($details['declaration_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Declaration proof</h2>
+<img src="'.$details['declaration_proof'].'" width= "100%" height="100%">');
+}
+/* if(!empty($details['dpn_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">DPN Proof</h2>
+<img src="'.$details['dpn_proof'].'" width= "100%" height="100%">');
+}
+if(!empty($details['schdule_proof'])){
+$mpdf->AddPage();
+$mpdf->WriteHTML('<h2 style="text-align: center;">Schdule Proof</h2>
+<img src="'.$details['schdule_proof'].'" width= "100%" height="100%">');
+} */
+
+
 
 $mpdf->Output('Before Approval.pdf', 'D');

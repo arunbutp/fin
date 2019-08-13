@@ -18,14 +18,25 @@ class Login extends CI_Controller {
 	
 		if($admin_data){
 
+			if($admin_data[0]['role'] == '2'){
+				$page = 'home';
+			}
+			if($admin_data[0]['role'] == '3' || $admin_data[0]['role'] == '4'){
+				$page = 'home2';
+			}
+
 			$sess = array("id" => "34567",
 				  "data" => $admin_data,
-				  "l_method" => 'admin');
+				  "l_method" => 'admin',
+				  "page"=>$page );
+
+			//echo "<pre>";
+			//print_r($admin_data[0]['role']);	  
 			
 			$this->session->set_userdata('MY_SESS2', $sess);
 			
 			
-			echo json_encode(array("msg"=> "success"));
+			echo json_encode(array("msg"=> "success","link"=>$page));
 		}else{
 			
 			echo json_encode(array("msg"=> "error"));

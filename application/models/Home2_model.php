@@ -1,5 +1,5 @@
 <?php
-	class Home_model extends CI_Model{
+	class Home2_model extends CI_Model{
 		public function __construct(){
 			
 			
@@ -114,8 +114,8 @@
 			//print_r($session['data'][0]['rso_bc_ids']);
 			
 			
-			$username = "AND (last_updated_by = '".$session['data'][0]['userName']."')";
-			
+		//	$username = "AND (last_updated_by = '".$session['data'][0]['userName']."')";
+			$username = "";
 			
 			$in_str = "";
 			
@@ -147,23 +147,16 @@
 			}
 			
 			 $SQL = "SELECT COUNT(*) AS total_lead,
-IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,
-IFNULL(SUM(IF(oi.status='Under Process' AND last_updated_by is not null  AND lead_type = 1,1,0 ) ),0) AS my_leads, 
-(select count(*) from orderlead_info where last_updated_by IS NULL AND STATUS='Under Process' $in_str ) as new_leads,
-
-IFNULL(SUM(IF(oi.status='Partner' AND lead_type = 1,1,0)),0) AS partner, 
-
-IFNULL(SUM(IF(oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, 
-IFNULL(SUM(IF(oi.status='Pre Approval Discrepancy' AND lead_type = 1,1,0)),0) AS pre_discrepancy, 
-IFNULL(SUM(IF(oi.status='Post Approval Discrepancy' AND lead_type = 1,1,0)),0) AS post_discrepancy, 
-IFNULL(SUM(IF(oi.status='DPN SA Uploaded' AND lead_type = 1,1,0)),0) AS dpn_sa_uploaded, 
-IFNULL(SUM(IF(oi.status='DPN SA Received' AND lead_type = 1,1,0)),0) AS dpn_sa_received, 
-IFNULL(SUM(IF(oi.status='Sanctioned' AND lead_type = 1,1,0)),0) AS sanctioned, 
-IFNULL(SUM(IF(oi.status='Pending Order Confirmation' AND lead_type = 1,1,0)),0) AS order_confim, 
-IFNULL(SUM(IF(oi.status='Confirmed' AND lead_type = 1,1,0)),0) AS confirmed, 
-IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, 
-IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, 
-IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi $str";
+			 IFNULL(SUM(IF(lead_type != 1,1,0)),0) AS otherleads,
+			 IFNULL(SUM(IF(oi.status='Under Process'  || oi.status='Partner' AND lead_type = 1,1,0 ) ),0) AS under_process,
+			 IFNULL(SUM(IF(oi.status='Post Approval Discrepancy'  || oi.status='Pre Approval Discrepancy' AND lead_type = 1,1,0)),0) AS discrepancy, 
+			 IFNULL(SUM(IF(oi.status='DPN SA Received' || oi.status='Loan Eligible' AND lead_type = 1,1,0)),0) AS loan_eligible, 
+			 IFNULL(SUM(IF(oi.status='DPN SA Uploaded' AND lead_type = 1,1,0)),0) AS dpn_sa_uploaded, 
+			 IFNULL(SUM(IF(oi.status='Sanctioned' || oi.status='Pending Order Confirmation'  AND lead_type = 1,1,0)),0) AS sanctioned_confirmed, 
+			 IFNULL(SUM(IF(oi.status='Confirmed' AND lead_type = 1,1,0)),0) AS confirmed, 
+			 IFNULL(SUM(IF(oi.status='Disbursement In Progress' AND lead_type = 1,1,0)),0) AS disbursement, 
+			 IFNULL(SUM(IF(oi.status='Disbursed' AND lead_type = 1,1,0)),0) AS disbursed, 
+			 IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM orderlead_info AS oi $str";
 			
 			$query = $this->db->query($SQL);
 
@@ -176,18 +169,6 @@ IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM o
 			$session = $this->session->userdata('MY_SESS2');
 			
 			$SQL = "SELECT * from finance_master";
-			
-			$query = $this->db->query($SQL);
-
-			return $query->result_array();
-			
-			
-		}
-		public function rso_list_show(){
-			
-			$session = $this->session->userdata('MY_SESS2');
-			
-			$SQL = "SELECT * FROM users WHERE role='6'";
 			
 			$query = $this->db->query($SQL);
 
@@ -512,84 +493,54 @@ IFNULL(SUM(IF(oi.status='Canceled' AND lead_type = 1,1,0)),0) AS rejected FROM o
 				$limit_rows = "LIMIT $start,$limit";
 			}
 			$task = $this->input->get('task');
+		
 			
-			if($task == 'New Leads'){
-				
-				$lead_type = "(lp.lead_type != 1) AND (lp.status = 'Under Process') and last_updated_by is null";
-			}else{
-				//echo $task;
-				$lead_type = '(lp.lead_type = 1) AND';
-				$status = "AND (lp.status = '$task')"; 
-			}
-			
-			
-			if($task == 'Total Lead'){
-				$lead_type = '';
-				$status = '';
-			}
-			
-			
-			if($task == 'New Leads'){
-				$status = "AND (lp.status = 'Under Process') and last_updated_by is null";
+			if($task == 'Under Process'){
+				$status = "AND (lp.status = 'Under Process' || lp.status = 'Partner') ";
 				$lead_type = '';
 			}
-			
-			if($task == 'My Leads'){
+
+			if($task == 'Discrepancy'){
+				$status = "AND (lp.status = 'Pre Approval Discrepancy' || lp.status = 'Post Approval Discrepancy') ";
 				$lead_type = '';
-				$status = "AND (lp.status = 'Under Process') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."'";
 			}
-			
-			if($task == 'Pre Approval Discrepancy'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Pre Approval Discrepancy') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
-			if($task == 'Partner'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Partner') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
+
 			if($task == 'Loan Eligible'){
+				$status = "AND (lp.status = 'Loan Eligible' || lp.status = 'DPN SA Received') ";
 				$lead_type = '';
-				$status = "AND (lp.status = 'Loan Eligible') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
 			}
-			
-			if($task == 'DPN SA Received'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'DPN SA Received') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
-			if($task == 'Post Approval Discrepancy'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Post Approval Discrepancy') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
-			if($task == 'Sanctioned'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Sanctioned') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			if($task == 'Confirmed'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Confirmed') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
-			if($task == 'Disbursement In Progress'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Disbursement In Progress') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			
-			if($task == 'Dispursed'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Dispursed') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
-			if($task == 'Rejected'){
-				$lead_type = '';
-				$status = "AND (lp.status = 'Canceled') and last_updated_by is not null and last_updated_by='".$session['data'][0]['userName']."' ";
-			}
+
 			if($task == 'DPN SA Uploaded'){
+				$status = "AND (lp.status = 'DPN SA Uploaded') ";
 				$lead_type = '';
-				$status = "AND (lp.status = 'DPN SA Uploaded') and last_updated_by is not null  and last_updated_by='".$session['data'][0]['userName']."'";
 			}
+
+			if($task == 'Sanction/Confirm'){
+				$status = "AND (lp.status = 'Sanctioned' || lp.status = 'Pending Order Confirmation') ";
+				$lead_type = '';
+			}
+
+			if($task == 'Confirmed'){
+				$status = "AND (lp.status = 'Confirmed') ";
+				$lead_type = '';
+			}
+
+			if($task == 'Disbursement In Progress'){
+				$status = "AND (lp.status = 'Disbursement In Progress') ";
+				$lead_type = '';
+			}
+
+			if($task == 'Disbursed'){
+				$status = "AND (lp.status = 'Disbursed') ";
+				$lead_type = '';
+			}
+
+			if($task == 'Rejected'){
+				$status = "AND (lp.status = 'Canceled') ";
+				$lead_type = '';
+			}
+			
+			
 			
 
 			if($session['data'][0]['role'] == 2){
@@ -694,14 +645,8 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 		   
 		   $session = $this->session->userdata('MY_SESS2');
 		   
-		
-		
-			if($session['data'][0]['role'] == 6){
-			$str = "where id IN (".$session['data'][0]['rso_bc_ids'].")";	
-			}
 		   
-		   
-		   $SQL = "SELECT * FROM `finance_bc_master` $str";
+		   $SQL = "SELECT * FROM `finance_bc_master` where id IN (".$session['data'][0]['rso_bc_ids'].")";
 		
 		   
 		   $query = $this->db->query($SQL);
@@ -746,7 +691,7 @@ IF(lp.status != 'Disbursed','true','false') AS can_approve,IFNULL(lp.cas_id,'') 
 			
 			if(!$chk){
 			
-			echo $SQL = "UPDATE orderlead_info SET case_id='$case_id',status='Partner',last_updated_by='".$session['data'][0]['userName']."' WHERE id='$id'";
+			 $SQL = "UPDATE orderlead_info SET case_id='$case_id',status='Partner',last_updated_by='".$session['data'][0]['userName']."' WHERE id='$id'";
 
 			$query = $this->db->query($SQL);
 			
@@ -1333,19 +1278,6 @@ VALUES ('".$chk_arr[0]['id']."', 'Discrepancy','','','','Post Approval Upload','
 VALUES ('".$chk_arr[0]['id']."', 'Processed','','','','BB Delivery Confirmation','In Queue');";
 
 			$query = $this->db->query($SQL2);
-			
-			
-			$SQL3 = "SELECT * FROM orderlead_info where case_id = '".$vars['case_id']."'";
-			
-			$query3 = $this->db->query($SQL3);
-		   
-		    $chk_arr3 =  $query3->result_array();
-			
-			
-			$this->after_disburse_api($chk_arr3[0]['order_id']);
-			
-			
-			
 			return "Status Changed Disbursed";
 		   }
 		}
@@ -2312,36 +2244,6 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 
 			
 		}
-		public function after_disburse_api($order_id){
-			
-				$post = [
-					'order_id' => $order_id
-				];
-				
-				
-
-				$data_string = json_encode($post);
-
-				$ch = curl_init('http://devcloud.in3access.in/apiconnection/ver1.0/placeorder/approve/index.php');
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-					'Content-Type: application/json',
-					'Content-Length: ' . strlen($data_string))
-				);
-				curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-
-				//execute post
-				$result = curl_exec($ch);
-
-				//close connection
-				curl_close($ch);
-
-				echo $result;
-			
-		}
 		public function lead_history(){
 			//$SQL = "SELECT  * FROM orderlead_upload_history where parent_id=62";
 			$SQL = "SELECT  * FROM orderlead_upload_history where parent_id=".$_GET['id']."";
@@ -2351,4 +2253,5 @@ VALUES ('".$chk_arr[0]['id']."', 'Processed', '','','BB Delivery Confirmation','
 			return $query->result_array();
 			
 		}
+		
 	}

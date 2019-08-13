@@ -34,14 +34,14 @@
 <div class="wrapper">
 <?php
 $session = $this->session->userdata('MY_SESS2');
-
+$page = $session['page'];
 //echo "<pre>";
 //print_r($session);
 //echo "</pre>";
 ?>
   <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="<?=base_url().$page;?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>F</b>T</span>
       <!-- logo for regular state and mobile devices -->

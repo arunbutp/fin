@@ -34,7 +34,13 @@ $vals = $data[0];
 			 style=" position:relative; display:block; width: 100%">
 			 
 			 
-			 
+			   <div class="box-tools pull-right">
+          <!--  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
+			
+			<button type="button" onclick="window.history.back();" class="btn btn-info"><span class="glyphicon glyphicon-hand-left"></span> Back</button>
+			<button type="button" onclick="location.href='<?=base_url();?>home/';" class="btn btn-info"><span class="glyphicon glyphicon-home"></span>   Home</button>
+          </div>
 			 
 	
   <div style="" id="register_show" class="register-box-body">
@@ -59,8 +65,8 @@ $vals = $data[0];
 		
 		$str = '<option value="">-- please select --</option>';
 		for($i=0;$i<count($get_fin);$i++){
-			
-		$str .= "<option value='".$get_fin[$i]['id']."-".$get_fin[$i]['name']."'>".$get_fin[$i]['name']."</option>";	
+		$arr_id = explode('-',$get_fin[$i]['id']);	
+		$str .= "<option   ".($vals['bc_code'] == $arr_id[0] ? 'selected' : '' )." value='".$get_fin[$i]['id']."-".$get_fin[$i]['name']."'>".$get_fin[$i]['name']."</option>";	
 			
 			
 		}
@@ -79,7 +85,30 @@ $vals = $data[0];
 	  <div class="col-md-4">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Branch:</label>
-       <select id="branch" name="branch"  class="form-control">
+	  <select id="branch" name="branch"  class="form-control">
+	  <?php
+	 // echo $vals['branch_code'];
+	 
+	 
+	 $SQL2 = "SELECT * FROM finance_bc_branch_master where bc_id = '".$vals['bc_code']."'";
+			
+	$query2 = $this->db->query($SQL2);
+		   
+	$bc_branch =  $query2->result_array();
+	  
+		$str = '<option value="">-- please select --</option>';
+		for($i=0;$i<count($bc_branch);$i++){
+		
+		$str .= "<option  ".($vals['branch_code'] == $bc_branch[$i]['branch_code'] ? 'selected' : '' )."  value='".$bc_branch[$i]['branch_code']."'>".$bc_branch[$i]['branch_name']."</option>";	
+			
+			
+		}
+		
+		echo $str;
+	  
+	  
+	  ?>
+       
 		
 		</select>
         <span class=""></span>
@@ -91,7 +120,28 @@ $vals = $data[0];
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Select Field Officer:</label>
         <select id="field_officer" name="field_officer" class="form-control">
+		<?php
+	 // echo $vals['branch_code'];
+	 
+	 
+	 $SQL3 = "SELECT * FROM users where branch_id = '".$vals['branch_code']."'";
+			
+	$query3 = $this->db->query($SQL3);
+		   
+	$field =  $query3->result_array();
+	  
+		$str = '<option value="">-- please select --</option>';
+		for($i=0;$i<count($field);$i++){
 		
+		$str .= "<option  ".($vals['field_officername'] == $field[$i]['firstname'] ? 'selected' : '' )."  value='".$field[$i]['firstname']."'>".$field[$i]['firstname']."</option>";	
+			
+			
+		}
+		
+		echo $str;
+	  
+	  
+	  ?>
 		</select>
         <span class=""></span>
       </div>
@@ -139,7 +189,7 @@ $vals = $data[0];
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Mother Name:</label>
-        <input type="text" class="form-control" value="<?php echo $vals['mother_name'];?>" name="mname" placeholder="" required>
+        <input type="text" class="form-control" value="<?php echo $vals['mother_name'];?>" name="mname" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -217,7 +267,7 @@ $vals = $data[0];
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Email:</label>
-        <input type="text" value="<?php echo $vals['email_id'];?>" class="form-control" name="email" placeholder="" required>
+        <input type="text" value="<?php echo $vals['email_id'];?>" class="form-control" name="email" placeholder="" >
         <span class=""></span>
       </div>
       </div>
@@ -324,7 +374,7 @@ $vals = $data[0];
 	  
 	  <div class="row">
 	  <div class="col-md-12">
-	  <label class="checkbox-inline"><input type="checkbox" name="check_address" <?php  echo ($vals['address_line1'] == $vals['perm_addressline1'] ? 'checked' : ''); ?> id="check_address" value="1">Please check if Shipping Address Different</label>
+	  <label class="checkbox-inline"><input type="checkbox" name="check_address" <?php  echo ($vals['address_line1'] != $vals['perm_addressline1'] ? 'checked' : ''); ?> id="check_address" value="1">Please check if Shipping Address Different</label>
 	  </div>
 	  </div>
 	 <!-- <div id="present_address"  style="display:<?php  echo ($vals['address_line1'] == $vals['perm_addressline1'] ? 'none' : 'block'); ?>">-->
@@ -392,7 +442,7 @@ $vals = $data[0];
 	  <div class="row">
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Aadhar Front:</label>
+	  <label for="firstname">ID proof Front:</label>
 		<?php
 		if($vals['aadhar_front']){
 		?>
@@ -411,7 +461,7 @@ $vals = $data[0];
 	  
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
-	  <label for="firstname">Aadhar Back:</label>
+	  <label for="firstname">ID Proof Back:</label>
 	  <?php
 		if($vals['aadhar_back']){
 		?>
@@ -427,63 +477,119 @@ $vals = $data[0];
         <span class=""></span>
       </div>
       </div>
+	  
+	   <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Address Proof Front:</label>
+	   <?php
+		if($vals['address_proof_front']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['address_proof_front'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['address_proof_front'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="address_proof_front" accept="image/*" >
+        <span class=""></span>
+      </div>
+      </div>
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Address Proof Back:</label>
+	   <?php
+		if($vals['address_proof_back']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['address_proof_back'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['address_proof_back'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="address_proof_back" accept="image/*" >
+        <span class=""></span>
+      </div>
+      </div>
 	  <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Declaration:</label>
 	   <?php
-		if($vals['alernate_id']){
+		if($vals['declaration_proof']){
 		?>
-		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['alernate_id'];?>">
-		<img width="50px" height="50px" src="<?php echo $vals['alernate_id'];?>">
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['declaration_proof'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['declaration_proof'];?>">
 		</a>
 	   <?php
 		}else{
 			echo "Image NA";
 		}
 	  ?>
-        <input type="file" class="form-control" name="declaration" accept="image/*" >
+        <input type="file" class="form-control" name="declaration_proof" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
+	   <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">Form 60 Proof:</label>
+	   <?php
+		if($vals['form60_proof']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['form60_proof'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['form60_proof'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="form60_proof" accept="image/*" >
+        <span class=""></span>
+      </div>
+      </div>
+	  
+	  <div class="col-md-3">
+	  <div class="form-group has-feedback">
+	  <label for="firstname">DPN Proof:</label>
+	   <?php
+		if($vals['dpn_proof']){
+		?>
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['dpn_proof'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['dpn_proof'];?>">
+		</a>
+	   <?php
+		}else{
+			echo "Image NA";
+		}
+	  ?>
+        <input type="file" class="form-control" name="dpn_proof" accept="image/*" >
+        <span class=""></span>
+      </div>
+      </div>
+	  
 	 <div class="col-md-3">
 	  <div class="form-group has-feedback">
 	  <label for="firstname">Schdule A:</label>
 	   <?php
-		if($vals['schdule_link']){
+		if($vals['schdule_proof']){
 		?>
-		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['schdule_link'];?>">
-		<img width="50px" height="50px" src="<?php echo $vals['schdule_link'];?>">
+		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['schdule_proof'];?>">
+		<img width="50px" height="50px" src="<?php echo $vals['schdule_proof'];?>">
 		</a>
 	   <?php
 		}else{
 			echo "Image NA";
 		}
 	  ?>
-        <input type="file" class="form-control" name="schdule" accept="image/*" >
+        <input type="file" class="form-control" name="schdule_proof" accept="image/*" >
         <span class=""></span>
       </div>
       </div>
       </div>
-	  <div class="row">
-	  <div class="col-md-3">
-	  <div class="form-group has-feedback">
-	  <label for="firstname">Demand & Promissary:</label>
-	  <?php
-		if($vals['demand_link']){
-		?>
-		<a style="margin:0px 5px;"  class="fancybox"  href="<?php echo $vals['demand_link'];?>">
-		<img width="50px" height="50px" src="<?php echo $vals['demand_link'];?>">
-		</a>
-	   <?php
-		}else{
-			echo "Image NA";
-		}
-	  ?>
-        <input type="file" class="form-control" name="demand" accept="image/*" >
-        <span class=""></span>
-      </div>
-      </div>
-	  </div>
+	 
 	  <div class="row" style="display:none">
 	  <div class="col-md-12">
 	  <div class="form-group has-feedback">
@@ -721,7 +827,7 @@ $this->load->view('footer');
 	   
 	   
 	$("#form2").submit(function(evt){
-		alert()
+		//alert()
 	$("#csv_status").html('<img style="margin:0px 35%;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
 	//alert();
 		  evt.preventDefault();
@@ -739,6 +845,7 @@ $this->load->view('footer');
 		   success: function (response) {
 			 $("#csv_status").html(response);
 			 alert("Edited Successfully");
+			 window.location.href='<?=base_url();?>home';
 			// $("#csv_status").html('<img style="margin:0px auto;" src="<?=base_url();?>assets/dist/img/ajax-loader-csv.gif">');		
 
 		   }

@@ -374,7 +374,7 @@ if(isset($_POST['submit'])){
 		$data = $this->home_model->under_process();
 		$arr = array();
 		for($i=0;$i<count($data['main']);$i++){
-			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_name'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Scrutiny</button>', 'edit'=>  '<button type="button" class="btn btn-default" onclick="edit('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Edit</button>');
+			$arr[] = array('lead_id'=> $data['main'][$i]['id'] ,'order_id'=> $data['main'][$i]['order_id'] ,'case_id'=> ($data['main'][$i]['case_id']=='' ? 'NA' : $data['main'][$i]['case_id']) , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_firstname'] .' '.$data['main'][$i]['applicant_middlename'].' '.$data['main'][$i]['applicant_lastname'], 'status'=>  $data['main'][$i]['status'], 'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'],'status'=>  $data['main'][$i]['status'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Scrutiny</button>', 'edit'=>  '<button type="button" class="btn btn-default" onclick="edit('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Edit</button>', 'assign'=>  '<button type="button" class="btn btn-default" onclick="assign('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Assign to me</button>', 'mov_part'=>  '<button type="button" class="btn btn-default" onclick="mov_part('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Move to Partner </button>');
 			
 		}
 		
@@ -385,10 +385,22 @@ if(isset($_POST['submit'])){
 				"data":'.json_encode( $arr, JSON_NUMERIC_CHECK ).'}';
 		
 	}
-	public function edit_lead(){
+	public function assigning_orderlead(){
 		
 		$this->load->model('home_model');
+		$data['data'] = $this->home_model->assigning_orderlead();
+		
+		
+		
+	}
+	public function edit_lead(){
+		
+		
+		 
+		$this->load->model('home_model');
 		$data['data'] = $this->home_model->orderLeadByID();
+		$data['get_fin'] = $this->home_model->get_fin();
+		$data['bc_details'] = $this->home_model->get_finance_bc();
 		
 		$this->load->view('home/edit_lead',$data);	
 		
@@ -484,6 +496,261 @@ if(isset($_POST['submit'])){
 		
 	}
 	public function lead_csv_upload(){
+		
+		$csv = $_FILES['myFile']['name'];
+	
+		$file = $_FILES['myFile']['tmp_name'];
+		$handle = fopen($file, "r");
+	
+		$this->load->model('home_model');
+
+			
+			while (($row = fgetcsv($handle, 10000, ",")) != FALSE) 
+			{
+				
+			$arr[]   = $row;
+
+			}
+			
+			for($i=0;$i<count($arr);$i++){
+				
+			$case_id 			=	array_search('Sr#',$arr[0]);
+			$process 			=	array_search('Process',$arr[0]);
+			$action 			=	array_search('Action',$arr[0]);
+			$reason 			=	array_search('Reason',$arr[0]);
+			$sub_reason 		=	array_search('Sub-Reason',$arr[0]);
+			$remarks 			=	array_search('Remarks',$arr[0]);
+			$status 			=	array_search('Status',$arr[0]);
+			$lead_status 		=	array_search('Boonbox Lead Status',$arr[0]);
+			$order_status	 	=	array_search('Boonbox Order Status',$arr[0]);
+			
+				
+			$original_array[] = array(    'case_id'		=> $arr[$i][$case_id],
+										'process'		=> $arr[$i][$process],
+										'action'		=> $arr[$i][$action],
+										'reason'		=> $arr[$i][$reason],
+										'sub_reason'	=> $arr[$i][$sub_reason],
+										'remarks'		=> $arr[$i][$remarks],
+										'status'		=> $arr[$i][$status],
+										'lead_status'	=> $arr[$i][$lead_status],
+										'order_status'	=> $arr[$i][$order_status]
+			
+			);	
+			}
+			//echo "<pre>";
+			//print_r($original_array);
+			$str = "<div style='overflow-x:auto; height:300px;'><table  class='table table-bordered'><tr><td>Case ID</td><td>Status</td></tr>";
+			for($m=0;$m<count($original_array);$m++){
+				
+				if($m != 0){
+				
+				if($original_array[$m]['case_id'] == ''){
+					
+					//echo $m . '<br/>';
+				$str .= "<tr><td>NA</td><td>Case ID Not Available</td></tr>";	
+					
+				}else{
+					
+				/*  if(strlen($original_array[$m]['process']) == 0 ){
+					$cell_err[] = 'Process NA';
+					
+				} 
+				else if(strlen($original_array[$m]['action']) == 0){
+					$cell_err[] = 'Action NA';
+				
+				} 
+				else{  */
+					
+					//$cell_err[] = 'go';
+					
+					
+					if($original_array[$m]['process'] == 'RCF QDE + Hunter' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->under_first_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'On Hold' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'Hold'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->under_second_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->first_disc_changes($original_array[$m]);
+						}
+					}
+					
+					
+					if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->under_third_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == 'Rejected' && $original_array[$m]['status'] == 'Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->loan_rejected_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == 'Cibil' && $original_array[$m]['sub_reason'] == 'ok to process' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->loan_eli_changes($original_array[$m]);
+						}
+					}
+					
+					
+					if($original_array[$m]['process'] == 'RCF QDE + Hunter Solution' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->dpn_first_changes($original_array[$m]);
+						}
+					}
+					
+					/*if($original_array[$m]['process'] == '-' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->post_disc_changes($original_array[$m]);
+						}
+					}*/
+					
+					if($original_array[$m]['process'] == 'RCF DDE Solution' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->dpn_second_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'RCF DDE' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->dpn_third_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'Post Approval Upload' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->post_second_changes($original_array[$m]);
+						}
+					}
+					if($original_array[$m]['process'] == 'Post Approval Upload' && $original_array[$m]['action'] == 'SS Completed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->sanc_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'Hero-Ops' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disburse_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->pending_sec_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'Boonbox Upload' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'BB-Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->post_third_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'Post Approval Upload' && $original_array[$m]['action'] == 'Discrepancy' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'BC-Discrepancy'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->post_four_changes($original_array[$m]);
+						}
+					}
+					
+					if($original_array[$m]['process'] == 'BB Delivery Confirmation' && $original_array[$m]['action'] == 'Processed' && $original_array[$m]['reason'] == '' && $original_array[$m]['sub_reason'] == '' && $original_array[$m]['remarks'] == '' && $original_array[$m]['status'] == 'In Queue'){
+						$disbursed_chk = $this->disbursed_chk($original_array[$m]);
+						if($disbursed_chk){
+							$cell_err[] ='Case Disbursed Already';
+						}else{
+						$this->load->model('home_model');
+						$cell_err[] = $this->home_model->disburse_new_changes($original_array[$m]);
+						
+						}
+					}
+					
+
+					
+				
+				$str .= "<tr><td>".$original_array[$m]['case_id']."</td><td>".( empty($cell_err) ? 'Unknown Status' : implode(" ",$cell_err) )."</td></tr>";	
+					
+				}
+				}
+				
+				unset($cell_err);
+				
+			}
+			$str .= "</div></table>";
+			echo $str;
+	}
+	public function lead_csv_upload_old(){
 		
 		$csv = $_FILES['myFile']['name'];
 	
@@ -749,6 +1016,111 @@ if(isset($_POST['submit'])){
 
 		//echo "<pre>";
 		//print_r($_FILES);
+	}
+	public function move_to_partner(){
+		
+		$this->load->model('home_model');
+		$this->home_model->move_to_partner();
+		
+	}
+	public function order_confirm(){
+		//echo 'ff';
+		$this->load->model('home_model');
+		$this->home_model->order_confirm();
+		
+	}
+	public function other_leads()
+	{
+		$this->load->view('home/other_details');
+	}
+	public function other_details_json()
+	{
+		$this->load->model('home_model');
+		$data = $this->home_model->other_leads();
+		$arr = array();
+		for($i=0;$i<count($data['main']);$i++){
+			$arr[] = array('lead_id'=> $data['main'][$i]['id'] , 'location_name'=>  $data['main'][$i]['location_name'], 'item_code'=>  $data['main'][$i]['item_code'], 'price'=>  $data['main'][$i]['price'], 'bc_name'=>  $data['main'][$i]['bc_name'], 'city'=>  $data['main'][$i]['city'], 'district'=>  $data['main'][$i]['district'], 'state'=>  $data['main'][$i]['cust_state'], 'applicant_name'=>  $data['main'][$i]['applicant_firstname'] .' '.$data['main'][$i]['applicant_middlename'].' '. $data['main'][$i]['applicant_lastname'], 'status'=>  $data['main'][$i]['status'], 'address'=>  $data['main'][$i]['address_line1'] .' '. $data['main'][$i]['address_line2'],'mobile_number'=>  $data['main'][$i]['mobile_number'], 'branch_code'=>  $data['main'][$i]['branch_code'], 'created_at'=>  $data['main'][$i]['created_at'], 'settings'=>  '<button type="button" class="btn btn-default" onclick="settings('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Scrutiny</button>', 'edit'=>  '<button type="button" class="btn btn-default" onclick="edit('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Edit</button>', 'assign'=>  '<button type="button" class="btn btn-default" onclick="assign('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Assign to me</button>', 'mov_part'=>  '<button type="button" class="btn btn-default" onclick="mov_part('.$data['main'][$i]['id'].')"> <span class="glyphicon glyphicon-cog"></span>  Move to Partner </button>');
+			
+		}
+		
+				echo '{
+			    "draw": '.$_POST['draw'].',
+			    "recordsFiltered": "'.($data['total'] == null ? '0' : $data['total']).'",
+			    "recordsTotal": "'.($data['total'] == null ? '0' : $data['total']).'",
+				"data":'.json_encode( $arr, JSON_NUMERIC_CHECK ).'}';
+		
+	}
+	public function lead_history(){
+		
+		$this->load->model('home_model');
+		$data = $this->home_model->lead_history();
+		
+		//echo "<pre>";
+		//print_r($data);
+		if($data){
+		$str = "<table class='table table-striped'><tr><td>Action</td><td>Reason</td><td>Sub Reason</td><td>Remarks</td><td>Process</td><td>Status</td></tr>";
+		for($i=0;$i<count($data);$i++){
+			
+			$str .= "<tr><td>".$data[$i]['action']."</td><td>".$data[$i]['reason']."</td><td>".$data[$i]['sub_reason']."</td><td>".$data[$i]['remarks']."</td><td>".$data[$i]['process']."</td><td>".$data[$i]['status']."</td></tr>";
+			
+		}
+		$str .= "</table>";
+		echo $str;
+		}
+		else{
+			echo "<h3>No Data Available</h3>";
+		}
+		
+	}
+	public function rso_list()
+	{
+		$this->load->view('home/rso_list');
+	}
+	public function rso_list_show(){
+		
+		$this->load->model('home_model');
+		
+		
+		
+		$postData = $this->input->post();
+		
+	//	echo $postData['action'];
+		
+		if($postData['action'] == 'edit'){
+
+			 $this->home_model->finance_master_edit($postData);
+			 $data = $this->home_model->rso_list_show();
+		for($i=0;$i<count($data);$i++){
+				$arr[] = array('id'=> $data[$i]['id'] , 'firstname'=>  $data[$i]['firstname'], 'lastname'=>  $data[$i]['lastname'], 'dob'=>  $data[$i]['dob'], 'gender'=>  $data[$i]['gender'], 'email'=>  $data[$i]['email'], 'mobile'=>  $data[$i]['mobile']);
+			
+		}
+		
+		echo '{"data":'.json_encode($arr).'}';
+			 
+		}
+	    if($postData['action'] == 'create'){
+			
+			 $this->home_model->finance_master_create($postData);
+			 $data = $this->home_model->rso_list_show();
+		for($i=0;$i<count($data);$i++){
+			$arr[] = array('id'=> $data[$i]['id'] , 'firstname'=>  $data[$i]['firstname'], 'lastname'=>  $data[$i]['lastname'], 'dob'=>  $data[$i]['dob'], 'gender'=>  $data[$i]['gender'], 'email'=>  $data[$i]['email'], 'mobile'=>  $data[$i]['mobile']);
+			
+		}
+		
+		echo '{"data":'.json_encode($arr).'}';
+			
+		}
+		if($postData['action'] == ''){
+		$data = $this->home_model->rso_list_show();
+		for($i=0;$i<count($data);$i++){
+			$arr[] = array('id'=> $data[$i]['id'] , 'firstname'=>  $data[$i]['firstname'], 'lastname'=>  $data[$i]['lastname'], 'dob'=>  $data[$i]['dob'], 'gender'=>  $data[$i]['gender'], 'email'=>  $data[$i]['email'], 'mobile'=>  $data[$i]['mobile']);
+			
+		}
+		
+		echo '{"data":'.json_encode($arr).'}';
+		}
+		
+		
 	}
 	
 }

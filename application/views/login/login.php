@@ -338,7 +338,7 @@ function bc_branch(){
 						console.log(result.msg);
                        if(result.msg == 'success'){
 						$("#loader").html('Redirecting...');   
-					   location.href= '<?php echo base_url().'home'; ?>';
+					   location.href= '<?php echo base_url(); ?>'+result.link;
 					}else{
 						$("#loader").html('');
 						$("#error").html("Please Use Correct Username Password");
